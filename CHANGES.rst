@@ -4,7 +4,11 @@ phenodata changelog
 
 development
 ===========
+
+2018-03-12 0.2.0
+================
 - Add command "list-quality-levels" for DWD
+- Add generic FTP resource caching honoring file modification time to speed up subsequent invocations
 
 2018-03-12 0.1.0
 ================
