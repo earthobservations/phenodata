@@ -1,15 +1,22 @@
+# ============
+# Main targets
+# ============
+
 # Release this piece of software
 # Synopsis:
 #   make release bump=minor  (major,minor,patch)
 release: bumpversion push sdist pypi-upload
 
+# Build the documentation
 docs-html: install-doctools
 	$(eval venvpath := ".venv_project")
 	touch doc/index.rst
 	export SPHINXBUILD="`pwd`/$(venvpath)/bin/sphinx-build"; cd doc; make html
 
 
+# ===============
 # Utility targets
+# ===============
 bumpversion: install-releasetools
 	$(eval venvpath := ".venv_project")
 	@$(venvpath)/bin/bumpversion $(bump)

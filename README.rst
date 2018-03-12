@@ -73,7 +73,7 @@ Display regular flowering events for hazel and snowdrop around Berlin and Brande
 
     phenodata tabular --source=dwd --dataset=immediate --year=2017 --regions=berlin,brandenburg --species=hazel,snowdrop --phase=flowering
 
-Display forecast for "beginning of flowering" events for canola and sweet cherry around Thüringen and Bayern (Germany) in 2017::
+Display forecast for "beginning of flowering" events for canola and sweet cherry around Thüringen and Bayern (Germany)::
 
     phenodata tabular --source=dwd --dataset=immediate --forecast --regions=thüringen,bayern --species=raps,süßkirsche --phase-bbch=60
 

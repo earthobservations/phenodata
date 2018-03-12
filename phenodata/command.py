@@ -63,4 +63,5 @@ def run():
     #print data.to_json(orient='index')
 
     # TODO: How to make "tabulate" print index column name
-    print tabulate(data, headers=data.columns, showindex=True, tablefmt='psql')
+    payload = tabulate(data, headers=data.columns, showindex=True, tablefmt='psql').encode('utf-8')
+    print(payload)
