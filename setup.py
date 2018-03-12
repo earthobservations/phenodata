@@ -10,6 +10,8 @@ requires = [
     'requests-ftp==0.3.1',
     'docopt==0.6.2',
     'attrs==17.4.0',
+    'pandas>=0.18.1,<=0.22.0',
+    'tabulate==0.8.2',
 ]
 
 test_requires = [

@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 # (c) 2018 Andreas Motl <andreas@hiveeyes.org>
-import json
 import logging
 from docopt import docopt, DocoptExit
+from tabulate import tabulate
 from phenodata import __version__
 from phenodata.dwd import DwdDataAcquisition
-from phenodata.util import boot_logging, normalize_options, read_list
+from phenodata.util import boot_logging, normalize_options
 
 """
 phenodata is a data acquisition and manipulation toolkit for open access phenology data.
@@ -51,11 +51,16 @@ def run():
 
     # Dispatch command
     data = None
-    if 'list-species' in options:
+    if options['list-species']:
         data = client.get_species()
-    elif 'list-phases' in options:
+    elif options['list-phases']:
         data = client.get_phases()
-    elif 'list-stations' in options:
-        data = client.get_stations()
+    elif options['list-stations']:
+        data = client.get_stations(dataset=options['dataset'])
 
-    print(json.dumps(data))
+    # TODO: Do either this or that
+    #print data.to_string()
+    #print data.to_json(orient='index')
+
+    # TODO: How to make "tabulate" print index column name
+    print tabulate(data, headers=data.columns, showindex=True, tablefmt='psql')
