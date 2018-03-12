@@ -17,7 +17,7 @@ phenodata - phenology data acquisition for humans
 *****
 About
 *****
-``phenodata`` is a data acquisition and manipulation toolkit for open access phenology data.
+phenodata is a data acquisition and manipulation toolkit for open access phenology data.
 It is written in Python.
 
 Currently, it implements data wrappers for acquiring phenology observation data published
@@ -47,7 +47,7 @@ If you know your way around Python, installing this software is really easy::
 
     pip install phenodata --upgrade
 
-Please refer to the `virtualenv`_ page about further guidelines how to install and use this software.
+Please refer to the `virtualenv`_ page about further recommendations how to install and use this software.
 
 .. _virtualenv: https://github.com/hiveeyes/phenodata/blob/master/doc/virtualenv.rst
 
@@ -67,16 +67,17 @@ Display list of stations::
     phenodata list-stations --source=dwd --dataset=immediate
 
 
-.. warning:: The following both commands are not implemented yet.
+Proposal
+========
+Display regular flowering events for hazel and snowdrop around Berlin and Brandenburg (Germany) in 2017::
 
-Display "beginning of flowering" events for hazel and snowdrop around Berlin and Brandenburg (Germany) in 2017::
-
-    phenodata tabular --source=dwd --dataset=immediate --year=2017 --regions=berlin,brandenburg --species=hasel,schneeglöckchen --bbch=60
+    phenodata tabular --source=dwd --dataset=immediate --year=2017 --regions=berlin,brandenburg --species=hazel,snowdrop --phase=flowering
 
 Display forecast for "beginning of flowering" events for canola and sweet cherry around Thüringen and Bayern (Germany) in 2017::
 
-    phenodata tabular --source=dwd --dataset=immediate --forecast --regions=thüringen,bayern --species=raps,süßkirsche --bbch=60
+    phenodata tabular --source=dwd --dataset=immediate --forecast --regions=thüringen,bayern --species=raps,süßkirsche --phase-bbch=60
 
+.. warning:: These commands are not implemented yet.
 
 You can choose between two different datasets, `annual-reporters`_ and `immediate-reporters`_.
 
@@ -87,6 +88,9 @@ You can choose between two different datasets, `annual-reporters`_ and `immediat
 *******************
 Project information
 *******************
+
+About
+=====
 The "phenodata" program is released under the AGPL license.
 The code lives on `GitHub <https://github.com/hiveeyes/phenodata>`_ and
 the Python package is published to `PyPI <https://pypi.org/project/phenodata/>`_.
@@ -99,6 +103,21 @@ Spend some time taking a look around, locate a bug, design issue or
 spelling mistake and then send us a pull request or create an issue.
 
 Thanks in advance for your efforts, we really appreciate any help or feedback.
+
+Code license
+============
+Licensed under the AGPL license. See LICENSE file for details.
+
+Data license
+============
+The DWD has information about their re-use policy in German and English.
+Please refer to the respective Disclaimer
+(`de <https://www.dwd.de/DE/service/disclaimer/disclaimer_node.html>`_,
+`en <https://www.dwd.de/EN/service/disclaimer/disclaimer.html>`_)
+and Copyright
+(`de <https://www.dwd.de/DE/service/copyright/copyright_node.html>`_,
+`en <https://www.dwd.de/EN/service/copyright/copyright_artikel.html>`_)
+information.
 
 Disclaimer
 ==========
