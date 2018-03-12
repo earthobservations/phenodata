@@ -1,25 +1,36 @@
-bumpversion:
-	bumpversion $(bump)
+# Release this piece of software
+# Synopsis:
+#   make release bump=minor  (major,minor,patch)
+release: bumpversion push sdist pypi-upload
+
+docs-html: install-doctools
+	$(eval venvpath := ".venv_project")
+	touch doc/index.rst
+	export SPHINXBUILD="`pwd`/$(venvpath)/bin/sphinx-build"; cd doc; make html
+
+
+# Utility targets
+bumpversion: install-releasetools
+	$(eval venvpath := ".venv_project")
+	@$(venvpath)/bin/bumpversion $(bump)
 
 push:
 	git push && git push --tags
 
 sdist:
-	python setup.py sdist
+	$(eval venvpath := ".venv_project")
+	@$(venvpath)/bin/python setup.py sdist
 
-upload:
-	twine upload --skip-existing dist/phenodata-*.tar.gz
+pypi-upload: install-releasetools
+	$(eval venvpath := ".venv_project")
+	@$(venvpath)/bin/twine upload --skip-existing dist/*.tar.gz
 
-# make release bump=minor  (major,minor,patch)
-release: bumpversion push sdist upload
-
-
-docs-virtualenv:
-	$(eval venvpath := ".venv_sphinx")
+install-doctools:
+	$(eval venvpath := ".venv_project")
 	@test -e $(venvpath)/bin/python || `command -v virtualenv` --python=`command -v python` --no-site-packages $(venvpath)
 	@$(venvpath)/bin/pip install --quiet --requirement requirements-docs.txt
 
-docs-html: docs-virtualenv
-	$(eval venvpath := ".venv_sphinx")
-	touch doc/index.rst
-	export SPHINXBUILD="`pwd`/$(venvpath)/bin/sphinx-build"; cd doc; make html
+install-releasetools:
+	$(eval venvpath := ".venv_project")
+	@test -e $(venvpath)/bin/python || `command -v virtualenv` --python=`command -v python` --no-site-packages $(venvpath)
+	@$(venvpath)/bin/pip install --quiet --requirement requirements-release.txt

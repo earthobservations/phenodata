@@ -65,16 +65,7 @@ setup(name='phenodata',
     install_requires=requires,
     tests_require=test_requires,
     extras_require={
-        'release': [
-            'bumpversion==0.5.3',
-            'twine==1.10.0',
-            'keyring==11.0.0',
-            ],
-        'documentation': [
-            'Sphinx==1.7.1',
-            'sphinx_rtd_theme==0.2.5b2',
-            ],
-        },
+    },
     dependency_links=[
     ],
 
