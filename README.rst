@@ -20,8 +20,21 @@ About
 ``phenodata`` is a data acquisition and manipulation toolkit for open access phenology data.
 It is written in Python.
 
-Currently, it implements data wrappers for the phenology observations published
+Currently, it implements data wrappers for acquiring phenology observation data published
 on the DWD Climate Data Center (CDC) FTP server operated by »Deutscher Wetterdienst« (DWD).
+
+Under the hood, it uses the fine Pandas_ data analysis library for data mangling, amongst others.
+
+.. _Pandas: https://pandas.pydata.org/
+
+
+***************
+Acknowledgments
+***************
+Thanks to the many observers, »Deutscher Wetterdienst«,
+the »Global Phenological Monitoring programme« and all people working behind
+the scenes for their commitment in recording the observations and for making
+the excellent datasets available to the community. You know who you are.
 
 
 ***************
@@ -74,10 +87,10 @@ You can choose between two different datasets, `annual-reporters`_ and `immediat
 *******************
 Project information
 *******************
-``phenodata`` is released under the AGPL license.
+The "phenodata" program is released under the AGPL license.
 The code lives on `GitHub <https://github.com/hiveeyes/phenodata>`_ and
 the Python package is published to `PyPI <https://pypi.org/project/phenodata/>`_.
-You might also want to have a look at the `documentation <https://docs.hiveeyes.org/phenodata/>`_.
+You might also want to have a look at the `documentation <https://hiveeyes.org/docs/phenodata/>`_.
 
 The software has been tested on Python 2.7.
 
@@ -92,12 +105,3 @@ Disclaimer
 The project and its authors are not affiliated with DWD, USA-NPN or any
 other data provider in any way. It is a sole project from the community
 for making data more accessible in the spirit of open data.
-
-
-***************
-Acknowledgments
-***************
-Thanks to the many observers, »Deutscher Wetterdienst«,
-the »Global Phenological Monitoring programme« and all people working behind
-the scenes for their commitment in recording the observations and for making
-the excellent datasets available to the community. You know who you are.
