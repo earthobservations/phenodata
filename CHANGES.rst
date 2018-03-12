@@ -9,3 +9,4 @@ development
 ================
 - Initial project skeleton
 - Add initial documentation
+- Add code basics
