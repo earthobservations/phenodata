@@ -1,0 +1,7 @@
+include README.rst
+include LICENSE
+include CHANGES.rst
+exclude .bumpversion.cfg
+exclude .gitignore
+exclude Makefile
+exclude MANIFEST.in
