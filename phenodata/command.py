@@ -21,6 +21,7 @@ def run():
       phenodata list-species --source=dwd
       phenodata list-phases --source=dwd
       phenodata list-stations --source=dwd --dataset=immediate
+      phenodata list-quality-levels --source=dwd
 
       phenodata info
       phenodata --version
@@ -57,6 +58,8 @@ def run():
         data = client.get_phases()
     elif options['list-stations']:
         data = client.get_stations(dataset=options['dataset'])
+    elif options['list-quality-levels']:
+        data = client.get_quality_levels()
 
     # TODO: Do either this or that
     #print data.to_string()

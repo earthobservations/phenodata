@@ -4,6 +4,7 @@ phenodata changelog
 
 development
 ===========
+- Add command "list-quality-levels" for DWD
 
 2018-03-12 0.1.0
 ================
