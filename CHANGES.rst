@@ -4,6 +4,8 @@ phenodata changelog
 
 development
 ===========
+- Add command "phenodata observations" for acquiring observation data
+- Filter observations by file names, station ids and years
 
 2018-03-12 0.2.0
 ================

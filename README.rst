@@ -54,6 +54,51 @@ Please refer to the `virtualenv`_ page about further recommendations how to inst
 
 Usage
 =====
+::
+
+    $ phenodata --help
+    Usage:
+      phenodata info
+      phenodata list-species --source=dwd
+      phenodata list-phases --source=dwd
+      phenodata list-stations --source=dwd --dataset=immediate
+      phenodata list-quality-levels --source=dwd
+      phenodata list-quality-bytes --source=dwd
+      phenodata list-filenames --source=dwd --dataset=immediate --partition=recent [--files=Hasel,Schneegloeckchen] [--years=2017 | --forecast]
+      phenodata list-urls --source=dwd --dataset=immediate --partition=recent [--files=Hasel,Schneegloeckchen] [--years=2017 | --forecast]
+      phenodata observations --source=dwd --dataset=immediate --partition=recent [--files=Hasel,Schneegloeckchen] [--stations=164,717 | --regions=berlin,brandenburg] [--species=hazel,snowdrop] [--phases=flowering] [--years=2017 | --forecast]
+      phenodata --version
+      phenodata (-h | --help)
+
+    Data acquisition options:
+      --source=<source>         Data source. Currently "dwd" only.
+      --dataset=<dataset>       Data set. Use "immediate" or "annual" for --source=dwd.
+      --partition=<dataset>     Partition. Use "recent" or "historical" for --source=dwd.
+
+    Data filtering options:
+      --files=<files>           Filter by files (comma-separated list)
+      --years=<years>           Filter by years (comma-separated list)
+      --stations=<stations>     Filter by station ids (comma-separated list)
+      --regions=<regions>       Filter by region names (comma-separated list)
+      --species=<species>       Filter by species names (comma-separated list)
+      --phases=<phases>         Filter by phase names (comma-separated list)
+
+
+.. note::
+
+    For most acquisition tasks, you must choose from one of two different datasets: `annual-reporters`_ and `immediate-reporters`_.
+
+.. _annual-reporters: https://www.dwd.de/DE/klimaumwelt/klimaueberwachung/phaenologie/daten_deutschland/jahresmelder/jahresmelder_node.html
+.. _immediate-reporters: https://www.dwd.de/DE/klimaumwelt/klimaueberwachung/phaenologie/daten_deutschland/sofortmelder/sofortmelder_node.html
+
+
+Examples
+========
+
+
+Metadata
+--------
+
 Display list of species::
 
     phenodata list-species --source=dwd
@@ -66,23 +111,48 @@ Display list of stations::
 
     phenodata list-stations --source=dwd --dataset=immediate
 
+Display list of file names of recent observations by the annual reporters::
 
-Proposal
-========
+    phenodata list-urls --source=dwd --dataset=annual --subset=recent
+
+Display list of urls to recent observations by the annual reporters and apply filter criteria::
+
+    phenodata list-urls --source=dwd --dataset=annual --subset=recent --files=Hasel,Schneegloeckchen
+
+
+Observations
+------------
+
+Display observations of hazel and snowdrop::
+
+    phenodata observations --source=dwd --dataset=annual --files=Hasel,Schneegloeckchen --partition=recent
+
+Display observations of hazel and snowdrop for stations 164 and 717::
+
+    phenodata observations --source=dwd --dataset=annual --files=Hasel,Schneegloeckchen --partition=recent --stations=164,717
+
+Display all observations for stations 164 and 717 in 2016 and 2017::
+
+    phenodata observations --source=dwd --dataset=annual --partition=recent --stations=164,717 --years=2016,2017
+
+
+Todo
+----
+.. warning:: These commands are not implemented yet.
+
 Display regular flowering events for hazel and snowdrop around Berlin and Brandenburg (Germany) in 2017::
 
-    phenodata tabular --source=dwd --dataset=immediate --year=2017 --regions=berlin,brandenburg --species=hazel,snowdrop --phase=flowering
+    phenodata calendar --source=dwd --dataset=immediate --regions=berlin,brandenburg --species=hazel,snowdrop --phases=flowering --partition=recent --years=2017
+
+    phenodata calendar --source=dwd --dataset=immediate --regions=berlin,brandenburg --species=hazel,snowdrop --phases=flowering --partition=historical --years=1958
 
 Display forecast for "beginning of flowering" events for canola and sweet cherry around Thüringen and Bayern (Germany)::
 
-    phenodata tabular --source=dwd --dataset=immediate --forecast --regions=thüringen,bayern --species=raps,süßkirsche --phase-bbch=60
+    phenodata calendar --source=dwd --dataset=immediate --subset=annual --regions=thüringen,bayern --species=raps,süßkirsche --phases-bbch=60 --forecast
 
-.. warning:: These commands are not implemented yet.
-
-You can choose between two different datasets, `annual-reporters`_ and `immediate-reporters`_.
-
-.. _annual-reporters: https://www.dwd.de/DE/klimaumwelt/klimaueberwachung/phaenologie/daten_deutschland/jahresmelder/jahresmelder_node.html
-.. _immediate-reporters: https://www.dwd.de/DE/klimaumwelt/klimaueberwachung/phaenologie/daten_deutschland/sofortmelder/sofortmelder_node.html
+To improve data acquisition performance, you can e.g. use ``--files=Hasel,Schneegloeckchen``
+to apply yet another filter based on file name matching. Only files matching the designated names
+will be retrieved.
 
 
 *******************
@@ -112,11 +182,11 @@ Data license
 ============
 The DWD has information about their re-use policy in German and English.
 Please refer to the respective Disclaimer
-(`de <https://www.dwd.de/DE/service/disclaimer/disclaimer_node.html>`_,
-`en <https://www.dwd.de/EN/service/disclaimer/disclaimer.html>`_)
+(`de <https://www.dwd.de/DE/service/disclaimer/disclaimer_node.html>`__,
+`en <https://www.dwd.de/EN/service/disclaimer/disclaimer.html>`__)
 and Copyright
-(`de <https://www.dwd.de/DE/service/copyright/copyright_node.html>`_,
-`en <https://www.dwd.de/EN/service/copyright/copyright_artikel.html>`_)
+(`de <https://www.dwd.de/DE/service/copyright/copyright_node.html>`__,
+`en <https://www.dwd.de/EN/service/copyright/copyright_artikel.html>`__)
 information.
 
 Disclaimer

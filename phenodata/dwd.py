@@ -9,7 +9,6 @@ import dogpile.cache
 import requests_ftp
 import pandas as pd
 from six import StringIO
-from pprint import pformat
 
 logger = logging.getLogger(__name__)
 
@@ -22,7 +21,7 @@ meta_cache = dogpile.cache.make_region().configure(
     }
 )
 
-# Use custom mechanism for caching content honoring modification time (mtime)
+# Use custom mechanism for caching content honoring modification time on server (mtime)
 content_cache = dogpile.cache.make_region().configure(
     "dogpile.cache.dbm",
     arguments={
@@ -36,14 +35,23 @@ class DwdDataAcquisition(object):
     baseurl = 'ftp://ftp-cdc.dwd.de/pub/CDC'
 
     dataset = attr.ib()
+    directory = attr.ib(default=None)
 
     def __attrs_post_init__(self):
         self.dwdftp = requests_ftp.ftp.FTPSession()
+        self.directory = '/observations_germany/phenology/{dataset}_reporters'.format(dataset=self.dataset)
 
     @meta_cache.cache_on_arguments()
     def ftp_list(self, directory):
+
+        # Send FTP LIST command
         url = self.baseurl + directory
         response = self.dwdftp.list(url)
+        #print 'FTP list response:\n{}'.format(response.content)
+        if response.status_code != 226:
+            message = 'FTP LIST command for {} failed'.format(url)
+            logger.error(message)
+            return []
 
         # Decode LIST response
         entries = []
@@ -72,7 +80,7 @@ class DwdDataAcquisition(object):
                 'size': size,
                 'mtime': mtime,
                 'name': filename,
-                'url': os.path.join(directory, filename)
+                'path': os.path.join(directory, filename)
             }
             entries.append(entry)
 
@@ -87,7 +95,7 @@ class DwdDataAcquisition(object):
         # Build dictionary mapping file url to its modification time for easier lookup
         name_mtime_map = {}
         for entry in entries:
-            name_mtime_map[entry['url']] = entry['mtime']
+            name_mtime_map[entry['path']] = entry['mtime']
 
         # Resolve modification time of designated file url
         mtime = name_mtime_map.get(urlpath)
@@ -96,8 +104,10 @@ class DwdDataAcquisition(object):
 
     def ftp_read_csv_cached(self, urlpath):
 
+        shortpath = urlpath.replace(self.directory, '')
+
         mtime = self.ftp_get_mtime(urlpath)
-        logger.info('Resource "{resource}" was modified on "{mtime}"'.format(resource=urlpath, mtime=mtime))
+        logger.info('Resource "{resource}": Last modified on "{mtime}"'.format(resource=shortpath, mtime=mtime))
 
         payload = None
 
@@ -105,11 +115,11 @@ class DwdDataAcquisition(object):
         mtime_key = 'mtime:{resource}'.format(resource=urlpath)
         mtime_cached = content_cache.get(mtime_key)
         if mtime_cached and mtime <= mtime_cached:
-            logger.info('Loading resource "{resource}" from cache'.format(resource=urlpath))
+            logger.info('Resource "{resource}": Loading from cache'.format(resource=shortpath))
             payload = content_cache.get(resource_key)
 
         if payload is None:
-            logger.info('Loading resource "{resource}" from FTP'.format(resource=urlpath))
+            logger.info('Resource "{resource}": Retrieving from FTP'.format(resource=shortpath))
             payload = self.ftp_read_csv(urlpath)
             content_cache.set(resource_key, payload)
             content_cache.set(mtime_key, mtime)
@@ -126,58 +136,182 @@ class DwdDataAcquisition(object):
         #print 'status:', resp.status_code
 
         # Acquire file content
-        content = response.content
+        content = response.content.strip()
 
         # Fix CSV formatting
         content = content.replace('\r\n', '')
         content = re.sub(';eor;\s*', ';eor;\n', content)
+        content = re.sub('; eor ;\s*', '; eor;\n', content)
+        content = content.strip()
+
+        # Specific fixups
+        if 'Qualitaetsbyte' in urlpath:
+            content = content.replace('Eintrittsdatum;', 'Eintrittsdatum,')
 
         # Debugging
-        #print 'content:\n', response.content.decode('Windows-1252').encode('utf8'); return
+        #print 'content:\n', response.content.decode('Windows-1252').encode('utf8')
 
         return content
 
-    def dataframe_from_csv(self, payload):
+    def dataframe_from_csv(self, payload, index=None, coerce_int=False):
 
         # Read CSV into Pandas DataFrame
         # https://pandas.pydata.org/pandas-docs/stable/io.html
         df = pd.read_csv(
             StringIO(payload), engine='c', encoding='Windows-1252',
             delimiter=';', skipinitialspace=True, skip_blank_lines=True,
-            index_col=0)
+        )
 
-        # Remove empty rows
+        if index is not None:
+            df.set_index(df.columns[index], inplace=True)
+
+        # Remove rows with empty values
         df.dropna(subset=['eor'], inplace=True)
 
         # Remove trailing nonsense columns
-        last_column = len(df.columns) - 1
-        df.drop(df.columns[[last_column]], axis=1, inplace=True)
+        last_column_index = len(df.columns) - 1
+        last_column = df.columns[[last_column_index]]
+        df.drop(last_column, axis=1, inplace=True)
+
+        # Remove end-of-row tombstone
         df.drop('eor', axis=1, inplace=True)
+
+        # Coerce types into correct format
+        if coerce_int:
+            df = df.astype(int)
 
         return df
 
-    def fetch_csv(self, urlpath):
-        return self.dataframe_from_csv(self.ftp_read_csv_cached(urlpath))
+    def fetch_csv(self, urlpath, index=None, coerce_int=False):
+        return self.dataframe_from_csv(self.ftp_read_csv_cached(urlpath), index=index, coerce_int=coerce_int)
 
     def get_species(self):
         """Return Pandas DataFrame containing complete species information"""
-        return self.fetch_csv('/help/PH_Beschreibung_Pflanze.txt')
+        return self.fetch_csv('/help/PH_Beschreibung_Pflanze.txt', index=0)
 
     def get_phases(self):
         """Return Pandas DataFrame containing complete phases information"""
-        return self.fetch_csv('/help/PH_Beschreibung_Phase.txt')
+        return self.fetch_csv('/help/PH_Beschreibung_Phase.txt', index=0)
 
     def get_quality_levels(self):
         """Return Pandas DataFrame containing complete quality level information"""
-        return self.fetch_csv('/help/PH_Beschreibung_Phaenologie_Qualitaetsniveau.txt')
+        return self.fetch_csv('/help/PH_Beschreibung_Phaenologie_Qualitaetsniveau.txt', index=0)
 
-    def get_stations(self, dataset):
+
+    def get_stations(self):
         """Return Pandas DataFrame containing complete stations information"""
-        if dataset == 'immediate':
+        if self.dataset == 'immediate':
             filename = 'PH_Beschreibung_Phaenologie_Stationen_Sofortmelder.txt'
-        elif dataset == 'annual':
+        elif self.dataset == 'annual':
             filename = 'PH_Beschreibung_Phaenologie_Stationen_Jahresmelder.txt'
         else:
-            raise KeyError('Unknown dataset "{}"'.format(dataset))
+            raise KeyError('Unknown dataset "{}"'.format(self.dataset))
 
-        return self.fetch_csv('/help/' + filename)
+        return self.fetch_csv('/help/' + filename, index=0)
+
+
+    def scan_files(self, partition, files=None, kind='path'):
+
+        # Scan all names for designated dataset
+        dataset_list = self.ftp_list(self.directory)
+        #pprint(dataset_list)
+
+        # crops, fruit, vine, wild
+        categories = [entry['name'] for entry in dataset_list]
+
+        # Compute list of items
+        items = []
+        for category in categories:
+            data_directory = '/'.join([self.directory, category, partition])
+            data_files = self.ftp_list(data_directory)
+            #pprint(data_files)
+
+            for entry in data_files:
+
+                name = entry['name']
+                path = entry['path']
+
+                if 'PH_Beschreibung' in name or 'Spezifizierung' in name:
+                    continue
+
+                if not re.match('PH_(Sofort|Jahres)melder.+\.txt', name): continue
+
+                use_me = False
+                if files:
+                    if self.filename_matches(name, files):
+                        use_me = True
+                else:
+                    use_me = True
+
+                if use_me:
+                    if kind == 'name':
+                        item = name
+                    elif kind == 'path':
+                        item = path
+                    elif kind == 'url':
+                        item = self.baseurl + path
+                    else:
+                        raise KeyError('kind="{}" not implemented'.format(kind))
+                    items.append(item)
+
+        return items
+
+    def filename_matches(self, filename, fragments):
+        for fragment in fragments:
+            if fragment in filename:
+                return True
+        return False
+
+
+    def query(self, partition=None, stations=None, regions=None, species=None, phases=None, files=None, years=None, forecast=False, **kwargs):
+        paths = self.scan_files(partition, files=files)
+
+        # The main DataFrame object
+        results = pd.DataFrame()
+
+        # Load multiple files into single DataFrame
+        for path in paths:
+            data = self.fetch_csv(path, coerce_int=True)
+
+            # Skip invalid files
+            if 'Kulturpflanze_Ruebe_akt' in path:
+                logger.warning('Skipping file "{}" due to invalid header format (all caps)'.format(path))
+                continue
+
+            # Coerce "Eintrittsdatum" column into date format
+            data['Eintrittsdatum'] = pd.to_datetime(data['Eintrittsdatum'], errors='coerce', format='%Y%m%d')
+
+            # Append to DataFrame
+            results = results.append(data)
+
+        # Reset index column
+        results.reset_index(drop=True, inplace=True)
+
+
+        # Filter DataFrame
+        # https://pythonspot.com/pandas-filter/
+        # https://stackoverflow.com/questions/12065885/filter-dataframe-rows-if-value-in-column-is-in-a-set-list-of-values/12065904#12065904
+
+        # Build expression from multiple criteria
+        expression = True
+        if stations:
+            expression = expression & (results.Stations_id.isin(stations))
+        if years:
+            expression = expression & (results.Referenzjahr.isin(years))
+
+        # Apply filter expression to DataFrame
+        # https://pandas.pydata.org/pandas-docs/stable/indexing.html#boolean-indexing
+        if type(expression) is not bool:
+            results = results[expression]
+
+        return results
+
+    def get_observations(self, options):
+
+        observations = self.query(
+            partition=options['partition'],
+            stations=options['stations'], regions=options['regions'],
+            species=options['species'], phases=options['phases'], files=options['files'],
+            years=options['years'], forecast=options['forecast'])
+
+        return observations
