@@ -23,6 +23,7 @@ def run():
       phenodata list-phases --source=dwd
       phenodata list-stations --source=dwd --dataset=immediate
       phenodata list-quality-levels --source=dwd
+      phenodata list-quality-bytes --source=dwd
       phenodata list-filenames --source=dwd --dataset=immediate --partition=recent [--files=Hasel,Schneegloeckchen] [--years=2017 | --forecast]
       phenodata list-urls --source=dwd --dataset=immediate --partition=recent [--files=Hasel,Schneegloeckchen] [--years=2017 | --forecast]
       phenodata observations --source=dwd --dataset=immediate --partition=recent [--files=Hasel,Schneegloeckchen] [--stations=164,717 | --regions=berlin,brandenburg] [--species=hazel,snowdrop] [--phases=flowering] [--years=2017 | --forecast]
@@ -80,6 +81,9 @@ def run():
         data = client.get_stations()
     elif options['list-quality-levels']:
         data = client.get_quality_levels()
+    elif options['list-quality-bytes']:
+        data = client.get_quality_bytes()
+
     elif options['list-filenames']:
         files = client.scan_files(options['partition'], files=options['files'], kind='name')
         print('\n'.join(files))

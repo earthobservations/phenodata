@@ -197,6 +197,9 @@ class DwdDataAcquisition(object):
         """Return Pandas DataFrame containing complete quality level information"""
         return self.fetch_csv('/help/PH_Beschreibung_Phaenologie_Qualitaetsniveau.txt', index=0)
 
+    def get_quality_bytes(self):
+        """Return Pandas DataFrame containing complete quality bytes information"""
+        return self.fetch_csv('/help/PH_Beschreibung_Phaenologie_Qualitaetsbyte.txt', index=0)
 
     def get_stations(self):
         """Return Pandas DataFrame containing complete stations information"""

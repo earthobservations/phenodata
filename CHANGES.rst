@@ -6,6 +6,7 @@ development
 ===========
 - Add command "phenodata observations" for acquiring observation data
 - Filter observations by file names, station ids and years
+- Add command "phenodata list-quality-bytes"
 
 2018-03-12 0.2.0
 ================
