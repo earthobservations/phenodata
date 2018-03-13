@@ -7,3 +7,4 @@ phenodata todo
 - Add "phenodata nearest-station --latitude= --longitude="
 - Filter by quality indicators
 - Add "--format" parameter
+- There are still spaces around, e.g. "phenodata list-phases --source=dwd --format=csv"

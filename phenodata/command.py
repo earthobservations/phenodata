@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 # (c) 2018 Andreas Motl <andreas@hiveeyes.org>
+import sys
 import logging
 from docopt import docopt, DocoptExit
 from tabulate import tabulate
@@ -19,14 +20,14 @@ def run():
     """
     Usage:
       phenodata info
-      phenodata list-species --source=dwd
-      phenodata list-phases --source=dwd
-      phenodata list-stations --source=dwd --dataset=immediate
-      phenodata list-quality-levels --source=dwd
-      phenodata list-quality-bytes --source=dwd
+      phenodata list-species --source=dwd [--format=csv]
+      phenodata list-phases --source=dwd [--format=csv]
+      phenodata list-stations --source=dwd --dataset=immediate [--format=csv]
+      phenodata list-quality-levels --source=dwd [--format=csv]
+      phenodata list-quality-bytes --source=dwd [--format=csv]
       phenodata list-filenames --source=dwd --dataset=immediate --partition=recent [--files=Hasel,Schneegloeckchen] [--years=2017 | --forecast]
       phenodata list-urls --source=dwd --dataset=immediate --partition=recent [--files=Hasel,Schneegloeckchen] [--years=2017 | --forecast]
-      phenodata observations --source=dwd --dataset=immediate --partition=recent [--files=Hasel,Schneegloeckchen] [--stations=164,717 | --regions=berlin,brandenburg] [--species=hazel,snowdrop] [--phases=flowering] [--years=2017 | --forecast]
+      phenodata observations --source=dwd --dataset=immediate --partition=recent [--files=Hasel,Schneegloeckchen] [--stations=164,717 | --regions=berlin,brandenburg] [--species=hazel,snowdrop] [--phases=flowering] [--years=2017 | --forecast] [--format=csv]
       phenodata --version
       phenodata (-h | --help)
 
@@ -42,6 +43,12 @@ def run():
       --regions=<regions>       Filter by region names (comma-separated list)
       --species=<species>       Filter by species names (comma-separated list)
       --phases=<phases>         Filter by phase names (comma-separated list)
+
+    Data formatting options:
+      --format=<format>         Output data in designated format. Choose one of "tabulate", "json" or "csv".
+                                With "tabulate", it is also possible to specify the table format,
+                                see https://bitbucket.org/astanin/python-tabulate. e.g. "tabulate:presto".
+                                [default: tabulate:psql]
     """
 
     # Use generic commandline options schema and amend with current program name
@@ -96,17 +103,38 @@ def run():
     elif options['observations']:
         data = client.get_observations(options)
 
-    # TODO: Do either this or that
-    #print data.to_string(); return
-    #print data.to_json(orient='index')
 
+    # Format and output results
     if data is not None:
 
         showindex = True
         if options['observations']:
             showindex = False
 
-        # TODO: How to make "tabulate" print index column name
-        payload = tabulate(data, headers=data.columns, showindex=showindex, tablefmt='psql').encode('utf-8')
-        print(payload)
+        output_format = options['format']
+        output = None
+        if output_format.startswith('tabulate'):
 
+            try:
+                tablefmt = options['format'].split(':')[1]
+            except:
+                tablefmt = 'psql'
+
+            # TODO: How to make "tabulate" print index column name?
+            output = tabulate(data, headers=data.columns, showindex=showindex, tablefmt=tablefmt).encode('utf-8')
+
+        elif output_format == 'csv':
+            output = data.to_csv(encoding='utf-8', index=showindex)
+
+        elif output_format == 'json':
+            output = data.to_json(orient='table', date_format='iso')
+
+        else:
+            message = 'Unknown output format "{}"'.format(options['format'])
+            logger.error(message)
+            sys.exit(1)
+
+        if output is not None:
+            print(output)
+        else:
+            logger.warning('Empty output')

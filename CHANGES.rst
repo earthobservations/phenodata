@@ -4,9 +4,13 @@ phenodata changelog
 
 development
 ===========
+
+2018-03-13 0.3.0
+================
 - Add command "phenodata observations" for acquiring observation data
 - Filter observations by file names, station ids and years
 - Add command "phenodata list-quality-bytes"
+- Add option "--format={tabulate,json,csv}" for specifying output format
 
 2018-03-12 0.2.0
 ================
