@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 # (c) 2018 Andreas Motl <andreas@hiveeyes.org>
+import re
 import sys
 import logging
 
@@ -49,3 +50,17 @@ def read_list(data, separator=u','):
     if len(result) == 1 and not result[0]:
         result = []
     return result
+
+def regex_make_matchers(patterns):
+    matchers = []
+    for pattern in to_list(patterns):
+        pattern = '.*{}.*'.format(pattern)
+        matchers.append(re.compile(pattern))
+    return matchers
+
+def regex_run_matchers(matchers, text):
+    for matcher in matchers:
+        if matcher.match(text):
+            return True
+    return False
+

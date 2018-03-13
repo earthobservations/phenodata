@@ -5,7 +5,9 @@ import logging
 from docopt import docopt, DocoptExit
 from tabulate import tabulate
 from phenodata import __version__
-from phenodata.dwd import DwdDataAcquisition
+from phenodata.ftp import FTPSession
+from phenodata.dwd.cdc import DwdCdcClient
+from phenodata.dwd.pheno import DwdPhenoData
 from phenodata.util import boot_logging, normalize_options
 
 """
@@ -45,10 +47,10 @@ def run():
       --phases=<phases>         Filter by phase names (comma-separated list)
 
     Data formatting options:
-      --format=<format>         Output data in designated format. Choose one of "tabulate", "json" or "csv".
-                                With "tabulate", it is also possible to specify the table format,
-                                see https://bitbucket.org/astanin/python-tabulate. e.g. "tabulate:presto".
-                                [default: tabulate:psql]
+      --format=<format>         Output data in designated format. Choose one of "tabular", "json" or "csv".
+                                With "tabular", it is also possible to specify the table format,
+                                see https://bitbucket.org/astanin/python-tabulate. e.g. "tabular:presto".
+                                [default: tabular:psql]
     """
 
     # Use generic commandline options schema and amend with current program name
@@ -70,11 +72,13 @@ def run():
         print('Name:         phenodata-{version}'.format(version=__version__))
         print('Description:  phenodata is a data acquisition and manipulation toolkit for open access phenology data')
         print('Data sources: DWD')
+        # TODO: Add cache location and info
         return
 
-    # Create data source adapter instance
+    # Create data source adapter
     if options['source'] == 'dwd':
-        client = DwdDataAcquisition(dataset=options.get('dataset'))
+        cdc_client = DwdCdcClient(ftp=FTPSession())
+        client = DwdPhenoData(cdc=cdc_client, dataset=options.get('dataset'))
     else:
         raise DocoptExit('Data source "{}" not implemented'.format(options['source']))
 
@@ -92,11 +96,11 @@ def run():
         data = client.get_quality_bytes()
 
     elif options['list-filenames']:
-        files = client.scan_files(options['partition'], files=options['files'], kind='name')
+        files = client.scan_files(options['partition'], files=options['files'], field='name')
         print('\n'.join(files))
         return
     elif options['list-urls']:
-        files = client.scan_files(options['partition'], files=options['files'], kind='url')
+        files = client.scan_files(options['partition'], files=options['files'], field='url')
         print('\n'.join(files))
         return
 
@@ -113,7 +117,7 @@ def run():
 
         output_format = options['format']
         output = None
-        if output_format.startswith('tabulate'):
+        if output_format.startswith('tabular'):
 
             try:
                 tablefmt = options['format'].split(':')[1]

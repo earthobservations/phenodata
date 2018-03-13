@@ -4,22 +4,25 @@ phenodata changelog
 
 development
 ===========
+- Refactoring and modularization
+- Make FTP client wrapper for DWD CDC server more universal
+- Improve inline documentation
 
 2018-03-13 0.3.0
 ================
 - Add command "phenodata observations" for acquiring observation data
 - Filter observations by file names, station ids and years
-- Add command "phenodata list-quality-bytes"
+- Add command "phenodata list-quality-bytes" for DWD
 - Add option "--format={tabulate,json,csv}" for specifying output format
 
 2018-03-12 0.2.0
 ================
-- Add command "list-quality-levels" for DWD
+- Add command "phenodata list-quality-levels" for DWD
 - Add generic FTP resource caching honoring file modification time to speed up subsequent invocations
 
 2018-03-12 0.1.0
 ================
-- Implement list-species, list-phases and list-stations for data source DWD
+- Implement commands list-species, list-phases and list-stations for data source DWD
 - Improve release process
 - Update documentation
 
