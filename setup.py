@@ -8,7 +8,7 @@ CHANGES = open(os.path.join(here, 'CHANGES.rst')).read()
 requires = [
     'requests==2.18.4',
     'requests-ftp==0.3.1',
-    'docopt==0.6.2',
+    'docopt==0.6.3',
     'attrs==17.4.0',
     'pandas>=0.18.1,<=0.22.0',
     'tabulate==0.8.2',
@@ -22,7 +22,7 @@ test_requires = [
 ]
 
 setup(name='phenodata',
-    version='0.6.2',
+    version='0.6.3',
     description='phenodata is a data acquisition and manipulation toolkit for open access phenology data',
     long_description=README,
     license="AGPL 3",
