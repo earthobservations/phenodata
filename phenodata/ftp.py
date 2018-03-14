@@ -3,6 +3,8 @@
 import os
 import re
 import arrow
+import shutil
+import appdirs
 import logging
 import requests_ftp
 import dogpile.cache
@@ -10,24 +12,46 @@ from phenodata.util import regex_make_matchers, regex_run_matchers
 
 logger = logging.getLogger(__name__)
 
-# Generic metadata cache with an expiration time of 5 minutes
-# See also ``listplus``.
-meta_cache = dogpile.cache.make_region().configure(
-    "dogpile.cache.dbm",
-    expiration_time=60 * 5,
-    arguments={
-        "filename": "/var/tmp/phenodata-meta-cache.dbm"
-    }
-)
+class CacheManager(object):
 
-# Content cache using a custom mechanism honoring modification time
-# on server (mtime). See also ``retr_cached``.
-content_cache = dogpile.cache.make_region().configure(
-    "dogpile.cache.dbm",
-    arguments={
-        "filename": "/var/tmp/phenodata-content-cache.dbm"
-    }
-)
+    def __init__(self):
+
+        # Path to cache directory, system agnostic
+        self.cache_path = os.path.join(appdirs.user_cache_dir(appname='phenodata', appauthor=False), 'dwd-ftp')
+        if not os.path.exists(self.cache_path):
+            os.makedirs(self.cache_path)
+
+        # Setup cache regions
+        self.setup()
+
+    def setup(self):
+
+        logger.info('The cache directory is {}'.format(self.cache_path))
+
+        # Generic metadata cache with an expiration time of 5 minutes
+        # See also ``listplus``.
+        self.meta = dogpile.cache.make_region().configure(
+            "dogpile.cache.dbm",
+            expiration_time=60 * 5,
+            arguments={
+                "filename": os.path.join(self.cache_path, 'meta-cache.dbm'),
+            }
+        )
+
+        # Content cache using a custom mechanism honoring modification time
+        # on server (mtime). See also ``retr_cached``.
+        self.content = dogpile.cache.make_region().configure(
+            "dogpile.cache.dbm",
+            arguments={
+                "filename": os.path.join(self.cache_path, 'content-cache.dbm'),
+            }
+        )
+
+    def drop(self):
+        logger.info('Dropping cache at {}'.format(self.cache_path))
+        shutil.rmtree(self.cache_path)
+        return True
+
 
 class FTPSession(requests_ftp.ftp.FTPSession):
     """
@@ -41,11 +65,15 @@ class FTPSession(requests_ftp.ftp.FTPSession):
     Furthermore, the module applies response caching mechanisms for each interaction with the
     remote FTP server to speed up subsequent invocations. There are two different cache regions:
 
-    - meta_cache:    A generic FTP metadata cache with a configurable expiration time (currently 5 minutes)
-    - content_cache: A generic FTP resource cache honoring file modification time
+    - meta:             A generic FTP metadata cache with a configurable expiration time (currently 5 minutes)
+    - content:          A generic FTP resource cache honoring file modification time
 
     .. _requests-ftp: https://pypi.python.org/pypi/requests-ftp
     """
+
+    def ensure_cache_manager(self):
+        if not hasattr(self, 'cache'):
+            self.cache = CacheManager()
 
     def mtime(self, url):
         """
@@ -69,12 +97,18 @@ class FTPSession(requests_ftp.ftp.FTPSession):
 
         return mtime
 
-    @meta_cache.cache_on_arguments()
     def list_plus(self, url):
+        self.ensure_cache_manager()
+        key = 'list:{}'.format(url)
+        return self.cache.meta.get_or_create(key, lambda: self.list_plus_real(url))
+
+    def list_plus_real(self, url):
         """
         Get directory contents in a structured manner, with short-time response caching.
         It offers short-time caching of FTP server responses to speed up subsequent invocations.
         """
+
+        logger.info('Send FTP LIST command for {}'.format(url))
 
         # Send FTP LIST command
         response = self.list(url)
@@ -199,6 +233,8 @@ class FTPSession(requests_ftp.ftp.FTPSession):
         from full URLs for using them in log messages.
         """
 
+        self.ensure_cache_manager()
+
         # Prepare short URL for logging
         shorturl = url
         if strip_base:
@@ -216,12 +252,12 @@ class FTPSession(requests_ftp.ftp.FTPSession):
         mtime_key = 'mtime:{resource}'.format(resource=url)
 
         # Retrieve modification time of cached item
-        mtime_cached = content_cache.get(mtime_key)
+        mtime_cached = self.cache.content.get(mtime_key)
 
         # Get item from cache if not expired
         if mtime_cached and mtime <= mtime_cached:
             logger.debug('Resource "{resource}": Loading from cache'.format(resource=shorturl))
-            payload = content_cache.get(content_key)
+            payload = self.cache.content.get(content_key)
 
         # Retrieve resource from FTP if it is stale or has not been cached yet
         if payload is None:
@@ -233,8 +269,8 @@ class FTPSession(requests_ftp.ftp.FTPSession):
             # Populate cache with valid response content
             if response.status_code == 226:
                 payload = response.content
-                content_cache.set(content_key, payload)
-                content_cache.set(mtime_key, mtime)
+                self.cache.content.set(content_key, payload)
+                self.cache.content.set(mtime_key, mtime)
 
             # Handle resource missing
             elif response.status_code == 404:

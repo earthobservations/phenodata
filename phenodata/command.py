@@ -32,6 +32,7 @@ def run():
       phenodata list-filenames --source=dwd --dataset=immediate --partition=recent [--filename=Hasel,Schneegloeckchen] [--year=2017]
       phenodata list-urls --source=dwd --dataset=immediate --partition=recent [--filename=Hasel,Schneegloeckchen] [--year=2017]
       phenodata (observations|forecast) --source=dwd --dataset=immediate --partition=recent [--filename=Hasel,Schneegloeckchen] [--station-id=164,717] [--species-id=113,127] [--phase-id=5] [--quality-level=10] [--quality-byte=1,2,3] [--station=berlin,brandenburg] [--species=hazel,snowdrop] [--species-preset=mellifera-primary] [--phase=flowering] [--quality=ROUTKLI] [--year=2017] [--humanize] [--show-ids] [--language=german] [--long-station] [--sort=Datum] [--format=csv]
+      phenodata drop-cache --source=dwd
       phenodata --version
       phenodata (-h | --help)
 
@@ -163,6 +164,15 @@ def run():
 
     elif options['nearest-stations']:
         data = client.nearest_stations(float(options['latitude']), float(options['longitude']), all=options['all'], limit=int(options['limit']))
+
+    elif options['drop-cache']:
+        client.cdc.ftp.ensure_cache_manager()
+        if client.cdc.ftp.cache.drop():
+            logger.info('Dropping the cache succeeded')
+        else:
+            logger.warning('Dropping the cache failed')
+        return
+
 
     # Format and output results
     if data is not None:

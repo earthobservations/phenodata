@@ -20,8 +20,8 @@ Prio 1
 ******
 Prio 2
 ******
-- [o] Suppress or move resource acquisition log messages to DEBUG log level and replace by progress indicator
-- [o] Use "appdirs" module for improving cache storage location
+- [x] Suppress or move resource acquisition log messages to DEBUG log level and replace by progress indicator
+- [x] Use "appdirs" module for computing cache storage location
 - [o] Add command "phenodata purge-cache"
 - [o] Output "phenodata info" as DataFrame
 - [o] Complete offline mode running from - even stale - cache entries

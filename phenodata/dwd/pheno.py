@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # (c) 2018 Andreas Motl <andreas@hiveeyes.org>
-import json
 import attr
+import json
 import logging
 import pandas as pd
 import pkg_resources

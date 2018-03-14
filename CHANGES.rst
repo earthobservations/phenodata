@@ -12,6 +12,7 @@ development
   Apply with e.g. "--species-preset=mellifera-de-primary".
   See also https://community.hiveeyes.org/t/phanologischer-kalender-entwicklung/664/23.
 - Reduce logging verbosity. Add progress bar for data acquisition step.
+- Use "appdirs" module for computing cache storage location
 
 2018-03-14 0.5.0
 ================
