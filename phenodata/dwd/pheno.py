@@ -186,8 +186,8 @@ class DwdPhenoData(object):
         # Convert Series to DataFrame
         forecast = series.to_frame()
 
-        # Compute ISO date from "day of the year" values
-        real_dates = pd.to_datetime(datetime.today().year * 1000 + forecast['Jultag'], format='%Y%j')
+        # Compute ISO date from "day of the year" values and insert as new column
+        real_dates = pd.to_datetime(datetime.today().year * 1000 + forecast['Jultag'], errors='coerce', format='%Y%j')
         forecast.insert(0, 'Datum', real_dates)
 
         # Optionally humanize DataFrame
