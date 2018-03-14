@@ -76,13 +76,15 @@ Usage
       phenodata info
       phenodata list-species --source=dwd [--format=csv]
       phenodata list-phases --source=dwd [--format=csv]
-      phenodata list-stations --source=dwd --dataset=immediate [--format=csv]
+      phenodata list-stations --source=dwd --dataset=immediate [--all] [--format=csv]
+      phenodata nearest-station --source=dwd --dataset=immediate --latitude=52.520007 --longitude=13.404954 [--format=csv]
+      phenodata nearest-stations --source=dwd --dataset=immediate [--all] --latitude=52.520007 --longitude=13.404954 [--limit=10] [--format=csv]
       phenodata list-quality-levels --source=dwd [--format=csv]
       phenodata list-quality-bytes --source=dwd [--format=csv]
-      phenodata list-filenames --source=dwd --dataset=immediate --partition=recent [--filename=Hasel,Schneegloeckchen] [--year=2017 | --forecast]
-      phenodata list-urls --source=dwd --dataset=immediate --partition=recent [--filename=Hasel,Schneegloeckchen] [--year=2017 | --forecast]
-      phenodata observations --source=dwd --dataset=immediate --partition=recent [--filename=Hasel,Schneegloeckchen] [--station-id=164,717] [--species-id=113,127] [--phase-id=5] [--quality-level=10] [--quality-byte=1,2,3] [--year=2017 | --forecast] [--format=csv]
-      phenodata observations --source=dwd --dataset=immediate --partition=recent [--filename=Hasel,Schneegloeckchen] [--station=berlin,brandenburg] [--species=hazel,snowdrop] [--phase=flowering] [--year=2017 | --forecast] [--format=csv]
+      phenodata list-filenames --source=dwd --dataset=immediate --partition=recent [--filename=Hasel,Schneegloeckchen] [--year=2017]
+      phenodata list-urls --source=dwd --dataset=immediate --partition=recent [--filename=Hasel,Schneegloeckchen] [--year=2017]
+      phenodata (observations|forecast) --source=dwd --dataset=immediate --partition=recent [--filename=Hasel,Schneegloeckchen] [--station-id=164,717] [--species-id=113,127] [--phase-id=5] [--quality-level=10] [--quality-byte=1,2,3] [--year=2017] [--humanize] [--language=german] [--format=csv]
+      phenodata (observations|forecast) --source=dwd --dataset=immediate --partition=recent [--filename=Hasel,Schneegloeckchen] [--station=berlin,brandenburg] [--species=hazel,snowdrop] [--phase=flowering] [--year=2017] [--humanize] [--language=german] [--format=csv]
       phenodata --version
       phenodata (-h | --help)
 
@@ -103,12 +105,15 @@ Usage
       --species=<species>       Filter by strings from "species" data (comma-separated list)
       --phase=<phase>           Filter by strings from "phases" data (comma-separated list)
 
-    Data formatting options:
-      --format=<format>         Output data in designated format. Choose one of "tabular", "json" or "csv".
+    Data output options:
+      --format=<format>         Output data in designated format. Choose one of "tabular", "json", "csv" or "string".
                                 With "tabular", it is also possible to specify the table format,
                                 see https://bitbucket.org/astanin/python-tabulate. e.g. "tabular:presto".
                                 [default: tabular:psql]
-
+      --humanize                Resolve ID-based columns to real names with "observations" and "forecast" output.
+      --language=<language>     Use labels in designated language when using ``--humanize`` [default: english].
+      --limit=<limit>           Limit output of "nearest-stations" to designated number of entries.
+                                [default: 10]
 
 
 ********
