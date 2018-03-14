@@ -24,3 +24,4 @@ Prio 2
 - [o] Complete offline mode running from - even stale - cache entries
 - [o] Move resource acquisition log messages to DEBUG log level and replace by progress indicator
 - [o] Display progress indicator when downloading large files
+- [o] What about the BBCH code?

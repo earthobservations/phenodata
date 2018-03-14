@@ -150,7 +150,9 @@ Display nearest station for given position::
 
 Display 20 nearest stations for given position::
 
-    phenodata nearest-stations --source=dwd --dataset=immediate --latitude=52.520007 --longitude=13.404954 --limit=20
+    phenodata nearest-stations \
+        --source=dwd --dataset=immediate \
+        --latitude=52.520007 --longitude=13.404954 --limit=20
 
 
 Observations
@@ -162,15 +164,21 @@ Observations of hazel and snowdrop, using filename-based filtering at data acqui
 
 Observations of hazel and snowdrop (dito), but for station ids 164 and 717 only::
 
-    phenodata observations --source=dwd --dataset=annual --partition=recent --filename=Hasel,Schneegloeckchen --station-id=164,717
+    phenodata observations \
+        --source=dwd --dataset=annual --partition=recent \
+        --filename=Hasel,Schneegloeckchen --station-id=164,717
 
 All observations for station ids 164 and 717 in years 2016 and 2017::
 
-    phenodata observations --source=dwd --dataset=annual --partition=recent --station-id=164,717 --year=2016,2017
+    phenodata observations \
+        --source=dwd --dataset=annual --partition=recent \
+        --station-id=164,717 --year=2016,2017
 
 All observations for station ids 164 and 717 and species ids 113 and 127::
 
-    phenodata observations --source=dwd --dataset=annual --partition=recent --station-id=164,717 --species-id=113,127
+    phenodata observations \
+        --source=dwd --dataset=annual --partition=recent \
+        --station-id=164,717 --species-id=113,127
 
 All invalid observations::
 
@@ -183,7 +191,10 @@ Forecasting
 Acquire data from observations in Berlin-Dahlem and München-Pasing and forecast to current year
 using grouping and by computing the "mean" value of the "Jultag" column::
 
-    phenodata forecast --source=dwd --dataset=annual --partition=recent --filename=Hasel,Schneegloeckchen,Apfel,Birne --station-id=12132,10961 --format=string
+    phenodata forecast \
+        --source=dwd --dataset=annual --partition=recent \
+        --filename=Hasel,Schneegloeckchen,Apfel,Birne \
+        --station-id=12132,10961 --format=string
 
 
 
