@@ -9,6 +9,7 @@ development
   to appropriate text representions from metadata files
 - Update "Usage" section in README
 - Add humanized representation for "forecast" mode
+- Add "--sort" parameter for sorting by result columns
 
 2018-03-14 0.4.0
 ================

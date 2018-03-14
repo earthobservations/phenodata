@@ -31,8 +31,8 @@ def run():
       phenodata list-quality-bytes --source=dwd [--format=csv]
       phenodata list-filenames --source=dwd --dataset=immediate --partition=recent [--filename=Hasel,Schneegloeckchen] [--year=2017]
       phenodata list-urls --source=dwd --dataset=immediate --partition=recent [--filename=Hasel,Schneegloeckchen] [--year=2017]
-      phenodata (observations|forecast) --source=dwd --dataset=immediate --partition=recent [--filename=Hasel,Schneegloeckchen] [--station-id=164,717] [--species-id=113,127] [--phase-id=5] [--quality-level=10] [--quality-byte=1,2,3] [--year=2017] [--humanize] [--language=german] [--format=csv]
-      phenodata (observations|forecast) --source=dwd --dataset=immediate --partition=recent [--filename=Hasel,Schneegloeckchen] [--station=berlin,brandenburg] [--species=hazel,snowdrop] [--phase=flowering] [--year=2017] [--humanize] [--language=german] [--format=csv]
+      phenodata (observations|forecast) --source=dwd --dataset=immediate --partition=recent [--filename=Hasel,Schneegloeckchen] [--station-id=164,717] [--species-id=113,127] [--phase-id=5] [--quality-level=10] [--quality-byte=1,2,3] [--year=2017] [--humanize] [--language=german] [--sort=Datum] [--format=csv]
+      phenodata (observations|forecast) --source=dwd --dataset=immediate --partition=recent [--filename=Hasel,Schneegloeckchen] [--station=berlin,brandenburg] [--species=hazel,snowdrop] [--phase=flowering] [--year=2017] [--humanize] [--language=german] [--sort=Datum] [--format=csv]
       phenodata --version
       phenodata (-h | --help)
 
@@ -58,6 +58,7 @@ def run():
                                 With "tabular", it is also possible to specify the table format,
                                 see https://bitbucket.org/astanin/python-tabulate. e.g. "tabular:presto".
                                 [default: tabular:psql]
+      --sort=<sort>             Sort by given column names (comma-separated list)
       --humanize                Resolve ID-based columns to real names with "observations" and "forecast" output.
       --language=<language>     Use labels in designated language when using ``--humanize`` [default: english].
       --limit=<limit>           Limit output of "nearest-stations" to designated number of entries.
@@ -94,6 +95,9 @@ def run():
         'location',
         'species',
         'phase',
+
+        # Sorting parameters
+        'sort',
     ])
 
     # Command line argument debugging
@@ -159,6 +163,9 @@ def run():
         if options['forecast'] and options['humanize']:
             showindex = False
 
+        # Sort columns
+        if options['sort']:
+            data.sort_values(options['sort'], inplace=True)
 
         output = None
         if output_format.startswith('tabular'):
