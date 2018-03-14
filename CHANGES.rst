@@ -8,6 +8,8 @@ development
 - Make FTP client wrapper for DWD CDC server more universal
 - Improve inline documentation
 - Improve CSV import string data cleansing and integer type coercion
+- Improve filtering mechanics
+- Filter by quality-level and quality-byte
 
 2018-03-13 0.3.0
 ================

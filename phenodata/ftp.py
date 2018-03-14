@@ -134,7 +134,7 @@ class FTPSession(requests_ftp.ftp.FTPSession):
         }
 
         # Regex-compile filter patterns, inplace
-        for key, value in filter.iteritems():
+        for key, value in filter.items():
             value = value or []
             value = regex_make_matchers(value)
             filter[key] = value

@@ -27,9 +27,10 @@ def run():
       phenodata list-stations --source=dwd --dataset=immediate [--format=csv]
       phenodata list-quality-levels --source=dwd [--format=csv]
       phenodata list-quality-bytes --source=dwd [--format=csv]
-      phenodata list-filenames --source=dwd --dataset=immediate --partition=recent [--files=Hasel,Schneegloeckchen] [--years=2017 | --forecast]
-      phenodata list-urls --source=dwd --dataset=immediate --partition=recent [--files=Hasel,Schneegloeckchen] [--years=2017 | --forecast]
-      phenodata observations --source=dwd --dataset=immediate --partition=recent [--files=Hasel,Schneegloeckchen] [--stations=164,717 | --regions=berlin,brandenburg] [--species=hazel,snowdrop] [--phases=flowering] [--years=2017 | --forecast] [--format=csv]
+      phenodata list-filenames --source=dwd --dataset=immediate --partition=recent [--filename=Hasel,Schneegloeckchen] [--year=2017 | --forecast]
+      phenodata list-urls --source=dwd --dataset=immediate --partition=recent [--filename=Hasel,Schneegloeckchen] [--year=2017 | --forecast]
+      phenodata observations --source=dwd --dataset=immediate --partition=recent [--filename=Hasel,Schneegloeckchen] [--station-id=164,717] [--species-id=113,127] [--phase-id=5] [--quality-level=10] [--quality-byte=1,2,3] [--year=2017 | --forecast] [--format=csv]
+      phenodata observations --source=dwd --dataset=immediate --partition=recent [--filename=Hasel,Schneegloeckchen] [--station=berlin,brandenburg] [--species=hazel,snowdrop] [--phase=flowering] [--year=2017 | --forecast] [--format=csv]
       phenodata --version
       phenodata (-h | --help)
 
@@ -37,14 +38,18 @@ def run():
       --source=<source>         Data source. Currently "dwd" only.
       --dataset=<dataset>       Data set. Use "immediate" or "annual" for --source=dwd.
       --partition=<dataset>     Partition. Use "recent" or "historical" for --source=dwd.
+      --filename=<file>         Filter by file names (comma-separated list)
 
-    Data filtering options:
-      --files=<files>           Filter by files (comma-separated list)
+    Direct filtering options:
       --years=<years>           Filter by years (comma-separated list)
-      --stations=<stations>     Filter by station ids (comma-separated list)
-      --regions=<regions>       Filter by region names (comma-separated list)
-      --species=<species>       Filter by species names (comma-separated list)
-      --phases=<phases>         Filter by phase names (comma-separated list)
+      --station-id=<station-id> Filter by station ids (comma-separated list)
+      --species-id=<species-id> Filter by species ids (comma-separated list)
+      --phase-id=<phase-id>     Filter by phase ids (comma-separated list)
+
+    Humanized filtering options:
+      --station=<station>       Filter by strings from "stations" data (comma-separated list)
+      --species=<species>       Filter by strings from "species" data (comma-separated list)
+      --phase=<phase>           Filter by strings from "phases" data (comma-separated list)
 
     Data formatting options:
       --format=<format>         Output data in designated format. Choose one of "tabular", "json" or "csv".
@@ -63,7 +68,27 @@ def run():
     boot_logging(options)
 
     # Normalize commandline options
-    options = normalize_options(options, list_items=['stations', 'regions', 'species', 'phases', 'files', 'years'])
+    options = normalize_options(options, list_items=[
+
+        # Acquisition parameters
+        'filename',
+
+        # Filter parameters
+        'year',
+
+        # ID parameters
+        'quality-level',
+        'quality-byte',
+        'station-id',
+        'species-id',
+        'phase-id',
+
+        # Humanized parameters
+        'quality',
+        'location',
+        'species',
+        'phase',
+    ])
 
     # Command line argument debugging
     #print 'options:\n{}'.format(pformat(options))
@@ -96,11 +121,11 @@ def run():
         data = client.get_quality_bytes()
 
     elif options['list-filenames']:
-        files = client.scan_files(options['partition'], files=options['files'], field='name')
+        files = client.scan_files(options['partition'], include=options['filename'], field='name')
         print('\n'.join(files))
         return
     elif options['list-urls']:
-        files = client.scan_files(options['partition'], files=options['files'], field='url')
+        files = client.scan_files(options['partition'], include=options['filename'], field='url')
         print('\n'.join(files))
         return
 
