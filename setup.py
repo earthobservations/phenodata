@@ -14,13 +14,14 @@ requires = [
     'tabulate==0.8.2',
     'dogpile.cache==0.6.5',
     'arrow==0.12.1',
+    'appdirs==1.4.3',
 ]
 
 test_requires = [
 ]
 
 setup(name='phenodata',
-    version='0.3.0',
+    version='0.4.0',
     description='phenodata is a data acquisition and manipulation toolkit for open access phenology data',
     long_description=README,
     license="AGPL 3",
