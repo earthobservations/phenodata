@@ -304,7 +304,9 @@ Same observations but only value which have seen corrections::
 
 Forecasting
 ===========
-Forecast based on "beginning of flowering" events of 2015-2017 in Thüringen and Bayern for the given list of species::
+Forecast based on "beginning of flowering" events of 2015-2017 in Thüringen and Bayern for the given list of species.
+Sort by species and date.
+::
 
     phenodata forecast \
         --source=dwd --dataset=annual --partition=recent \
@@ -315,6 +317,23 @@ Forecast based on "beginning of flowering" events of 2015-2017 in Thüringen and
         --humanize --language=german \
         --sort=Spezies,Datum
 
+Forecast based on "beginning of flowering" events of 2015-2017 in Berlin for the named list of species "mellifera-eu-primary".
+Sort by date.
+::
+
+    phenodata forecast \
+        --source=dwd --dataset=annual --partition=recent \
+        --station=berlin \
+        --phase="beginning of flowering" \
+        --year=2015,2016,2017 \
+        --humanize --language=german \
+        --sort=Datum \
+        --species-preset=mellifera-de-primary
+
+.. note::
+
+    The species presets like ``mellifera-eu-primary`` are currently stored in
+    `presets.json <https://github.com/hiveeyes/phenodata/blob/master/phenodata/dwd/presets.json>`__.
 
 
 *******************

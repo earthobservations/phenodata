@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 # (c) 2018 Andreas Motl <andreas@hiveeyes.org>
+import json
 import attr
 import logging
 import pandas as pd
+import pkg_resources
 from datetime import datetime
 from phenodata.util import haversine_distance
 
@@ -411,6 +413,17 @@ class DwdPhenoData(object):
 
         return results
 
+    @classmethod
+    def load_preset(cls, section, option, name):
+        resource = pkg_resources.resource_stream(__name__, 'presets.json')
+        presets = json.load(resource)
+        try:
+            value = presets[section][option][name]
+            return value
+        except KeyError:
+            message = 'Preset "{}" not found in file "{}"'.format(name, resource.name)
+            logger.error(message)
+            raise KeyError(message)
 
 @attr.s
 class DwdPhenoDataHumanizer(object):

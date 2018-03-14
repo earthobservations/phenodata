@@ -62,6 +62,9 @@ setup(name='phenodata',
     packages=find_packages(),
     include_package_data=True,
     package_data={
+        'phenodata': [
+            'dwd/*.json',
+        ],
     },
     zip_safe=False,
     test_suite='nose.collector',

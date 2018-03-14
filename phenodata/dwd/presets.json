@@ -1,0 +1,12 @@
+{
+    "options": {
+        "species": {
+            "mellifera-de-primary": "Hasel, Schneeglöckchen, Sal-Weide, Löwenzahn, Süßkirsche, Apfel, Winterraps, Robinie, Winter-Linde, Heidekraut",
+            "mellifera-de-secondary": "Kornellkirsche, Traubenkirsche, Stachelbeere, Johannisbeere, Schlehe, Huflattich, Ahorn, Sonnenblume, Birne, Schwarz-Erle, Rosskastanie",
+            "mellifera-de-honeydew": "Fichte, Kiefer, Tanne, Ahorn, Birke, Birne, Linde, Eiche, Kastanie, Holunder",
+            "mellifera-de-forensic": "Mais, Raps, Sonnenblume",
+            "mellifera-de-interests": "Pflaume, Himbeere, Brombeere, Traubenkirsche, Zweigriffliger Weißdorn",
+            "mellifera-de-primary-openhive": "Winterraps, Sonnenblume, Mais, Apfel, Birne, Süßkirsche, Sauerkirsche, Himbeere, Brombeere, Hasel, Heidekraut, Löwenzahn, Robinie, Rosskastanie, Sal-Weide, Spitz-Ahorn, Winter-Linde"
+        }
+    }
+}

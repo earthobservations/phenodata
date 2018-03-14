@@ -22,7 +22,6 @@ def setup_logging(level=logging.INFO):
 
 def normalize_options(options, encoding=None, list_items=None):
     normalized = {}
-    list_items = list_items or []
     for key, value in options.items():
 
         # Sanitize key
@@ -32,16 +31,20 @@ def normalize_options(options, encoding=None, list_items=None):
         if encoding and (type(value) is str):
             value = value.decode(encoding)
 
+        normalized[key] = value
+
+    return normalized
+
+def options_convert_lists(options, list_items=None):
+    list_items = list_items or []
+    for key, value in options.items():
         # Decode list options
         if key in list_items:
             if value is None:
                 value = []
             else:
                 value = read_list(value)
-
-        normalized[key] = value
-
-    return normalized
+            options[key] = value
 
 def to_list(obj):
     """Convert an object to a list if it is not already one"""

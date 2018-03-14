@@ -5,3 +5,4 @@ exclude .bumpversion.cfg
 exclude .gitignore
 exclude Makefile
 exclude MANIFEST.in
+recursive-include phenodata *.json
