@@ -4,6 +4,7 @@ phenodata changelog
 
 development
 ===========
+- Add commands "phenodata nearest-station" and "phenodata nearest-stations"
 
 2018-03-14 0.4.0
 ================

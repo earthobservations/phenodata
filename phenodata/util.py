@@ -2,6 +2,7 @@
 # (c) 2018 Andreas Motl <andreas@hiveeyes.org>
 import re
 import sys
+import math
 import logging
 import numpy as np
 
@@ -70,7 +71,7 @@ def dataframe_strip_strings(col):
     # https://stackoverflow.com/questions/33788913/pythonic-efficient-way-to-strip-whitespace-from-every-pandas-data-frame-cell-tha/44740438#44740438
     if col.dtypes == object:
         return (col.astype(unicode)
-                .str.strip()
+                .str.strip('\s\t')
                 .replace({'nan': np.nan}))
     return col
 
@@ -78,3 +79,17 @@ def dataframe_coerce_columns(df, columns, datatype):
     # https://stackoverflow.com/questions/15891038/change-data-type-of-columns-in-pandas/47303880#47303880
     # https://stackoverflow.com/questions/15891038/change-data-type-of-columns-in-pandas/44536326#44536326
     df[columns] = df[columns].astype(datatype)
+
+def haversine_distance(destination, origin):
+    # Stolen from https://github.com/marians/dwd-weather
+    lon1, lat1 = origin
+    lon2, lat2 = destination
+    radius = 6371000 # meters
+
+    dlat = math.radians(lat2-lat1)
+    dlon = math.radians(lon2-lon1)
+    a = math.sin(dlat/2) * math.sin(dlat/2) + math.cos(math.radians(lat1)) \
+        * math.cos(math.radians(lat2)) * math.sin(dlon/2) * math.sin(dlon/2)
+    c = 2 * math.atan2(math.sqrt(a), math.sqrt(1-a))
+    d = radius * c
+    return d

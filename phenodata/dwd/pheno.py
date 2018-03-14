@@ -4,6 +4,7 @@ import attr
 import logging
 import pandas as pd
 from datetime import datetime
+from phenodata.util import haversine_distance
 
 logger = logging.getLogger(__name__)
 
@@ -64,7 +65,7 @@ class DwdPhenoData(object):
         """
         return self.cdc.get_dataframe(path='/help/PH_Beschreibung_Phaenologie_Qualitaetsbyte.txt', index_column=0)
 
-    def get_stations(self):
+    def get_stations(self, all=False):
         """
         Return DataFrame with stations information.
         """
@@ -76,7 +77,63 @@ class DwdPhenoData(object):
         else:
             raise KeyError('Unknown dataset "{}"'.format(self.dataset))
 
-        return self.cdc.get_dataframe(path=filename, index_column=0)
+        # Read stations CSV file
+        data = self.cdc.get_dataframe(path=filename, index_column=0)
+
+        # Unless "all==True", use only rows with "Datum Stationsaufloesung" == nan
+        if not all:
+            data = data[data['Datum Stationsaufloesung'].isna()]
+
+        # Appropriately coerce geolocation values to float
+        #dataframe_coerce_columns(data, ['geograph.Breite', 'geograph.Laenge'], float)
+
+        return data
+
+    def nearest_station(self, latitude, longitude, all=False):
+        """
+        Select most current stations datasets.
+
+        Stolen from https://github.com/marians/dwd-weather
+        """
+        closest = None
+        closest_distance = 99999999999
+        for index, station in self.get_stations(all=all).iterrows():
+            d = haversine_distance((longitude, latitude),
+                (station["geograph.Laenge"], station["geograph.Breite"]))
+            if d < closest_distance:
+                closest = station
+                closest_distance = d
+        return closest.to_frame()
+
+    def nearest_stations(self, latitude, longitude, all=False, limit=10):
+        """
+        Select most current stations datasets.
+
+        Stolen from https://github.com/marians/dwd-weather
+        """
+
+        # Retrieve stations
+        stations = self.get_stations(all=all)
+
+        # Build list of distances to corresponding station
+        distances = []
+        for index, station in stations.iterrows():
+            distance = haversine_distance(
+                (longitude, latitude),
+                (station['geograph.Laenge'], station['geograph.Breite'])
+            )
+            distances.append(distance)
+
+        # Insert list of distances as new column
+        stations.insert(1, 'Distanz', distances)
+
+        # Sort ascending by distance value and limit row count
+        stations = stations.sort_values('Distanz').head(n=limit)
+
+        # Convert Series to DataFrame again
+        frame = pd.DataFrame(stations)
+
+        return frame
 
     def get_observations(self, options):
         """

@@ -139,6 +139,14 @@ List of full URLs to observations using filename-based filtering::
 
     phenodata list-urls --source=dwd --dataset=annual --partition=recent --filename=Hasel,Schneegloeckchen
 
+Display nearest station for given position::
+
+    phenodata nearest-station --source=dwd --dataset=immediate --latitude=52.520007 --longitude=13.404954
+
+Display 20 nearest stations for given position::
+
+    phenodata nearest-stations --source=dwd --dataset=immediate --latitude=52.520007 --longitude=13.404954 --limit=20
+
 
 Observations
 ============

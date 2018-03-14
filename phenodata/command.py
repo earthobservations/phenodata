@@ -24,7 +24,9 @@ def run():
       phenodata info
       phenodata list-species --source=dwd [--format=csv]
       phenodata list-phases --source=dwd [--format=csv]
-      phenodata list-stations --source=dwd --dataset=immediate [--format=csv]
+      phenodata list-stations --source=dwd --dataset=immediate [--all] [--format=csv]
+      phenodata nearest-station --source=dwd --dataset=immediate --latitude=52.520007 --longitude=13.404954 [--format=csv]
+      phenodata nearest-stations --source=dwd --dataset=immediate [--all] --latitude=52.520007 --longitude=13.404954 [--limit=10] [--format=csv]
       phenodata list-quality-levels --source=dwd [--format=csv]
       phenodata list-quality-bytes --source=dwd [--format=csv]
       phenodata list-filenames --source=dwd --dataset=immediate --partition=recent [--filename=Hasel,Schneegloeckchen] [--year=2017]
@@ -56,6 +58,8 @@ def run():
                                 With "tabular", it is also possible to specify the table format,
                                 see https://bitbucket.org/astanin/python-tabulate. e.g. "tabular:presto".
                                 [default: tabular:psql]
+      --limit=<limit>           Limit output of "nearest-stations" to designated number of entries.
+                                [default: 10]
     """
 
     # Use generic commandline options schema and amend with current program name
@@ -114,7 +118,7 @@ def run():
     elif options['list-phases']:
         data = client.get_phases()
     elif options['list-stations']:
-        data = client.get_stations()
+        data = client.get_stations(all=options['all'])
     elif options['list-quality-levels']:
         data = client.get_quality_levels()
     elif options['list-quality-bytes']:
@@ -134,6 +138,12 @@ def run():
 
     elif options['forecast']:
         data = client.get_forecast(options)
+
+    elif options['nearest-station']:
+        data = client.nearest_station(float(options['latitude']), float(options['longitude']), all=options['all'])
+
+    elif options['nearest-stations']:
+        data = client.nearest_stations(float(options['latitude']), float(options['longitude']), all=options['all'], limit=int(options['limit']))
 
     # Format and output results
     if data is not None:
