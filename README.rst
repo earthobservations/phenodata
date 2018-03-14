@@ -291,7 +291,7 @@ Same observations but with "ROUTKLI" quality::
         --year=2017 \
         --humanize --sort=Datum
 
-Same observations but only value which have seen corrections::
+Investigate some "flowering" observations near Munich which have seen corrections last year::
 
     phenodata observations \
         --source=dwd --dataset=annual --partition=recent \
@@ -323,7 +323,7 @@ Sort by date.
 
     phenodata forecast \
         --source=dwd --dataset=annual --partition=recent \
-        --station=berlin \
+        --station=köln \
         --phase="beginning of flowering" \
         --year=2015,2016,2017 \
         --humanize --language=german \

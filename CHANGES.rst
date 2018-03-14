@@ -5,12 +5,16 @@ phenodata changelog
 development
 ===========
 
+2018-03-14 0.6.1
+================
+- Minor documentation updates
+
 2018-03-14 0.6.0
 ================
 - Add "--show-ids" parameter to show IDs alongside resolved text representation when using "--humanize"
 - More compact date output for "tabular" mode
 - Fix datetime coercion when encountering invalid datetime values
-- Humanize searching in observation and forecast data for stations, species, phases and quality information
+- Humanize searching in "observation" and "forecast" data for stations, species, phases and quality information
 - Implement predefined sets of parameters using ``presets.json``.
   Apply with e.g. "--species-preset=mellifera-de-primary".
   See also https://community.hiveeyes.org/t/phanologischer-kalender-entwicklung/664/23.
