@@ -34,17 +34,15 @@ class FTPSession(requests_ftp.ftp.FTPSession):
     An improved version of the `requests-ftp`_ module featuring a few additional methods:
 
     - ``mtime``:        Get modification time of file on server
-    - ``list_plus``:     Get directory contents in a structured manner, with response caching
+    - ``list_plus``:    Get directory contents in a structured manner, with short-time response caching
     - ``scan_files``:   Scan three-level hierarchy of directories on FTP server, can apply filters
-    - ``retr_cached``:  Get file contents, with response caching
+    - ``retr_cached``:  Get file contents, with response caching using mtime-based expiry
 
-
-    Futhermore, the module applies response caching mechanisms for each interaction with the
+    Furthermore, the module applies response caching mechanisms for each interaction with the
     remote FTP server to speed up subsequent invocations. There are two different cache regions:
 
     - meta_cache:    A generic FTP metadata cache with a configurable expiration time (currently 5 minutes)
     - content_cache: A generic FTP resource cache honoring file modification time
-
 
     .. _requests-ftp: https://pypi.python.org/pypi/requests-ftp
     """

@@ -118,9 +118,10 @@ Display list of stations::
 
 Display list of file names of recent observations by the annual reporters::
 
-    phenodata list-urls --source=dwd --dataset=annual --partition=recent
+    phenodata list-filenames --source=dwd --dataset=annual --partition=recent
 
-Display list of urls to recent observations by the annual reporters and apply filter criteria::
+Display list of full URLs to recent observations by the annual reporters
+and apply filter criteria to the filename::
 
     phenodata list-urls --source=dwd --dataset=annual --partition=recent --files=Hasel,Schneegloeckchen
 
@@ -184,7 +185,9 @@ Thanks in advance for your efforts, we really appreciate any help or feedback.
 
 Code license
 ============
-Licensed under the AGPL license. See LICENSE file for details.
+Licensed under the AGPL license. See LICENSE_ file for details.
+
+.. _LICENSE: https://github.com/hiveeyes/phenodata/blob/master/LICENSE
 
 Data license
 ============

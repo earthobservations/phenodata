@@ -11,3 +11,5 @@ phenodata todo
 - [o] Complete offline mode running from - even stale - cache entries
 - [o] Move resource acquisition log messages to DEBUG log level and replace by progress indicator
 - [o] Improve flux compensator by joining observation data frames against metadata frames
+- [o] Use "appdirs" module for improving cache storage location
+- [o] Output "phenodata" info as DataFrame
