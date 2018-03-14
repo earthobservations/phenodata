@@ -65,6 +65,7 @@ class DwdPhenoData(object):
     def get_quality_bytes(self):
         """
         Return DataFrame with quality bytes information
+        ftp://ftp-cdc.dwd.de/pub/CDC/observations_germany/climate/subdaily/standard_format/qualitaetsbytes.pdf
         """
         return self.cdc.get_dataframe(path='/help/PH_Beschreibung_Phaenologie_Qualitaetsbyte.txt', index_column=0)
 
@@ -280,6 +281,7 @@ class DwdPhenoData(object):
             frame = pd.merge(frame, self.get_quality_levels(), left_on='Qualitaetsniveau', right_index=True)
 
         # Quality byte
+        # ftp://ftp-cdc.dwd.de/pub/CDC/observations_germany/climate/subdaily/standard_format/qualitaetsbytes.pdf
         if 'Eintrittsdatum_QB' in frame:
             frame = pd.merge(frame, self.get_quality_bytes(), left_on='Eintrittsdatum_QB', right_index=True)
 
@@ -425,9 +427,9 @@ class DwdPhenoDataHumanizer(object):
 
         # Improved map for quality level texts
         quality_level_text = {
-            1: u'Loadtime checks',
-            7: u'ROUTKLI checks',
-            10: u'ROUTKLI checks, corrected',
+            1: u'Load time checks',
+            7: u'ROUTKLI validated',
+            10: u'ROUTKLI validated and corrected',
             }
 
         # Which field to choose from the "species" entity. One of "Objekt", "Objekt_englisch", "Objekt_latein".
@@ -441,8 +443,8 @@ class DwdPhenoDataHumanizer(object):
                 phase_field = 'Phase'
                 quality_level_text = {
                     1: u'Vorabprüfung beim Laden',
-                    7: u'ROUTKLI Prüfung',
-                    10: u'ROUTKLI Prüfung, korrigiert',
+                    7: u'ROUTKLI geprüft',
+                    10: u'ROUTKLI geprüft und korrigiert',
                     }
             elif language == 'latin':
                 species_field = 'Objekt_latein'
@@ -480,7 +482,8 @@ class DwdPhenoDataHumanizer(object):
                     ql_label += ' [{}]'.format(row['Qualitaetsniveau'])
                 quality_levels.append(ql_label)
 
-            # Eintrittsdatum_QB
+            # Qualitaetsbyte
+            # ftp://ftp-cdc.dwd.de/pub/CDC/observations_germany/climate/subdaily/standard_format/qualitaetsbytes.pdf
             if 'Eintrittsdatum_QB' in row:
                 qb_label = row.get('Beschreibung_y', '')
                 if self.show_ids:

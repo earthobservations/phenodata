@@ -225,6 +225,7 @@ Forecast of "beginning of flowering" events at station "Berlin-Dahlem".
 Use all species of the "primary group": "hazel", "snowdrop", "goat willow",
 "dandelion", "cherry", "apple", "winter oilseed rape", "black locust" and "common heather".
 Sort by date, ascending.
+::
 
     phenodata forecast \
         --source=dwd --dataset=annual --partition=recent \
@@ -238,18 +239,26 @@ Event sequence for each species
 Forecast of all events at station "Berlin-Dahlem".
 Use all species of the "primary group" (dito).
 Sort by species and date, ascending.
+::
 
     phenodata forecast \
         --source=dwd --dataset=annual --partition=recent \
         --filename=Hasel,Schneegloeckchen,Sal-Weide,Loewenzahn,Suesskirsche,Apfel,Winterraps,Robinie,Winter-Linde,Heidekraut \
         --station-id=12132 \
-        --humanize --lang=german \
+        --humanize --language=german \
         --sort=Spezies,Datum
 
 
 *************************
 Humanized search examples
 *************************
+::
+
+    phenodata observations \
+        --source=dwd --dataset=annual --partition=recent \
+        --filename=Hasel,Schneegloeckchen \
+        --station=berlin,brandenburg \
+        --humanize
 
 Todo
 ====
