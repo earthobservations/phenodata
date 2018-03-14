@@ -165,6 +165,19 @@ All invalid observations::
     phenodata observations --source=dwd --dataset=annual --partition=recent --quality-byte=5,6,7,8
 
 
+Forecasting
+===========
+Acquire data from observations in Berlin-Dahlem and München-Pasing and forecast to current year
+using grouping and by computing the "mean" value of the "Jultag" column::
+
+    phenodata forecast --source=dwd --dataset=annual --partition=recent --filename=Hasel,Schneegloeckchen,Apfel,Birne --station-id=12132,10961 --format=string
+
+
+
+******************
+Humanized examples
+******************
+
 Todo
 ====
 .. warning:: These commands are not implemented yet.

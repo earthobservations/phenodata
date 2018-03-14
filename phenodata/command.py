@@ -27,10 +27,10 @@ def run():
       phenodata list-stations --source=dwd --dataset=immediate [--format=csv]
       phenodata list-quality-levels --source=dwd [--format=csv]
       phenodata list-quality-bytes --source=dwd [--format=csv]
-      phenodata list-filenames --source=dwd --dataset=immediate --partition=recent [--filename=Hasel,Schneegloeckchen] [--year=2017 | --forecast]
-      phenodata list-urls --source=dwd --dataset=immediate --partition=recent [--filename=Hasel,Schneegloeckchen] [--year=2017 | --forecast]
-      phenodata observations --source=dwd --dataset=immediate --partition=recent [--filename=Hasel,Schneegloeckchen] [--station-id=164,717] [--species-id=113,127] [--phase-id=5] [--quality-level=10] [--quality-byte=1,2,3] [--year=2017 | --forecast] [--format=csv]
-      phenodata observations --source=dwd --dataset=immediate --partition=recent [--filename=Hasel,Schneegloeckchen] [--station=berlin,brandenburg] [--species=hazel,snowdrop] [--phase=flowering] [--year=2017 | --forecast] [--format=csv]
+      phenodata list-filenames --source=dwd --dataset=immediate --partition=recent [--filename=Hasel,Schneegloeckchen] [--year=2017]
+      phenodata list-urls --source=dwd --dataset=immediate --partition=recent [--filename=Hasel,Schneegloeckchen] [--year=2017]
+      phenodata (observations|forecast) --source=dwd --dataset=immediate --partition=recent [--filename=Hasel,Schneegloeckchen] [--station-id=164,717] [--species-id=113,127] [--phase-id=5] [--quality-level=10] [--quality-byte=1,2,3] [--year=2017] [--format=csv]
+      phenodata (observations|forecast) --source=dwd --dataset=immediate --partition=recent [--filename=Hasel,Schneegloeckchen] [--station=berlin,brandenburg] [--species=hazel,snowdrop] [--phase=flowering] [--year=2017] [--format=csv]
       phenodata --version
       phenodata (-h | --help)
 
@@ -52,7 +52,7 @@ def run():
       --phase=<phase>           Filter by strings from "phases" data (comma-separated list)
 
     Data formatting options:
-      --format=<format>         Output data in designated format. Choose one of "tabular", "json" or "csv".
+      --format=<format>         Output data in designated format. Choose one of "tabular", "json", "csv" or "string".
                                 With "tabular", it is also possible to specify the table format,
                                 see https://bitbucket.org/astanin/python-tabulate. e.g. "tabular:presto".
                                 [default: tabular:psql]
@@ -91,7 +91,7 @@ def run():
     ])
 
     # Command line argument debugging
-    #print 'options:\n{}'.format(pformat(options))
+    #import pprint; print 'options:\n{}'.format(pprint.pformat(options))
 
     if options['info']:
         print('Name:         phenodata-{version}'.format(version=__version__))
@@ -132,6 +132,8 @@ def run():
     elif options['observations']:
         data = client.get_observations(options)
 
+    elif options['forecast']:
+        data = client.get_forecast(options)
 
     # Format and output results
     if data is not None:
@@ -141,6 +143,7 @@ def run():
             showindex = False
 
         output_format = options['format']
+
         output = None
         if output_format.startswith('tabular'):
 
@@ -157,6 +160,9 @@ def run():
 
         elif output_format == 'json':
             output = data.to_json(orient='table', date_format='iso')
+
+        elif output_format == 'string':
+            output = data.to_string()
 
         else:
             message = 'Unknown output format "{}"'.format(options['format'])

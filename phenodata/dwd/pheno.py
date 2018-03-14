@@ -3,6 +3,7 @@
 import attr
 import logging
 import pandas as pd
+from datetime import datetime
 
 logger = logging.getLogger(__name__)
 
@@ -79,9 +80,11 @@ class DwdPhenoData(object):
 
     def get_observations(self, options):
         """
-        Obtain query options.
-        Compute DataFrame with combined observation data.
-        Apply a bunch of filters to the result data.
+        Retrieve observations.
+
+        - Obtain query options
+        - Compute DataFrame with combined observation data
+        - Apply a bunch of filters to the result data
         """
 
         # Acquire data
@@ -91,6 +94,35 @@ class DwdPhenoData(object):
         observations = self.flux(observations, criteria=options, forecast=options['forecast'])
 
         return observations
+
+    def get_forecast(self, options):
+        """
+        Forecast observations.
+
+        - Obtain query options
+        - Get real observations, all filtering options can be used
+        - Group results by (Stations_id, Objekt_id, Phase_id)
+        - Aggregate mean "day of the year" value of the "Jultag" values for each group
+        """
+
+        # Get current observations
+        data = self.get_observations(options)
+
+        # Group by station, species and phase
+        # https://pandas.pydata.org/pandas-docs/stable/groupby.html
+        grouped = data.groupby(['Stations_id', 'Objekt_id', 'Phase_id'])
+
+        # Aggregate mean "day of the year" value of the "Jultag" values for each group
+        series = grouped['Jultag'].mean().round().astype(int)
+
+        # Convert Series to DataFrame
+        frame = series.to_frame()
+
+        # Compute ISO date from "day of the year" values
+        real_dates = pd.to_datetime(datetime.today().year * 1000 + frame['Jultag'], format='%Y%j')
+        frame.insert(0, 'date', real_dates)
+
+        return frame
 
     def query(self, partition=None, files=None):
         """
@@ -146,7 +178,7 @@ class DwdPhenoData(object):
         The flux compensator. All filtering on the DataFrame takes places here.
         """
 
-        logger.info('Flux compensator: Filter and transform data')
+        logger.info('Entering flux compensator: Filter and transform data')
 
         criteria = criteria or {}
 
