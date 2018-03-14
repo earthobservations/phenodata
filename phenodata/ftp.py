@@ -206,7 +206,7 @@ class FTPSession(requests_ftp.ftp.FTPSession):
 
         # Request modification time of resource
         mtime = self.mtime(url)
-        logger.info('Resource "{resource}": Last modified on "{mtime}"'.format(resource=shorturl, mtime=mtime))
+        logger.debug('Resource "{resource}": Last modified on "{mtime}"'.format(resource=shorturl, mtime=mtime))
 
         # Default payload: Empty
         payload = None
@@ -220,14 +220,14 @@ class FTPSession(requests_ftp.ftp.FTPSession):
 
         # Get item from cache if not expired
         if mtime_cached and mtime <= mtime_cached:
-            logger.info('Resource "{resource}": Loading from cache'.format(resource=shorturl))
+            logger.debug('Resource "{resource}": Loading from cache'.format(resource=shorturl))
             payload = content_cache.get(content_key)
 
         # Retrieve resource from FTP if it is stale or has not been cached yet
         if payload is None:
 
             # Retrieve resource from upstream
-            logger.info('Resource "{resource}": Retrieving from FTP'.format(resource=shorturl))
+            logger.debug('Resource "{resource}": Retrieving from FTP'.format(resource=shorturl))
             response = self.retr(url)
 
             # Populate cache with valid response content

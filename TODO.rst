@@ -15,7 +15,7 @@ Prio 1
 - [x] Parameter "shortstation"
 - [x] Can the fine "tabulate" module can be tweaked to use custom datetime formatting (w/o the time component)?
 - [x] Implement text-searching in stations, species, phases and quality information
-- [o] Implement wishlist re. preselected groups of species as "mellifera" flavours
+- [x] Implement wishlist re. preselected groups of species as "mellifera" flavours
 
 ******
 Prio 2

@@ -5,6 +5,7 @@ import attr
 import logging
 import pandas as pd
 import pkg_resources
+from tqdm import tqdm
 from datetime import datetime
 from phenodata.util import haversine_distance
 
@@ -227,16 +228,19 @@ class DwdPhenoData(object):
           as an "include" filter to the list of scanned file names.
         """
 
-        logger.info('Starting data acquisition')
+        logger.info('Scanning for files')
 
         # Search FTP server
         paths = self.scan_files(partition, include=files, field='url')
+
+
+        logger.info('Starting data acquisition with {} files'.format(len(paths)))
 
         # The main DataFrame object
         results = pd.DataFrame()
 
         # Load multiple files into single DataFrame
-        for path in paths:
+        for path in tqdm(paths, ncols=80):
 
             # Skip invalid files
             if 'Kulturpflanze_Ruebe_akt' in path:
