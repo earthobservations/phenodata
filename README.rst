@@ -41,6 +41,21 @@ the excellent datasets available to the community. You know who you are.
 Getting started
 ***************
 
+Introduction
+============
+For most acquisition tasks, you must choose from one of two different datasets: `annual-reporters`_ and `immediate-reporters`_.
+
+To improve data acquisition performance, also consider applying
+the ``--filename=`` parameter for file name filtering.
+
+Example: When using ``--filename=Hasel,Schneegloeckchen``, only file names containing
+``Hasel`` or ``Schneegloeckchen`` will be retrieved, thus minimizing the required effort
+to acquire all files.
+
+.. _annual-reporters: https://www.dwd.de/DE/klimaumwelt/klimaueberwachung/phaenologie/daten_deutschland/jahresmelder/jahresmelder_node.html
+.. _immediate-reporters: https://www.dwd.de/DE/klimaumwelt/klimaueberwachung/phaenologie/daten_deutschland/sofortmelder/sofortmelder_node.html
+
+
 Install
 =======
 If you know your way around Python, installing this software is really easy::
@@ -64,24 +79,29 @@ Usage
       phenodata list-stations --source=dwd --dataset=immediate [--format=csv]
       phenodata list-quality-levels --source=dwd [--format=csv]
       phenodata list-quality-bytes --source=dwd [--format=csv]
-      phenodata list-filenames --source=dwd --dataset=immediate --partition=recent [--files=Hasel,Schneegloeckchen] [--years=2017 | --forecast]
-      phenodata list-urls --source=dwd --dataset=immediate --partition=recent [--files=Hasel,Schneegloeckchen] [--years=2017 | --forecast]
-      phenodata observations --source=dwd --dataset=immediate --partition=recent [--files=Hasel,Schneegloeckchen] [--stations=164,717 | --regions=berlin,brandenburg] [--species=hazel,snowdrop] [--phases=flowering] [--years=2017 | --forecast] [--format=csv]
+      phenodata list-filenames --source=dwd --dataset=immediate --partition=recent [--filename=Hasel,Schneegloeckchen] [--year=2017 | --forecast]
+      phenodata list-urls --source=dwd --dataset=immediate --partition=recent [--filename=Hasel,Schneegloeckchen] [--year=2017 | --forecast]
+      phenodata observations --source=dwd --dataset=immediate --partition=recent [--filename=Hasel,Schneegloeckchen] [--station-id=164,717] [--species-id=113,127] [--phase-id=5] [--quality-level=10] [--quality-byte=1,2,3] [--year=2017 | --forecast] [--format=csv]
+      phenodata observations --source=dwd --dataset=immediate --partition=recent [--filename=Hasel,Schneegloeckchen] [--station=berlin,brandenburg] [--species=hazel,snowdrop] [--phase=flowering] [--year=2017 | --forecast] [--format=csv]
       phenodata --version
       phenodata (-h | --help)
 
     Data acquisition options:
       --source=<source>         Data source. Currently "dwd" only.
-      --dataset=<dataset>       Data set. Use "annual" or "immediate" for --source=dwd.
+      --dataset=<dataset>       Data set. Use "immediate" or "annual" for --source=dwd.
       --partition=<dataset>     Partition. Use "recent" or "historical" for --source=dwd.
+      --filename=<file>         Filter by file names (comma-separated list)
 
-    Data filtering options:
-      --files=<files>           Filter by files (comma-separated list)
+    Direct filtering options:
       --years=<years>           Filter by years (comma-separated list)
-      --stations=<stations>     Filter by station ids (comma-separated list)
-      --regions=<regions>       Filter by region names (comma-separated list)
-      --species=<species>       Filter by species names (comma-separated list)
-      --phases=<phases>         Filter by phase names (comma-separated list)
+      --station-id=<station-id> Filter by station ids (comma-separated list)
+      --species-id=<species-id> Filter by species ids (comma-separated list)
+      --phase-id=<phase-id>     Filter by phase ids (comma-separated list)
+
+    Humanized filtering options:
+      --station=<station>       Filter by strings from "stations" data (comma-separated list)
+      --species=<species>       Filter by strings from "species" data (comma-separated list)
+      --phase=<phase>           Filter by strings from "phases" data (comma-separated list)
 
     Data formatting options:
       --format=<format>         Output data in designated format. Choose one of "tabular", "json" or "csv".
@@ -89,61 +109,64 @@ Usage
                                 see https://bitbucket.org/astanin/python-tabulate. e.g. "tabular:presto".
                                 [default: tabular:psql]
 
-.. note::
-
-    For most acquisition tasks, you must choose from one of two different datasets: `annual-reporters`_ and `immediate-reporters`_.
-
-.. _annual-reporters: https://www.dwd.de/DE/klimaumwelt/klimaueberwachung/phaenologie/daten_deutschland/jahresmelder/jahresmelder_node.html
-.. _immediate-reporters: https://www.dwd.de/DE/klimaumwelt/klimaueberwachung/phaenologie/daten_deutschland/sofortmelder/sofortmelder_node.html
 
 
+********
 Examples
-========
+********
 
 
 Metadata
---------
+========
 
-Display list of species::
+List of species::
 
     phenodata list-species --source=dwd
 
-Display list of phases::
+List of phases::
 
     phenodata list-phases --source=dwd
 
-Display list of stations::
+List of stations::
 
     phenodata list-stations --source=dwd --dataset=immediate
 
-Display list of file names of recent observations by the annual reporters::
+List of file names of recent observations by the annual reporters::
 
     phenodata list-filenames --source=dwd --dataset=annual --partition=recent
 
-Display list of full URLs to recent observations by the annual reporters
-and apply filter criteria to the filename::
+List of full URLs to observations using filename-based filtering::
 
-    phenodata list-urls --source=dwd --dataset=annual --partition=recent --files=Hasel,Schneegloeckchen
+    phenodata list-urls --source=dwd --dataset=annual --partition=recent --filename=Hasel,Schneegloeckchen
 
 
 Observations
-------------
+============
 
-Display observations of hazel and snowdrop::
+Observations of hazel and snowdrop, using filename-based filtering at data acquisition time::
 
-    phenodata observations --source=dwd --dataset=annual --partition=recent --files=Hasel,Schneegloeckchen
+    phenodata observations --source=dwd --dataset=annual --partition=recent --filename=Hasel,Schneegloeckchen
 
-Display observations of hazel and snowdrop for stations 164 and 717::
+Observations of hazel and snowdrop (dito), but for station ids 164 and 717 only::
 
-    phenodata observations --source=dwd --dataset=annual --partition=recent --files=Hasel,Schneegloeckchen --stations=164,717
+    phenodata observations --source=dwd --dataset=annual --partition=recent --filename=Hasel,Schneegloeckchen --station-id=164,717
 
-Display all observations for stations 164 and 717 in 2016 and 2017::
+All observations for station ids 164 and 717 in years 2016 and 2017::
 
-    phenodata observations --source=dwd --dataset=annual --partition=recent --stations=164,717 --years=2016,2017
+    phenodata observations --source=dwd --dataset=annual --partition=recent --station-id=164,717 --year=2016,2017
+
+All observations for station ids 164 and 717 and species ids 113 and 127::
+
+    phenodata observations --source=dwd --dataset=annual --partition=recent --station-id=164,717 --species-id=113,127
+
+All invalid observations::
+
+    phenodata list-quality-bytes --source=dwd
+    phenodata observations --source=dwd --dataset=annual --partition=recent --quality-byte=5,6,7,8
 
 
 Todo
-----
+====
 .. warning:: These commands are not implemented yet.
 
 Display regular flowering events for hazel and snowdrop around Berlin and Brandenburg (Germany) in 2017::
@@ -157,11 +180,6 @@ around Thüringen and Bayern (Germany), deduced from annual/recent data::
 
     phenodata calendar --source=dwd --dataset=annual --partition=recent --regions=thüringen,bayern --species=raps,süßkirsche --phases-bbch=60 --forecast
 
-To improve data acquisition performance, also consider applying
-the ``--files=`` parameter for file name filtering.
-
-Example: When using ``--files=Hasel,Schneegloeckchen``, only file names
-containing ``Hasel`` or ``Schneegloeckchen`` will be retrieved.
 
 
 *******************
