@@ -157,6 +157,8 @@ class DwdPhenoData(object):
         if humanize:
             megaframe = self.create_megaframe(observations)
             observations = self.humanizer.get_observations(megaframe)
+        else:
+            observations['Eintrittsdatum'] = observations['Eintrittsdatum'].astype(str)
 
         return observations
 
@@ -205,6 +207,9 @@ class DwdPhenoData(object):
 
             megaframe = self.create_megaframe(forecast)
             forecast = self.humanizer.get_forecast(megaframe)
+
+        else:
+            forecast['Datum'] = forecast['Datum'].astype(str)
 
         return forecast
 
@@ -387,7 +392,7 @@ class DwdPhenoDataHumanizer(object):
 
         # Build fresh DataFrame with designated order of columns
         canvas['Jahr'] = frame['Referenzjahr']
-        canvas['Datum'] = frame['Eintrittsdatum']
+        canvas['Datum'] = frame['Eintrittsdatum'].astype(str)
         canvas['Spezies'] = species
         canvas['Phase'] = phases
         canvas['Station'] = stations
@@ -403,7 +408,7 @@ class DwdPhenoDataHumanizer(object):
         stations, species, phases, quality_levels, quality_bytes = self.get_fields(frame)
 
         # Build fresh DataFrame with designated order of columns
-        canvas['Datum'] = frame['Datum'].values
+        canvas['Datum'] = frame['Datum'].astype(str)
         canvas['Spezies'] = species
         canvas['Phase'] = phases
         canvas['Station'] = stations
