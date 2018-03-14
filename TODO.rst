@@ -23,6 +23,7 @@ Prio 2
 - [x] Suppress or move resource acquisition log messages to DEBUG log level and replace by progress indicator
 - [x] Use "appdirs" module for computing cache storage location
 - [x] Add command "phenodata drop-cache"
+- [o] Display current criteria before performing work
 - [o] Output "phenodata info" as DataFrame
 - [o] Complete offline mode running from - even stale - cache entries
 - [o] Display progress indicator when downloading large files

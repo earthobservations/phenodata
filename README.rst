@@ -83,8 +83,8 @@ Usage
       phenodata list-quality-bytes --source=dwd [--format=csv]
       phenodata list-filenames --source=dwd --dataset=immediate --partition=recent [--filename=Hasel,Schneegloeckchen] [--year=2017]
       phenodata list-urls --source=dwd --dataset=immediate --partition=recent [--filename=Hasel,Schneegloeckchen] [--year=2017]
-      phenodata (observations|forecast) --source=dwd --dataset=immediate --partition=recent [--filename=Hasel,Schneegloeckchen] [--station-id=164,717] [--species-id=113,127] [--phase-id=5] [--quality-level=10] [--quality-byte=1,2,3] [--year=2017] [--humanize] [--language=german] [--format=csv]
-      phenodata (observations|forecast) --source=dwd --dataset=immediate --partition=recent [--filename=Hasel,Schneegloeckchen] [--station=berlin,brandenburg] [--species=hazel,snowdrop] [--phase=flowering] [--year=2017] [--humanize] [--language=german] [--format=csv]
+      phenodata (observations|forecast) --source=dwd --dataset=immediate --partition=recent [--filename=Hasel,Schneegloeckchen] [--station-id=164,717] [--species-id=113,127] [--phase-id=5] [--quality-level=10] [--quality-byte=1,2,3] [--station=berlin,brandenburg] [--species=hazel,snowdrop] [--species-preset=mellifera-primary] [--phase=flowering] [--quality=ROUTKLI] [--year=2017] [--humanize] [--show-ids] [--language=german] [--long-station] [--sort=Datum] [--format=csv]
+      phenodata drop-cache --source=dwd
       phenodata --version
       phenodata (-h | --help)
 
@@ -104,14 +104,18 @@ Usage
       --station=<station>       Filter by strings from "stations" data (comma-separated list)
       --species=<species>       Filter by strings from "species" data (comma-separated list)
       --phase=<phase>           Filter by strings from "phases" data (comma-separated list)
+      --species-preset=<preset> Filter by strings from "species" data (comma-separated list) loaded from ``presets.json`` file
 
     Data output options:
       --format=<format>         Output data in designated format. Choose one of "tabular", "json", "csv" or "string".
                                 With "tabular", it is also possible to specify the table format,
                                 see https://bitbucket.org/astanin/python-tabulate. e.g. "tabular:presto".
                                 [default: tabular:psql]
+      --sort=<sort>             Sort by given column names (comma-separated list)
       --humanize                Resolve ID-based columns to real names with "observations" and "forecast" output.
+      --show-ids                Show IDs alongside resolved text representation when using ``--humanize``.
       --language=<language>     Use labels in designated language when using ``--humanize`` [default: english].
+      --long-station            Use long station name including "Naturraumgruppe" and "Naturraum".
       --limit=<limit>           Limit output of "nearest-stations" to designated number of entries.
                                 [default: 10]
 
@@ -232,7 +236,24 @@ Sort by date, ascending.
         --filename=Hasel,Schneegloeckchen,Sal-Weide,Loewenzahn,Suesskirsche,Apfel,Winterraps,Robinie,Winter-Linde,Heidekraut \
         --station-id=12132 --phase-id=5 \
         --humanize \
-        --sort=Datum
+        --sort=Datum \
+        --format=tabular:rst
+
+==========  ======================  ======================  =====================
+Datum       Spezies                 Phase                   Station
+==========  ======================  ======================  =====================
+2018-02-17  common snowdrop         beginning of flowering  Berlin-Dahlem, Berlin
+2018-02-19  common hazel            beginning of flowering  Berlin-Dahlem, Berlin
+2018-03-30  goat willow             beginning of flowering  Berlin-Dahlem, Berlin
+2018-04-07  dandelion               beginning of flowering  Berlin-Dahlem, Berlin
+2018-04-15  cherry (late ripeness)  beginning of flowering  Berlin-Dahlem, Berlin
+2018-04-21  winter oilseed rape     beginning of flowering  Berlin-Dahlem, Berlin
+2018-04-23  apple (early ripeness)  beginning of flowering  Berlin-Dahlem, Berlin
+2018-05-03  apple (late ripeness)   beginning of flowering  Berlin-Dahlem, Berlin
+2018-05-24  black locust            beginning of flowering  Berlin-Dahlem, Berlin
+2018-08-20  common heather          beginning of flowering  Berlin-Dahlem, Berlin
+==========  ======================  ======================  =====================
+
 
 Event sequence for each species
 -------------------------------

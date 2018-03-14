@@ -5,6 +5,10 @@ phenodata changelog
 development
 ===========
 
+2018-03-14 0.6.2
+================
+- More documentation updates
+
 2018-03-14 0.6.1
 ================
 - Minor documentation updates
