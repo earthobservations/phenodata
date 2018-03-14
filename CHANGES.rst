@@ -8,6 +8,7 @@ development
 - Add parameter "--humanize" to improve user output by resolving ID columns
   to appropriate text representions from metadata files
 - Update "Usage" section in README
+- Add humanized representation for "forecast" mode
 
 2018-03-14 0.4.0
 ================

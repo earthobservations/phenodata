@@ -31,6 +31,9 @@ class DwdPhenoData(object):
     # Instance of the lowlevel DWD CDC FTP server client wrapper object ``phenodata.dwd.cdc.DwdCdcClient``
     cdc = attr.ib()
 
+    # Instance of ``phenodata.dwd.pheno.DwdPhenoDataHumanizer``
+    humanizer = attr.ib()
+
     # The dataset to access, either "annual" or "immediate"
     dataset = attr.ib()
 
@@ -135,7 +138,7 @@ class DwdPhenoData(object):
 
         return frame
 
-    def get_observations(self, options):
+    def get_observations(self, options, humanize=False):
         """
         Retrieve observations.
 
@@ -150,9 +153,14 @@ class DwdPhenoData(object):
         # Filter data
         observations = self.flux(observations, criteria=options)
 
+        # Optionally humanize DataFrame
+        if humanize:
+            megaframe = self.create_megaframe(observations)
+            observations = self.humanizer.get_observations(megaframe, language=options['language'])
+
         return observations
 
-    def get_forecast(self, options):
+    def get_forecast(self, options, humanize=False):
         """
         Forecast observations.
 
@@ -163,23 +171,42 @@ class DwdPhenoData(object):
         """
 
         # Get current observations
-        data = self.get_observations(options)
+        observations = self.get_observations(options)
 
         # Group by station, species and phase
         # https://pandas.pydata.org/pandas-docs/stable/groupby.html
-        grouped = data.groupby(['Stations_id', 'Objekt_id', 'Phase_id'])
+        grouped = observations.groupby(['Stations_id', 'Objekt_id', 'Phase_id'])
 
         # Aggregate mean "day of the year" value of the "Jultag" values for each group
         series = grouped['Jultag'].mean().round().astype(int)
 
         # Convert Series to DataFrame
-        frame = series.to_frame()
+        forecast = series.to_frame()
 
         # Compute ISO date from "day of the year" values
-        real_dates = pd.to_datetime(datetime.today().year * 1000 + frame['Jultag'], format='%Y%j')
-        frame.insert(0, 'Datum', real_dates)
+        real_dates = pd.to_datetime(datetime.today().year * 1000 + forecast['Jultag'], format='%Y%j')
+        forecast.insert(0, 'Datum', real_dates)
 
-        return frame
+        # Optionally humanize DataFrame
+        if humanize:
+            station_ids = []
+            species_ids = []
+            phase_ids = []
+            for index, row in forecast.iterrows():
+
+                # Decode index column and collect its components
+                station_id, species_id, phase_id = index
+                station_ids.append(station_id)
+                species_ids.append(species_id)
+                phase_ids.append(phase_id)
+
+            # Re-add index components as real columns
+            forecast['Stations_id'], forecast['Objekt_id'], forecast['Phase_id'] = station_ids, species_ids, phase_ids
+
+            megaframe = self.create_megaframe(forecast)
+            forecast = self.humanizer.get_forecast(megaframe, language=options['language'])
+
+        return forecast
 
     def query(self, partition=None, files=None):
         """
@@ -234,100 +261,27 @@ class DwdPhenoData(object):
 
         # https://pandas.pydata.org/pandas-docs/stable/merging.html#database-style-dataframe-joining-merging
 
-        # Stations_id
+        # Stations
         frame = pd.merge(frame, self.get_stations(), left_on='Stations_id', right_index=True)
 
-        # Objekt_id
+        # Species
         frame = pd.merge(frame, self.get_species(), left_on='Objekt_id', right_index=True)
 
-        # Phase_id
+        # Phases
         frame = pd.merge(frame, self.get_phases(), left_on='Phase_id', right_index=True)
 
-        # Qualitaetsniveau
-        frame = pd.merge(frame, self.get_quality_levels(), left_on='Qualitaetsniveau', right_index=True)
+        # Quality level
+        if 'Qualitaetsniveau' in frame:
+            frame = pd.merge(frame, self.get_quality_levels(), left_on='Qualitaetsniveau', right_index=True)
 
-        # Eintrittsdatum_QB
-        frame = pd.merge(frame, self.get_quality_bytes(), left_on='Eintrittsdatum_QB', right_index=True)
+        # Quality byte
+        if 'Eintrittsdatum_QB' in frame:
+            frame = pd.merge(frame, self.get_quality_bytes(), left_on='Eintrittsdatum_QB', right_index=True)
 
+        # Debugging
         #print frame.to_csv(encoding='utf-8')
-        #sys.exit()
+
         return frame
-
-
-    def humanize_megaframe(self, frame, language=None):
-
-        canvas = pd.DataFrame()
-
-        # Which fields to use from "station" entity
-        station_fields = ['Stationsname', 'Naturraumgruppe', 'Naturraum', 'Bundesland']
-
-        # Improved map for quality level texts
-        quality_level_text = {
-             1: u'Loadtime checks',
-             7: u'ROUTKLI checks',
-            10: u'ROUTKLI checks, corrected',
-        }
-
-        # Which field to choose from the "species" entity. One of "Objekt", "Objekt_englisch", "Objekt_latein".
-        # Which field to choose from the "phase" entity. One of "Phase", "Phase_englisch".
-        species_field = 'Objekt_englisch'
-        phase_field = 'Phase_englisch'
-        if language:
-            language = language.lower()
-            if language == 'german':
-                species_field = 'Objekt'
-                phase_field = 'Phase'
-                quality_level_text = {
-                     1: u'Vorabprüfung beim Laden',
-                     7: u'ROUTKLI Prüfung',
-                    10: u'ROUTKLI Prüfung, korrigiert',
-                }
-            elif language == 'latin':
-                species_field = 'Objekt_latein'
-
-        stations = []
-        species = []
-        phases = []
-        quality_levels = []
-        quality_bytes = []
-        for index, row in frame.iterrows():
-
-            # Station
-            station_parts = [row.get(field, '') for field in station_fields]
-            station_label = ', '.join(station_parts)
-            station_label += ' [{}]'.format(row['Stations_id'])
-            stations.append(station_label)
-
-            # Species
-            species_label = row.get(species_field, '')
-            species_label += ' [{}]'.format(row['Objekt_id'])
-            species.append(species_label)
-
-            # Phase
-            phase_label = row.get(phase_field, '')
-            phase_label += ' [{}]'.format(row['Phase_id'])
-            phases.append(phase_label)
-
-            # Qualitaetsniveau
-            ql_label = quality_level_text.get(row['Qualitaetsniveau'], row.get('Beschreibung_x', ''))
-            ql_label += ' [{}]'.format(row['Qualitaetsniveau'])
-            quality_levels.append(ql_label)
-
-            # Eintrittsdatum_QB
-            qb_label = row.get('Beschreibung_y', '')
-            qb_label += ' [{}]'.format(row['Eintrittsdatum_QB'])
-            quality_bytes.append(qb_label)
-
-        # Build fresh DataFrame with designated order of columns
-        canvas['Jahr'] = frame['Referenzjahr']
-        canvas['Datum'] = frame['Eintrittsdatum']
-        canvas['Spezies'] = species
-        canvas['Phase'] = phases
-        canvas['Station'] = stations
-        canvas['QS-Level'] = quality_levels
-        canvas['QS-Byte'] = quality_bytes
-
-        return canvas
 
     def flux(self, results, criteria=None):
         """
@@ -408,3 +362,107 @@ class DwdPhenoData(object):
                 raise KeyError('Projection "field={}" not available'.format(field))
 
         return results
+
+
+@attr.s
+class DwdPhenoDataHumanizer(object):
+    """
+    Bring result DataFrame in a more pleasant shape.
+    """
+
+    def get_observations(self, frame, language=None):
+
+        canvas = pd.DataFrame()
+
+        stations, species, phases, quality_levels, quality_bytes = self.get_fields(frame, language=language)
+
+        # Build fresh DataFrame with designated order of columns
+        canvas['Jahr'] = frame['Referenzjahr']
+        canvas['Datum'] = frame['Eintrittsdatum']
+        canvas['Spezies'] = species
+        canvas['Phase'] = phases
+        canvas['Station'] = stations
+        canvas['QS-Level'] = quality_levels
+        canvas['QS-Byte'] = quality_bytes
+
+        return canvas
+
+    def get_forecast(self, frame, language=None):
+
+        canvas = pd.DataFrame()
+
+        stations, species, phases, quality_levels, quality_bytes = self.get_fields(frame, language=language)
+
+        # Build fresh DataFrame with designated order of columns
+        canvas['Datum'] = frame['Datum'].values
+        canvas['Spezies'] = species
+        canvas['Phase'] = phases
+        canvas['Station'] = stations
+
+        return canvas
+
+    def get_fields(self, frame, language=None):
+
+        # Which fields to use from "station" entity
+        station_fields = ['Stationsname', 'Naturraumgruppe', 'Naturraum', 'Bundesland']
+
+        # Improved map for quality level texts
+        quality_level_text = {
+            1: u'Loadtime checks',
+            7: u'ROUTKLI checks',
+            10: u'ROUTKLI checks, corrected',
+            }
+
+        # Which field to choose from the "species" entity. One of "Objekt", "Objekt_englisch", "Objekt_latein".
+        # Which field to choose from the "phase" entity. One of "Phase", "Phase_englisch".
+        species_field = 'Objekt_englisch'
+        phase_field = 'Phase_englisch'
+        if language:
+            language = language.lower()
+            if language == 'german':
+                species_field = 'Objekt'
+                phase_field = 'Phase'
+                quality_level_text = {
+                    1: u'Vorabprüfung beim Laden',
+                    7: u'ROUTKLI Prüfung',
+                    10: u'ROUTKLI Prüfung, korrigiert',
+                    }
+            elif language == 'latin':
+                species_field = 'Objekt_latein'
+
+        stations = []
+        species = []
+        phases = []
+        quality_levels = []
+        quality_bytes = []
+        for index, row in frame.iterrows():
+
+            # Station
+            station_parts = [row[field] for field in station_fields if field in row]
+            station_label = ', '.join(station_parts)
+            station_label += ' [{}]'.format(row['Stations_id'])
+            stations.append(station_label)
+
+            # Species
+            species_label = row.get(species_field, '')
+            species_label += ' [{}]'.format(row['Objekt_id'])
+            species.append(species_label)
+
+            # Phase
+            phase_label = row.get(phase_field, '')
+            phase_label += ' [{}]'.format(row['Phase_id'])
+            phases.append(phase_label)
+
+            # Qualitaetsniveau
+            if 'Qualitaetsniveau' in row:
+                ql_label = quality_level_text.get(row['Qualitaetsniveau'], row.get('Beschreibung_x', ''))
+                ql_label += ' [{}]'.format(row['Qualitaetsniveau'])
+                quality_levels.append(ql_label)
+
+            # Eintrittsdatum_QB
+            if 'Eintrittsdatum_QB' in row:
+                qb_label = row.get('Beschreibung_y', '')
+                qb_label += ' [{}]'.format(row['Eintrittsdatum_QB'])
+                quality_bytes.append(qb_label)
+
+        return stations, species, phases, quality_levels, quality_bytes

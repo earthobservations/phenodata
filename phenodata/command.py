@@ -7,7 +7,7 @@ from tabulate import tabulate
 from phenodata import __version__
 from phenodata.ftp import FTPSession
 from phenodata.dwd.cdc import DwdCdcClient
-from phenodata.dwd.pheno import DwdPhenoData
+from phenodata.dwd.pheno import DwdPhenoData, DwdPhenoDataHumanizer
 from phenodata.util import boot_logging, normalize_options
 
 """
@@ -109,7 +109,7 @@ def run():
     # Create data source adapter
     if options['source'] == 'dwd':
         cdc_client = DwdCdcClient(ftp=FTPSession())
-        client = DwdPhenoData(cdc=cdc_client, dataset=options.get('dataset'))
+        client = DwdPhenoData(cdc=cdc_client, humanizer=DwdPhenoDataHumanizer(), dataset=options.get('dataset'))
     else:
         raise DocoptExit('Data source "{}" not implemented'.format(options['source']))
 
@@ -136,10 +136,10 @@ def run():
         return
 
     elif options['observations']:
-        data = client.get_observations(options)
+        data = client.get_observations(options, humanize=options['humanize'])
 
     elif options['forecast']:
-        data = client.get_forecast(options)
+        data = client.get_forecast(options, humanize=options['humanize'])
 
     elif options['nearest-station']:
         data = client.nearest_station(float(options['latitude']), float(options['longitude']), all=options['all'])
@@ -150,15 +150,15 @@ def run():
     # Format and output results
     if data is not None:
 
+        output_format = options['format']
+
+        # Whether to show the index column or not
         showindex = True
         if options['observations']:
             showindex = False
+        if options['forecast'] and options['humanize']:
+            showindex = False
 
-            if options['humanize']:
-                megaframe = client.create_megaframe(data)
-                data = client.humanize_megaframe(megaframe, language=options['language'])
-
-        output_format = options['format']
 
         output = None
         if output_format.startswith('tabular'):
