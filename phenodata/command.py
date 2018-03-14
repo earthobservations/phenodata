@@ -31,8 +31,8 @@ def run():
       phenodata list-quality-bytes --source=dwd [--format=csv]
       phenodata list-filenames --source=dwd --dataset=immediate --partition=recent [--filename=Hasel,Schneegloeckchen] [--year=2017]
       phenodata list-urls --source=dwd --dataset=immediate --partition=recent [--filename=Hasel,Schneegloeckchen] [--year=2017]
-      phenodata (observations|forecast) --source=dwd --dataset=immediate --partition=recent [--filename=Hasel,Schneegloeckchen] [--station-id=164,717]         [--species-id=113,127]     [--phase-id=5]      [--quality-level=10] [--quality-byte=1,2,3] [--year=2017] [--humanize] [--language=german] [--long-station] [--sort=Datum] [--format=csv]
-      phenodata (observations|forecast) --source=dwd --dataset=immediate --partition=recent [--filename=Hasel,Schneegloeckchen] [--station=berlin,brandenburg] [--species=hazel,snowdrop] [--phase=flowering] [--quality=blubb]                           [--year=2017] [--humanize] [--language=german] [--long-station] [--sort=Datum] [--format=csv]
+      phenodata (observations|forecast) --source=dwd --dataset=immediate --partition=recent [--filename=Hasel,Schneegloeckchen] [--station-id=164,717]         [--species-id=113,127]     [--phase-id=5]      [--quality-level=10] [--quality-byte=1,2,3] [--year=2017] [--humanize] [--show-ids] [--language=german] [--long-station] [--sort=Datum] [--format=csv]
+      phenodata (observations|forecast) --source=dwd --dataset=immediate --partition=recent [--filename=Hasel,Schneegloeckchen] [--station=berlin,brandenburg] [--species=hazel,snowdrop] [--phase=flowering] [--quality=blubb]                           [--year=2017] [--humanize] [--show-ids] [--language=german] [--long-station] [--sort=Datum] [--format=csv]
       phenodata --version
       phenodata (-h | --help)
 
@@ -60,6 +60,7 @@ def run():
                                 [default: tabular:psql]
       --sort=<sort>             Sort by given column names (comma-separated list)
       --humanize                Resolve ID-based columns to real names with "observations" and "forecast" output.
+      --show-ids                Show IDs alongside resolved text representation when using ``--humanize``.
       --language=<language>     Use labels in designated language when using ``--humanize`` [default: english].
       --long-station            Use long station name including "Naturraumgruppe" and "Naturraum".
       --limit=<limit>           Limit output of "nearest-stations" to designated number of entries.
@@ -114,7 +115,7 @@ def run():
     # Create data source adapter
     if options['source'] == 'dwd':
         cdc_client = DwdCdcClient(ftp=FTPSession())
-        humanizer = DwdPhenoDataHumanizer(language=options['language'], long_station=options['long-station'])
+        humanizer = DwdPhenoDataHumanizer(language=options['language'], long_station=options['long-station'], show_ids=options['show-ids'])
         client = DwdPhenoData(cdc=cdc_client, humanizer=humanizer, dataset=options.get('dataset'))
     else:
         raise DocoptExit('Data source "{}" not implemented'.format(options['source']))

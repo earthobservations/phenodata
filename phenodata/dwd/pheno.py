@@ -376,6 +376,9 @@ class DwdPhenoDataHumanizer(object):
     # Whether to output long station name including "Naturraumgruppe" and "Naturraum"
     long_station = attr.ib()
 
+    # Whether to show IDs alongside resolved text representation
+    show_ids = attr.ib()
+
     def get_observations(self, frame):
 
         canvas = pd.DataFrame()
@@ -449,29 +452,34 @@ class DwdPhenoDataHumanizer(object):
             # Station
             station_parts = [row[field] for field in station_fields if field in row]
             station_label = ', '.join(station_parts)
-            station_label += ' [{}]'.format(row['Stations_id'])
+            if self.show_ids:
+                station_label += ' [{}]'.format(row['Stations_id'])
             stations.append(station_label)
 
             # Species
             species_label = row.get(species_field, '')
-            species_label += ' [{}]'.format(row['Objekt_id'])
+            if self.show_ids:
+                species_label += ' [{}]'.format(row['Objekt_id'])
             species.append(species_label)
 
             # Phase
             phase_label = row.get(phase_field, '')
-            phase_label += ' [{}]'.format(row['Phase_id'])
+            if self.show_ids:
+                phase_label += ' [{}]'.format(row['Phase_id'])
             phases.append(phase_label)
 
             # Qualitaetsniveau
             if 'Qualitaetsniveau' in row:
                 ql_label = quality_level_text.get(row['Qualitaetsniveau'], row.get('Beschreibung_x', ''))
-                ql_label += ' [{}]'.format(row['Qualitaetsniveau'])
+                if self.show_ids:
+                    ql_label += ' [{}]'.format(row['Qualitaetsniveau'])
                 quality_levels.append(ql_label)
 
             # Eintrittsdatum_QB
             if 'Eintrittsdatum_QB' in row:
                 qb_label = row.get('Beschreibung_y', '')
-                qb_label += ' [{}]'.format(row['Eintrittsdatum_QB'])
+                if self.show_ids:
+                    qb_label += ' [{}]'.format(row['Eintrittsdatum_QB'])
                 quality_bytes.append(qb_label)
 
         return stations, species, phases, quality_levels, quality_bytes
