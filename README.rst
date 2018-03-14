@@ -120,9 +120,30 @@ Usage
                                 [default: 10]
 
 
-********
-Examples
-********
+**************
+Output example
+**************
+
+==========  ======================  ======================  =====================
+Datum       Spezies                 Phase                   Station
+==========  ======================  ======================  =====================
+2018-02-17  common snowdrop         beginning of flowering  Berlin-Dahlem, Berlin
+2018-02-19  common hazel            beginning of flowering  Berlin-Dahlem, Berlin
+2018-03-30  goat willow             beginning of flowering  Berlin-Dahlem, Berlin
+2018-04-07  dandelion               beginning of flowering  Berlin-Dahlem, Berlin
+2018-04-15  cherry (late ripeness)  beginning of flowering  Berlin-Dahlem, Berlin
+2018-04-21  winter oilseed rape     beginning of flowering  Berlin-Dahlem, Berlin
+2018-04-23  apple (early ripeness)  beginning of flowering  Berlin-Dahlem, Berlin
+2018-05-03  apple (late ripeness)   beginning of flowering  Berlin-Dahlem, Berlin
+2018-05-24  black locust            beginning of flowering  Berlin-Dahlem, Berlin
+2018-08-20  common heather          beginning of flowering  Berlin-Dahlem, Berlin
+==========  ======================  ======================  =====================
+
+
+
+*******************
+Invocation examples
+*******************
 
 
 Metadata
@@ -238,22 +259,6 @@ Sort by date, ascending.
         --humanize \
         --sort=Datum \
         --format=tabular:rst
-
-==========  ======================  ======================  =====================
-Datum       Spezies                 Phase                   Station
-==========  ======================  ======================  =====================
-2018-02-17  common snowdrop         beginning of flowering  Berlin-Dahlem, Berlin
-2018-02-19  common hazel            beginning of flowering  Berlin-Dahlem, Berlin
-2018-03-30  goat willow             beginning of flowering  Berlin-Dahlem, Berlin
-2018-04-07  dandelion               beginning of flowering  Berlin-Dahlem, Berlin
-2018-04-15  cherry (late ripeness)  beginning of flowering  Berlin-Dahlem, Berlin
-2018-04-21  winter oilseed rape     beginning of flowering  Berlin-Dahlem, Berlin
-2018-04-23  apple (early ripeness)  beginning of flowering  Berlin-Dahlem, Berlin
-2018-05-03  apple (late ripeness)   beginning of flowering  Berlin-Dahlem, Berlin
-2018-05-24  black locust            beginning of flowering  Berlin-Dahlem, Berlin
-2018-08-20  common heather          beginning of flowering  Berlin-Dahlem, Berlin
-==========  ======================  ======================  =====================
-
 
 Event sequence for each species
 -------------------------------
