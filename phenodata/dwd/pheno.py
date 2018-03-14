@@ -156,7 +156,7 @@ class DwdPhenoData(object):
         # Optionally humanize DataFrame
         if humanize:
             megaframe = self.create_megaframe(observations)
-            observations = self.humanizer.get_observations(megaframe, language=options['language'])
+            observations = self.humanizer.get_observations(megaframe)
 
         return observations
 
@@ -204,7 +204,7 @@ class DwdPhenoData(object):
             forecast['Stations_id'], forecast['Objekt_id'], forecast['Phase_id'] = station_ids, species_ids, phase_ids
 
             megaframe = self.create_megaframe(forecast)
-            forecast = self.humanizer.get_forecast(megaframe, language=options['language'])
+            forecast = self.humanizer.get_forecast(megaframe)
 
         return forecast
 
@@ -370,11 +370,17 @@ class DwdPhenoDataHumanizer(object):
     Bring result DataFrame in a more pleasant shape.
     """
 
-    def get_observations(self, frame, language=None):
+    # Output language. "english", "german" or "latin"
+    language = attr.ib()
+
+    # Whether to output long station name including "Naturraumgruppe" and "Naturraum"
+    long_station = attr.ib()
+
+    def get_observations(self, frame):
 
         canvas = pd.DataFrame()
 
-        stations, species, phases, quality_levels, quality_bytes = self.get_fields(frame, language=language)
+        stations, species, phases, quality_levels, quality_bytes = self.get_fields(frame)
 
         # Build fresh DataFrame with designated order of columns
         canvas['Jahr'] = frame['Referenzjahr']
@@ -387,11 +393,11 @@ class DwdPhenoDataHumanizer(object):
 
         return canvas
 
-    def get_forecast(self, frame, language=None):
+    def get_forecast(self, frame):
 
         canvas = pd.DataFrame()
 
-        stations, species, phases, quality_levels, quality_bytes = self.get_fields(frame, language=language)
+        stations, species, phases, quality_levels, quality_bytes = self.get_fields(frame)
 
         # Build fresh DataFrame with designated order of columns
         canvas['Datum'] = frame['Datum'].values
@@ -401,10 +407,13 @@ class DwdPhenoDataHumanizer(object):
 
         return canvas
 
-    def get_fields(self, frame, language=None):
+    def get_fields(self, frame):
 
         # Which fields to use from "station" entity
-        station_fields = ['Stationsname', 'Naturraumgruppe', 'Naturraum', 'Bundesland']
+        if self.long_station:
+            station_fields = ['Stationsname', 'Naturraumgruppe', 'Naturraum', 'Bundesland']
+        else:
+            station_fields = ['Stationsname', 'Bundesland']
 
         # Improved map for quality level texts
         quality_level_text = {
@@ -417,8 +426,8 @@ class DwdPhenoDataHumanizer(object):
         # Which field to choose from the "phase" entity. One of "Phase", "Phase_englisch".
         species_field = 'Objekt_englisch'
         phase_field = 'Phase_englisch'
-        if language:
-            language = language.lower()
+        if self.language:
+            language = self.language.lower()
             if language == 'german':
                 species_field = 'Objekt'
                 phase_field = 'Phase'

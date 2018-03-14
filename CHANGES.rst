@@ -10,6 +10,7 @@ development
 - Update "Usage" section in README
 - Add humanized representation for "forecast" mode
 - Add "--sort" parameter for sorting by result columns
+- Use shorter representation of humanized "Station" name
 
 2018-03-14 0.4.0
 ================
