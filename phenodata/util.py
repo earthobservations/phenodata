@@ -20,7 +20,7 @@ def setup_logging(level=logging.INFO):
         stream=sys.stderr,
         level=level)
 
-def normalize_options(options, list_items=None):
+def normalize_options(options, encoding=None, list_items=None):
     normalized = {}
     list_items = list_items or []
     for key, value in options.items():
@@ -28,11 +28,15 @@ def normalize_options(options, list_items=None):
         # Sanitize key
         key = key.strip('--<>')
 
+        # Sanitize charset encoding
+        if encoding and (type(value) is str):
+            value = value.decode(encoding)
+
         # Decode list options
         if key in list_items:
             if value is None:
                 value = []
-            elif type(value) is str:
+            else:
                 value = read_list(value)
 
         normalized[key] = value

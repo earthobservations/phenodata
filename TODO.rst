@@ -14,7 +14,7 @@ Prio 1
 - [x] Add parameter "--humanize" and "--language={german,english}
 - [x] Parameter "shortstation"
 - [x] Can the fine "tabulate" module can be tweaked to use custom datetime formatting (w/o the time component)?
-- [o] Implement text-searching in stations, species, phases and quality information
+- [x] Implement text-searching in stations, species, phases and quality information
 - [o] Implement wishlist re. preselected groups of species as "mellifera" flavours
 
 ******
@@ -26,4 +26,5 @@ Prio 2
 - [o] Output "phenodata info" as DataFrame
 - [o] Complete offline mode running from - even stale - cache entries
 - [o] Display progress indicator when downloading large files
-- [o] What about introducing the BBCH code?
+- [o] What about introducing the BBCH code? ``--phase-bbch=60``
+- [o] Revisit the "historical" data sets

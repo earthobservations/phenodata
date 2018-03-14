@@ -6,7 +6,8 @@ development
 ===========
 - Add "--show-ids" parameter to show IDs alongside resolved text representation when using "--humanize"
 - More compact date output for "tabular" mode
-- Fix datetime coercion when ocourring invalid datetime values
+- Fix datetime coercion when encountering invalid datetime values
+- Humanize searching in observation and forecast data for stations, species, phases and quality information
 
 2018-03-14 0.5.0
 ================

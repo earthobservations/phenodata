@@ -252,28 +252,68 @@ Sort by species and date, ascending.
 *************************
 Humanized search examples
 *************************
-::
+
+Observations
+============
+Query observations by using textual representation of "station" information::
 
     phenodata observations \
         --source=dwd --dataset=annual --partition=recent \
         --filename=Hasel,Schneegloeckchen \
         --station=berlin,brandenburg \
-        --humanize
+        --humanize --sort=Datum
 
-Todo
-====
-.. warning:: These commands are not implemented yet.
+Observations near Munich for species "hazel" or "snowdrop" in 2018::
 
-Display regular flowering events for hazel and snowdrop around Berlin and Brandenburg (Germany) in 2017::
+    phenodata observations \
+        --source=dwd --dataset=annual --partition=recent \
+        --station=münchen \
+        --species=hazel,snowdrop \
+        --year=2018 \
+        --humanize --sort=Datum
 
-    phenodata calendar --source=dwd --dataset=immediate --partition=recent --regions=berlin,brandenburg --species=hazel,snowdrop --phases=flowering --years=2017
+Observations for any "flowering" events in 2017 and 2018 around Munich::
 
-    phenodata calendar --source=dwd --dataset=immediate --partition=historical --regions=berlin,brandenburg --species=hazel,snowdrop --phases=flowering --years=1958
+    phenodata observations \
+        --source=dwd --dataset=annual --partition=recent \
+        --station=münchen \
+        --phase=flowering \
+        --year=2017,2018 \
+        --humanize --sort=Datum
 
-Display forecast for "beginning of flowering" events for canola and sweet cherry
-around Thüringen and Bayern (Germany), deduced from annual/recent data::
+Same observations but with "ROUTKLI" quality::
 
-    phenodata calendar --source=dwd --dataset=annual --partition=recent --regions=thüringen,bayern --species=raps,süßkirsche --phases-bbch=60 --forecast
+    phenodata observations \
+        --source=dwd --dataset=annual --partition=recent \
+        --station=münchen \
+        --phase=flowering \
+        --quality=ROUTKLI \
+        --year=2017 \
+        --humanize --sort=Datum
+
+Same observations but only value which have seen corrections::
+
+    phenodata observations \
+        --source=dwd --dataset=annual --partition=recent \
+        --station=münchen \
+        --phase=flowering \
+        --quality=korrigiert \
+        --year=2017 \
+        --humanize --sort=Datum
+
+
+Forecasting
+===========
+Forecast based on "beginning of flowering" events of 2015-2017 in Thüringen and Bayern for the given list of species::
+
+    phenodata forecast \
+        --source=dwd --dataset=annual --partition=recent \
+        --station=thüringen,bayern \
+        --species=Hasel,Schneeglöckchen,Sal-Weide,Löwenzahn,Süßkirsche,Apfel,Winterraps,Robinie,Winter-Linde,Heidekraut \
+        --phase-id=5 \
+        --year=2015,2016,2017 \
+        --humanize --language=german \
+        --sort=Spezies,Datum
 
 
 

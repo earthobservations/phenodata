@@ -186,6 +186,7 @@ class DwdPhenoData(object):
         # Convert Series to DataFrame
         forecast = series.to_frame()
 
+
         # Compute ISO date from "day of the year" values and insert as new column
         real_dates = pd.to_datetime(datetime.today().year * 1000 + forecast['Jultag'], errors='coerce', format='%Y%j')
         forecast.insert(0, 'Datum', real_dates)
@@ -307,7 +308,10 @@ class DwdPhenoData(object):
         # https://pythonspot.com/pandas-filter/
         # https://stackoverflow.com/questions/12065885/filter-dataframe-rows-if-value-in-column-is-in-a-set-list-of-values/12065904#12065904
 
-        # Build "boolean indexing" filter expression from multiple criteria
+
+        # A. Basic filtering
+
+        # Build "boolean indexing" filter expression from multiple ID-based criteria
         # https://pandas.pydata.org/pandas-docs/stable/indexing.html#boolean-indexing
         isin_map = {
             'year': results.Referenzjahr,
@@ -325,11 +329,48 @@ class DwdPhenoData(object):
             if criteria[key]:
                 expression &= reference.isin(criteria[key])
 
+        # Apply filter expression to DataFrame
+        if type(expression) is not bool:
+            results = results[expression]
 
-        # Humanized filtering based on merged/joined DataFrames
-        # TODO: For each designated field, add ``.str.contains('|'.join(patterns)`` criteria to "boolean index" expression
+
+        # B. Humanized filtering based on merged/joined DataFrames
+
+        # Build "boolean indexing" filter expression from multiple text-based criteria
+        # https://pandas.pydata.org/pandas-docs/stable/indexing.html#boolean-indexing
         # https://stackoverflow.com/questions/12065885/filter-dataframe-rows-if-value-in-column-is-in-a-set-list-of-values/26724725#26724725
+        patterns_map = {
+            'station': ['Stationsname', 'Naturraumgruppe', 'Naturraum', 'Bundesland'],
+            'species': ['Objekt', 'Objekt_englisch', 'Objekt_latein'],
+            'phase':   ['Phase', 'Phase_englisch'],
+            'quality': ['Beschreibung_x', 'Beschreibung_y'],
+        }
 
+        # Remember columns of current DataFrame
+        columns = results.columns
+
+        expression = True
+        is_megaframe = False
+        for field, reference_fields in patterns_map.items():
+
+            if criteria[field]:
+
+                # Create megaframe as this will contain all information required for advanced searching
+                if not is_megaframe:
+                    is_megaframe = True
+                    results = self.create_megaframe(results)
+
+                # The list of patterns to search for. Any match counts.
+                pattern = '|'.join(criteria[field])
+
+                subexpression = False
+                for reference_field in reference_fields:
+                    subexpression |= results[reference_field].str.contains(pattern, case=False)
+
+                expression &= subexpression
+
+        # Shrink megaframe back using projection on former columns
+        results = results[columns]
 
         # Apply filter expression to DataFrame
         if type(expression) is not bool:
