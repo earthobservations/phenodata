@@ -4,6 +4,7 @@ import re
 import attr
 import pandas as pd
 from six import StringIO
+from phenodata.util import dataframe_strip_strings, dataframe_coerce_columns
 
 @attr.s
 class DwdCdcClient(object):
@@ -87,9 +88,11 @@ class DwdCdcClient(object):
             delimiter=';', skipinitialspace=True, skip_blank_lines=True,
         )
 
-        # Initialize index column on DataFrame
-        if index_column is not None:
-            df.set_index(df.columns[index_column], inplace=True)
+
+        # A. Apply cleanups
+
+        # Strip whitespace from all values
+        df = df.apply(dataframe_strip_strings, axis=0)
 
         # Remove rows with empty values
         df.dropna(subset=['eor'], inplace=True)
@@ -103,8 +106,23 @@ class DwdCdcClient(object):
         # Remove end-of-row tombstone
         df.drop('eor', axis=1, inplace=True)
 
+
+        # B. Apply coercions
+
         # Coerce types into correct format
         if coerce_int:
             df = df.astype(int)
+
+        # Initialize index column on DataFrame
+        if index_column is not None:
+
+            # Get name of index column
+            index_column_name = df.columns[index_column]
+
+            # Coerce values in index column to integer
+            dataframe_coerce_columns(df, [index_column_name], int)
+
+            # Establish index on index column
+            df.set_index(index_column_name, inplace=True)
 
         return df

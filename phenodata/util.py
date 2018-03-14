@@ -3,6 +3,8 @@
 import re
 import sys
 import logging
+import numpy as np
+
 
 def boot_logging(options=None):
     log_level = logging.INFO
@@ -64,3 +66,15 @@ def regex_run_matchers(matchers, text):
             return True
     return False
 
+def dataframe_strip_strings(col):
+    # https://stackoverflow.com/questions/33788913/pythonic-efficient-way-to-strip-whitespace-from-every-pandas-data-frame-cell-tha/44740438#44740438
+    if col.dtypes == object:
+        return (col.astype(unicode)
+                .str.strip()
+                .replace({'nan': np.nan}))
+    return col
+
+def dataframe_coerce_columns(df, columns, datatype):
+    # https://stackoverflow.com/questions/15891038/change-data-type-of-columns-in-pandas/47303880#47303880
+    # https://stackoverflow.com/questions/15891038/change-data-type-of-columns-in-pandas/44536326#44536326
+    df[columns] = df[columns].astype(datatype)

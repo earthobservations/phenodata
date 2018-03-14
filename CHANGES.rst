@@ -7,6 +7,7 @@ development
 - Refactoring and modularization
 - Make FTP client wrapper for DWD CDC server more universal
 - Improve inline documentation
+- Improve CSV import string data cleansing and integer type coercion
 
 2018-03-13 0.3.0
 ================
