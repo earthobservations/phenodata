@@ -71,7 +71,7 @@ def dataframe_strip_strings(col):
     # https://stackoverflow.com/questions/33788913/pythonic-efficient-way-to-strip-whitespace-from-every-pandas-data-frame-cell-tha/44740438#44740438
     if col.dtypes == object:
         return (col.astype(unicode)
-                .str.strip('\s\t')
+                .str.strip(' \t')
                 .replace({'nan': np.nan}))
     return col
 

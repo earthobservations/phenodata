@@ -91,6 +91,10 @@ class DwdCdcClient(object):
 
         # A. Apply cleanups
 
+        # Strip whitespace from all column headers
+        # https://stackoverflow.com/questions/21606987/how-can-i-strip-the-whitespace-from-pandas-dataframe-headers/21607530#21607530
+        df.rename(columns=lambda x: x.strip(), inplace=True)
+
         # Strip whitespace from all values
         df = df.apply(dataframe_strip_strings, axis=0)
 

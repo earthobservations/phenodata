@@ -8,10 +8,12 @@ Prio 1
 - [x] Introduce parameter "--format", which can be "tabulate:psql", "json", "xml", "vcf"
 - [x] There are still spaces around, e.g. "phenodata list-phases --source=dwd --format=csv"
 - [x] Filter by quality indicators
-- [o] Add forecasting feature. Based on "Jultag"?
-- [o] Add command "phenodata nearest-station --latitude= --longitude="
-- [o] Add parameter "--humanize" and "--lang={german,english}
-- [o] Improve flux compensator by joining observation data frames against metadata frames
+- [x] Add forecasting feature. Based on "Jultag"?
+- [x] Add command "phenodata nearest-station --latitude= --longitude="
+- [x] Improve flux compensator by joining observation data frames against metadata frames
+- [x] Add parameter "--humanize" and "--language={german,english}
+- [o] Implement text-searching in stations, species, phases and quality information
+- [o] Implement wishlist re. preselected groups of species as "mellifera" flavours
 
 ******
 Prio 2

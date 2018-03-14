@@ -182,9 +182,27 @@ using grouping and by computing the "mean" value of the "Jultag" column::
 
 
 
-******************
-Humanized examples
-******************
+*************************
+Humanized output examples
+*************************
+The option ``--humanize`` will improve textual output by resolving ID columns
+in the observation data to their appropriate text representions from metadata files.
+
+Observations
+============
+Observations for species "hazel", "snowdrop", "apple" and "pear" at station "Berlin-Dahlem",
+output texts in the German language if possible::
+
+    phenodata observations \
+        --source=dwd --dataset=annual --partition=recent \
+        --filename=Hasel,Schneegloeckchen,Apfel,Birne \
+        --station-id=12132 \
+        --humanize --language=german
+
+
+*************************
+Humanized search examples
+*************************
 
 Todo
 ====

@@ -148,7 +148,7 @@ class DwdPhenoData(object):
         observations = self.query(partition=options['partition'], files=options['filename'])
 
         # Filter data
-        observations = self.flux(observations, criteria=options, forecast=options['forecast'])
+        observations = self.flux(observations, criteria=options)
 
         return observations
 
@@ -177,7 +177,7 @@ class DwdPhenoData(object):
 
         # Compute ISO date from "day of the year" values
         real_dates = pd.to_datetime(datetime.today().year * 1000 + frame['Jultag'], format='%Y%j')
-        frame.insert(0, 'date', real_dates)
+        frame.insert(0, 'Datum', real_dates)
 
         return frame
 
@@ -230,7 +230,106 @@ class DwdPhenoData(object):
 
         return results
 
-    def flux(self, results, criteria=None, forecast=False):
+    def create_megaframe(self, frame):
+
+        # https://pandas.pydata.org/pandas-docs/stable/merging.html#database-style-dataframe-joining-merging
+
+        # Stations_id
+        frame = pd.merge(frame, self.get_stations(), left_on='Stations_id', right_index=True)
+
+        # Objekt_id
+        frame = pd.merge(frame, self.get_species(), left_on='Objekt_id', right_index=True)
+
+        # Phase_id
+        frame = pd.merge(frame, self.get_phases(), left_on='Phase_id', right_index=True)
+
+        # Qualitaetsniveau
+        frame = pd.merge(frame, self.get_quality_levels(), left_on='Qualitaetsniveau', right_index=True)
+
+        # Eintrittsdatum_QB
+        frame = pd.merge(frame, self.get_quality_bytes(), left_on='Eintrittsdatum_QB', right_index=True)
+
+        #print frame.to_csv(encoding='utf-8')
+        #sys.exit()
+        return frame
+
+
+    def humanize_megaframe(self, frame, language=None):
+
+        canvas = pd.DataFrame()
+
+        # Which fields to use from "station" entity
+        station_fields = ['Stationsname', 'Naturraumgruppe', 'Naturraum', 'Bundesland']
+
+        # Improved map for quality level texts
+        quality_level_text = {
+             1: u'Loadtime checks',
+             7: u'ROUTKLI checks',
+            10: u'ROUTKLI checks, corrected',
+        }
+
+        # Which field to choose from the "species" entity. One of "Objekt", "Objekt_englisch", "Objekt_latein".
+        # Which field to choose from the "phase" entity. One of "Phase", "Phase_englisch".
+        species_field = 'Objekt_englisch'
+        phase_field = 'Phase_englisch'
+        if language:
+            language = language.lower()
+            if language == 'german':
+                species_field = 'Objekt'
+                phase_field = 'Phase'
+                quality_level_text = {
+                     1: u'Vorabprüfung beim Laden',
+                     7: u'ROUTKLI Prüfung',
+                    10: u'ROUTKLI Prüfung, korrigiert',
+                }
+            elif language == 'latin':
+                species_field = 'Objekt_latein'
+
+        stations = []
+        species = []
+        phases = []
+        quality_levels = []
+        quality_bytes = []
+        for index, row in frame.iterrows():
+
+            # Station
+            station_parts = [row.get(field, '') for field in station_fields]
+            station_label = ', '.join(station_parts)
+            station_label += ' [{}]'.format(row['Stations_id'])
+            stations.append(station_label)
+
+            # Species
+            species_label = row.get(species_field, '')
+            species_label += ' [{}]'.format(row['Objekt_id'])
+            species.append(species_label)
+
+            # Phase
+            phase_label = row.get(phase_field, '')
+            phase_label += ' [{}]'.format(row['Phase_id'])
+            phases.append(phase_label)
+
+            # Qualitaetsniveau
+            ql_label = quality_level_text.get(row['Qualitaetsniveau'], row.get('Beschreibung_x', ''))
+            ql_label += ' [{}]'.format(row['Qualitaetsniveau'])
+            quality_levels.append(ql_label)
+
+            # Eintrittsdatum_QB
+            qb_label = row.get('Beschreibung_y', '')
+            qb_label += ' [{}]'.format(row['Eintrittsdatum_QB'])
+            quality_bytes.append(qb_label)
+
+        # Build fresh DataFrame with designated order of columns
+        canvas['Jahr'] = frame['Referenzjahr']
+        canvas['Datum'] = frame['Eintrittsdatum']
+        canvas['Spezies'] = species
+        canvas['Phase'] = phases
+        canvas['Station'] = stations
+        canvas['QS-Level'] = quality_levels
+        canvas['QS-Byte'] = quality_bytes
+
+        return canvas
+
+    def flux(self, results, criteria=None):
         """
         The flux compensator. All filtering on the DataFrame takes places here.
         """
