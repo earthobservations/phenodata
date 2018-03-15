@@ -119,6 +119,7 @@ Usage
       --limit=<limit>           Limit output of "nearest-stations" to designated number of entries.
                                 [default: 10]
 
+----
 
 **************
 Output example
@@ -139,6 +140,7 @@ Datum       Spezies                 Phase                   Station
 2018-08-20  common heather          beginning of flowering  Berlin-Dahlem, Berlin
 ==========  ======================  ======================  =====================
 
+----
 
 
 *******************
@@ -343,7 +345,7 @@ Sort by species and date.
         --humanize --language=german \
         --sort=Spezies,Datum
 
-Forecast based on "beginning of flowering" events of 2015-2017 in Berlin for the named list of species "mellifera-eu-primary".
+Forecast based on "beginning of flowering" events of 2015-2017 in Berlin for the named list of species "mellifera-de-primary".
 Sort by date.
 ::
 
@@ -358,7 +360,7 @@ Sort by date.
 
 .. note::
 
-    The species presets like ``mellifera-eu-primary`` are currently stored in
+    The species presets like ``mellifera-de-primary`` and others are currently stored in
     `presets.json <https://github.com/hiveeyes/phenodata/blob/master/phenodata/dwd/presets.json>`__.
 
 

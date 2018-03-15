@@ -4,8 +4,12 @@ phenodata changelog
 
 development
 ===========
+
+2018-03-15 0.6.4
+================
 - Fix accidental version bump of the "docopt" module,
   see also https://github.com/peritus/bumpversion/issues/168
+- Update documentation
 
 2018-03-14 0.6.3
 ================

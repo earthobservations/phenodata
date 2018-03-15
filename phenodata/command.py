@@ -52,7 +52,8 @@ def run():
       --station=<station>       Filter by strings from "stations" data (comma-separated list)
       --species=<species>       Filter by strings from "species" data (comma-separated list)
       --phase=<phase>           Filter by strings from "phases" data (comma-separated list)
-      --species-preset=<preset> Filter by strings from "species" data (comma-separated list) loaded from ``presets.json`` file
+      --species-preset=<preset> Filter by strings from "species" data (comma-separated list)
+                                The preset will get loaded from the ``presets.json`` file.
 
     Data output options:
       --format=<format>         Output data in designated format. Choose one of "tabular", "json", "csv" or "string".

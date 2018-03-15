@@ -23,9 +23,14 @@ Prio 2
 - [x] Suppress or move resource acquisition log messages to DEBUG log level and replace by progress indicator
 - [x] Use "appdirs" module for computing cache storage location
 - [x] Add command "phenodata drop-cache"
-- [o] Display current criteria before performing work
+- [o] Display effective criteria just before performing the work
 - [o] Output "phenodata info" as DataFrame
 - [o] Complete offline mode running from - even stale - cache entries
 - [o] Display progress indicator when downloading large files
 - [o] What about introducing the BBCH code? ``--phase-bbch=60``
 - [o] Revisit the "historical" data sets
+- [o] Exporter for vis.js timeline
+- [o] See what Nominatim could do
+- [o] Query directly by lat/lon instead of --station=
+- [o] Enrich "Output example" in README.rst
+- [o] Add --format=table-markdown, expanding to --format=tabular:pipe
