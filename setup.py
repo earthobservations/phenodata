@@ -8,7 +8,7 @@ CHANGES = open(os.path.join(here, 'CHANGES.rst')).read()
 requires = [
     'requests==2.18.4',
     'requests-ftp==0.3.1',
-    'docopt==0.6.3',
+    'docopt==0.6.2',
     'attrs==17.4.0',
     'pandas>=0.18.1,<=0.22.0',
     'tabulate==0.8.2',
@@ -27,7 +27,7 @@ setup(name='phenodata',
     long_description=README,
     license="AGPL 3",
     classifiers=[
-        "Development Status :: 3 - Alpha",
+        "Development Status :: 4 - Beta",
         "Environment :: Console",
         "Environment :: Web Environment",
         "Intended Audience :: Developers",
