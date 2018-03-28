@@ -258,11 +258,14 @@ class DwdPhenoData(object):
                 logger.warning('Skipping file "{}" due to invalid header format (all caps)'.format(path))
                 continue
 
+            logger.debug('Processing file "{}"'.format(path))
+
             # Acquire DataFrame from CSV data
             data = self.cdc.get_dataframe(path, coerce_int=True)
 
             # Sanity checks
             if data is None:
+                logger.warning('File "{}" is empty')
                 continue
 
             # Coerce "Eintrittsdatum" column into date format

@@ -5,6 +5,7 @@ phenodata changelog
 development
 ===========
 - Add some sanity checks protecting against empty intermediate results
+- Add "--verbose" option for enabling the DEBUG log level in turn displaying processed files
 
 2018-03-15 0.6.4
 ================

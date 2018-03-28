@@ -9,7 +9,7 @@ import numpy as np
 
 def boot_logging(options=None):
     log_level = logging.INFO
-    if options and options.get('--debug'):
+    if options and (options.get('--verbose') or options.get('--debug')):
         log_level = logging.DEBUG
     setup_logging(level=log_level)
 

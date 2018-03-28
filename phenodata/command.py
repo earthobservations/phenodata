@@ -31,7 +31,7 @@ def run():
       phenodata list-quality-bytes --source=dwd [--format=csv]
       phenodata list-filenames --source=dwd --dataset=immediate --partition=recent [--filename=Hasel,Schneegloeckchen] [--year=2017]
       phenodata list-urls --source=dwd --dataset=immediate --partition=recent [--filename=Hasel,Schneegloeckchen] [--year=2017]
-      phenodata (observations|forecast) --source=dwd --dataset=immediate --partition=recent [--filename=Hasel,Schneegloeckchen] [--station-id=164,717] [--species-id=113,127] [--phase-id=5] [--quality-level=10] [--quality-byte=1,2,3] [--station=berlin,brandenburg] [--species=hazel,snowdrop] [--species-preset=mellifera-primary] [--phase=flowering] [--quality=ROUTKLI] [--year=2017] [--humanize] [--show-ids] [--language=german] [--long-station] [--sort=Datum] [--format=csv]
+      phenodata (observations|forecast) --source=dwd --dataset=immediate --partition=recent [--filename=Hasel,Schneegloeckchen] [--station-id=164,717] [--species-id=113,127] [--phase-id=5] [--quality-level=10] [--quality-byte=1,2,3] [--station=berlin,brandenburg] [--species=hazel,snowdrop] [--species-preset=mellifera-primary] [--phase=flowering] [--quality=ROUTKLI] [--year=2017] [--humanize] [--show-ids] [--language=german] [--long-station] [--sort=Datum] [--format=csv] [--verbose]
       phenodata drop-cache --source=dwd
       phenodata --version
       phenodata (-h | --help)
@@ -67,6 +67,7 @@ def run():
       --long-station            Use long station name including "Naturraumgruppe" and "Naturraum".
       --limit=<limit>           Limit output of "nearest-stations" to designated number of entries.
                                 [default: 10]
+      --verbose                 Turn on verbose output
     """
 
     # Use generic commandline options schema and amend with current program name
