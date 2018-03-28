@@ -254,7 +254,7 @@ class DwdPhenoData(object):
         for path in tqdm(paths, ncols=80):
 
             # Skip invalid files
-            if 'Kulturpflanze_Ruebe_akt' in path:
+            if 'Kulturpflanze_Ruebe_akt' in path or 'Kulturpflanze_Ruebe_hist' in path:
                 logger.warning('Skipping file "{}" due to invalid header format (all caps)'.format(path))
                 continue
 
