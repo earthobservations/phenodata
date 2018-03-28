@@ -23,6 +23,7 @@ Prio 2
 - [x] Suppress or move resource acquisition log messages to DEBUG log level and replace by progress indicator
 - [x] Use "appdirs" module for computing cache storage location
 - [x] Add command "phenodata drop-cache"
+- [x] "Jultag" auch bei "--humanize" nicht unterdrücken wegen https://community.hiveeyes.org/t/phanologischer-kalender/664/45
 - [o] Display effective criteria just before performing the work
 - [o] Output "phenodata info" as DataFrame
 - [o] Complete offline mode running from - even stale - cache entries
@@ -34,3 +35,7 @@ Prio 2
 - [o] Query directly by lat/lon instead of --station=
 - [o] Enrich "Output example" in README.rst
 - [o] Add --format=table-markdown, expanding to --format=tabular:pipe
+- [o] For "--partition=historical", the file sizes are considerably larger. Think about displaying a per-file progress bar.
+- [o] Don't skip "Kulturpflanze_Ruebe_akt" and "Kulturpflanze_Ruebe_hist"
+- [o] Scan https://community.hiveeyes.org/t/phanologischer-kalender/664 for more bug reports and feature requests
+- [o] Exporter for Kotori annotations, see https://community.hiveeyes.org/t/annotationen-im-grafana-uber-die-http-mqtt-api/111/17
