@@ -99,7 +99,9 @@ class DwdCdcClient(object):
         df = df.apply(dataframe_strip_strings, axis=0)
 
         # Remove rows with empty values
-        df.dropna(subset=['eor'], inplace=True)
+        for sanitize_column in ['eor']:
+            if sanitize_column in df:
+                df.dropna(subset=[sanitize_column], inplace=True)
 
         # Remove trailing nonsense column
         # FIXME: Only remove if there actually *are* nonsense columns
