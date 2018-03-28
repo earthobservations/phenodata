@@ -154,8 +154,16 @@ class DwdPhenoData(object):
         # Acquire data
         observations = self.query(partition=options['partition'], files=options['filename'])
 
+        # Sanity checks
+        if observations is None:
+            return
+
         # Filter data
         observations = self.flux(observations, criteria=options)
+
+        # Sanity checks
+        if observations is None:
+            return
 
         # Optionally humanize DataFrame
         if humanize:
@@ -178,6 +186,9 @@ class DwdPhenoData(object):
 
         # Get current observations
         observations = self.get_observations(options)
+        if observations is None:
+            logger.warning('No results found')
+            return
 
         # Group by station, species and phase
         # https://pandas.pydata.org/pandas-docs/stable/groupby.html

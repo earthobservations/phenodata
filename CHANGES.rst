@@ -4,6 +4,7 @@ phenodata changelog
 
 development
 ===========
+- Add some sanity checks protecting against empty intermediate results
 
 2018-03-15 0.6.4
 ================
