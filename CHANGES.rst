@@ -4,6 +4,9 @@ phenodata changelog
 
 development
 ===========
+
+2018-03-28 0.6.5
+================
 - Add some sanity checks protecting against empty intermediate results
 - Add "--verbose" option for enabling the DEBUG log level in turn displaying processed files
 - Also skip file "Kulturpflanze_Ruebe_hist" completely as it has an invalid header format (all caps)
