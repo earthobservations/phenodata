@@ -411,7 +411,7 @@ class DwdPhenoData(object):
             url, subdir=partition,
             include=include,
             include_base=['PH_(Sofort|Jahres)melder.+\.txt'],
-            exclude_base=['PH_Beschreibung', 'Spezifizierung'],
+            exclude_base=['PH_Beschreibung', 'Spezifizierung', 'PH_.+_Notiz'],
         )
 
         # Return entries if projection to field not requested

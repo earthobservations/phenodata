@@ -7,6 +7,7 @@ development
 - Add some sanity checks protecting against empty intermediate results
 - Add "--verbose" option for enabling the DEBUG log level in turn displaying processed files
 - Also skip file "Kulturpflanze_Ruebe_hist" completely as it has an invalid header format (all caps)
+- Also skip files matching "PH_.+_Notiz" completely as they contain metadata
 
 2018-03-15 0.6.4
 ================
