@@ -9,6 +9,7 @@ development
 - Also skip file "Kulturpflanze_Ruebe_hist" completely as it has an invalid header format (all caps)
 - Also skip files matching "PH_.+_Notiz" completely as they contain metadata
 - Improve empty value removal before postprocessing
+- Add column "Tag" for "--humanize" option
 
 2018-03-15 0.6.4
 ================

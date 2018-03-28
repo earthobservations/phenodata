@@ -467,6 +467,7 @@ class DwdPhenoDataHumanizer(object):
         # Build fresh DataFrame with designated order of columns
         canvas['Jahr'] = frame['Referenzjahr']
         canvas['Datum'] = frame['Eintrittsdatum'].astype(str)
+        canvas['Tag'] = frame['Jultag']
         canvas['Spezies'] = species
         canvas['Phase'] = phases
         canvas['Station'] = stations
@@ -483,6 +484,7 @@ class DwdPhenoDataHumanizer(object):
 
         # Build fresh DataFrame with designated order of columns
         canvas['Datum'] = frame['Datum'].astype(str)
+        canvas['Tag'] = frame['Jultag']
         canvas['Spezies'] = species
         canvas['Phase'] = phases
         canvas['Station'] = stations
