@@ -159,9 +159,13 @@ List of phases::
 
     phenodata list-phases --source=dwd
 
-List of stations::
+List of all stations::
 
     phenodata list-stations --source=dwd --dataset=immediate
+
+List of filtered stations::
+
+    phenodata list-stations --source=dwd --dataset=annual --filter="Fränkische Alb"
 
 List of file names of recent observations by the annual reporters::
 

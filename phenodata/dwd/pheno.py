@@ -72,7 +72,7 @@ class DwdPhenoData(object):
         """
         return self.cdc.get_dataframe(path='/help/PH_Beschreibung_Phaenologie_Qualitaetsbyte.txt', index_column=0)
 
-    def get_stations(self, all=False):
+    def get_stations(self, filter=None, all=False):
         """
         Return DataFrame with stations information.
         """
@@ -93,6 +93,27 @@ class DwdPhenoData(object):
 
         # Appropriately coerce geolocation values to float
         #dataframe_coerce_columns(data, ['geograph.Breite', 'geograph.Laenge'], float)
+
+        # A. Basic filtering
+
+        if filter:
+            # Build "boolean indexing" filter expression from multiple ID-based criteria
+            # https://pandas.pydata.org/pandas-docs/stable/indexing.html#boolean-indexing
+            reference_fields = [
+                'Stationsname',
+                'Naturraumgruppe',
+                'Naturraum',
+                'Bundesland',
+            ]
+
+            expression = False
+            for reference_field in reference_fields:
+                print reference_field, filter
+                expression |= data[reference_field].str.contains(filter, case=False)
+
+            # Apply filter expression to DataFrame
+            if type(expression) is not bool:
+                data = data[expression]
 
         return data
 
@@ -334,18 +355,21 @@ class DwdPhenoData(object):
         # Build "boolean indexing" filter expression from multiple ID-based criteria
         # https://pandas.pydata.org/pandas-docs/stable/indexing.html#boolean-indexing
         isin_map = {
-            'year': results.Referenzjahr,
-            'quality-level': results.Qualitaetsniveau,
-            'quality-byte': results.Eintrittsdatum_QB,
-            'station-id': results.Stations_id,
-            'species-id': results.Objekt_id,
-            'phase-id': results.Phase_id,
+            'year': 'Referenzjahr',
+            'quality-level': 'Qualitaetsniveau',
+            'quality-byte': 'Eintrittsdatum_QB',
+            'station-id': 'Stations_id',
+            'species-id': 'Objekt_id',
+            'phase-id': 'Phase_id',
         }
 
         # Lowlevel filtering based on IDs
         # For each designated field, add ``.isin`` criteria to "boolean index" expression
         expression = True
-        for key, reference in isin_map.items():
+        for key, field in isin_map.items():
+            if field not in results:
+                continue
+            reference = results[field]
             if criteria[key]:
                 expression &= reference.isin(criteria[key])
 
