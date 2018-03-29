@@ -35,9 +35,9 @@ pypi-upload: install-releasetools
 install-doctools:
 	$(eval venvpath := ".venv_project")
 	@test -e $(venvpath)/bin/python || `command -v virtualenv` --python=`command -v python` --no-site-packages $(venvpath)
-	@$(venvpath)/bin/pip install --quiet --requirement requirements-docs.txt
+	@$(venvpath)/bin/pip install --quiet --requirement requirements-docs.txt --upgrade
 
 install-releasetools:
 	$(eval venvpath := ".venv_project")
 	@test -e $(venvpath)/bin/python || `command -v virtualenv` --python=`command -v python` --no-site-packages $(venvpath)
-	@$(venvpath)/bin/pip install --quiet --requirement requirements-release.txt
+	@$(venvpath)/bin/pip install --quiet --requirement requirements-release.txt --upgrade
