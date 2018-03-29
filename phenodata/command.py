@@ -183,9 +183,7 @@ def run():
 
         # Whether to show the index column or not
         showindex = True
-        if options['observations']:
-            showindex = False
-        if options['forecast'] and options['humanize']:
+        if options['observations'] or options['forecast']:
             showindex = False
 
         # Sort columns

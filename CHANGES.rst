@@ -4,6 +4,7 @@ phenodata changelog
 
 development
 ===========
+- Don't display multi-index column in "forecast" mode w/o "humanize" option
 
 2018-03-28 0.6.5
 ================

@@ -163,12 +163,15 @@ class DwdPhenoData(object):
 
         # Sanity checks
         if observations is None:
+            logger.warning('No results found')
             return
 
         # Optionally humanize DataFrame
         if humanize:
             megaframe = self.create_megaframe(observations)
             observations = self.humanizer.get_observations(megaframe)
+
+        # or pass-through with minor cosmetic amendments
         else:
             observations['Eintrittsdatum'] = observations['Eintrittsdatum'].astype(str)
 
@@ -186,8 +189,9 @@ class DwdPhenoData(object):
 
         # Get current observations
         observations = self.get_observations(options)
+
+        # Sanity checks
         if observations is None:
-            logger.warning('No results found')
             return
 
         # Group by station, species and phase
@@ -205,25 +209,26 @@ class DwdPhenoData(object):
         real_dates = pd.to_datetime(datetime.today().year * 1000 + forecast['Jultag'], errors='coerce', format='%Y%j')
         forecast.insert(0, 'Datum', real_dates)
 
+        # Resolve index column to real columns
+        station_ids = []
+        species_ids = []
+        phase_ids = []
+        for index, row in forecast.iterrows():
+            # Decode index column and collect its components
+            station_id, species_id, phase_id = index
+            station_ids.append(station_id)
+            species_ids.append(species_id)
+            phase_ids.append(phase_id)
+
+        forecast['Stations_id'], forecast['Objekt_id'], forecast['Phase_id'] = station_ids, species_ids, phase_ids
+
+
         # Optionally humanize DataFrame
         if humanize:
-            station_ids = []
-            species_ids = []
-            phase_ids = []
-            for index, row in forecast.iterrows():
-
-                # Decode index column and collect its components
-                station_id, species_id, phase_id = index
-                station_ids.append(station_id)
-                species_ids.append(species_id)
-                phase_ids.append(phase_id)
-
-            # Re-add index components as real columns
-            forecast['Stations_id'], forecast['Objekt_id'], forecast['Phase_id'] = station_ids, species_ids, phase_ids
-
             megaframe = self.create_megaframe(forecast)
             forecast = self.humanizer.get_forecast(megaframe)
 
+        # or pass-through with minor cosmetic amendments
         else:
             forecast['Datum'] = forecast['Datum'].astype(str)
 
