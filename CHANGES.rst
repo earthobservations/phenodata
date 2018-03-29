@@ -4,6 +4,7 @@ phenodata changelog
 
 development
 ===========
+- Upgrade release support packages "twine" and "keyring"
 
 2018-03-29 0.8.0
 ================
