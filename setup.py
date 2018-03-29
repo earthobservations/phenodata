@@ -12,7 +12,7 @@ requires = [
     'attrs==17.4.0',
     'pandas>=0.18.1,<=0.22.0',
     'tabulate==0.8.2',
-    'dogpile.cache==0.7.0',
+    'dogpile.cache==0.6.5',
     'arrow==0.12.1',
     'tqdm==4.19.7',
     'appdirs==1.4.3',
