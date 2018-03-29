@@ -4,6 +4,9 @@ phenodata changelog
 
 development
 ===========
+
+2018-03-29 0.7.0
+================
 - Don't display multi-index column in "forecast" mode w/o "humanize" option
 - Grok species "Rübe" by applying appropriate fixups to raw data before parsing
 - Add option "--filter" to "phenodata list-stations" for filtering by arbitrary text strings
