@@ -5,6 +5,7 @@ phenodata changelog
 development
 ===========
 - Don't display multi-index column in "forecast" mode w/o "humanize" option
+- Grok species "Rübe" by applying appropriate fixups to raw data before parsing
 
 2018-03-28 0.6.5
 ================

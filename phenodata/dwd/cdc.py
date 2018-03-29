@@ -57,9 +57,24 @@ class DwdCdcClient(object):
         content = re.sub('; eor ;\s*', '; eor;\n', content)
         content = content.strip()
 
-        # Specific fixups
+        # Fixups for specific fields
         if 'Qualitaetsbyte' in url:
             content = content.replace('Eintrittsdatum;', 'Eintrittsdatum,')
+
+        # Fixups for specific files
+        if 'Kulturpflanze_Ruebe_akt' in url or 'Kulturpflanze_Ruebe_hist' in url:
+            fieldmap = {
+                'STATIONS_ID': 'Stations_id',
+                'OBJEKT_ID': 'Objekt_id',
+                'PHASE_ID': 'Phase_id',
+                'REFERENZJAHR': 'Referenzjahr',
+                'EINTRITTSDATUM': 'Eintrittsdatum',
+                'JULTAG': 'Jultag',
+                'EINTRITTSDATUM_QB': 'Eintrittsdatum_QB',
+                'QUALITAETSNIVEAU': 'Qualitaetsniveau',
+            }
+            for old, new in fieldmap.items():
+                content = content.replace(old, new)
 
         # Debugging
         #print 'content:\n', response.content.decode('Windows-1252').encode('utf8')
@@ -99,7 +114,7 @@ class DwdCdcClient(object):
         df = df.apply(dataframe_strip_strings, axis=0)
 
         # Remove rows with empty values
-        for sanitize_column in ['eor']:
+        for sanitize_column in ['Eintrittsdatum', 'Jultag', 'eor']:
             if sanitize_column in df:
                 df.dropna(subset=[sanitize_column], inplace=True)
 
