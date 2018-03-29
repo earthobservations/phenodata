@@ -76,14 +76,14 @@ Usage
       phenodata info
       phenodata list-species --source=dwd [--format=csv]
       phenodata list-phases --source=dwd [--format=csv]
-      phenodata list-stations --source=dwd --dataset=immediate [--all] [--format=csv]
+      phenodata list-stations --source=dwd --dataset=immediate [--all] [--filter=berlin] [--sort=Stationsname] [--format=csv]
       phenodata nearest-station --source=dwd --dataset=immediate --latitude=52.520007 --longitude=13.404954 [--format=csv]
       phenodata nearest-stations --source=dwd --dataset=immediate [--all] --latitude=52.520007 --longitude=13.404954 [--limit=10] [--format=csv]
       phenodata list-quality-levels --source=dwd [--format=csv]
       phenodata list-quality-bytes --source=dwd [--format=csv]
       phenodata list-filenames --source=dwd --dataset=immediate --partition=recent [--filename=Hasel,Schneegloeckchen] [--year=2017]
       phenodata list-urls --source=dwd --dataset=immediate --partition=recent [--filename=Hasel,Schneegloeckchen] [--year=2017]
-      phenodata (observations|forecast) --source=dwd --dataset=immediate --partition=recent [--filename=Hasel,Schneegloeckchen] [--station-id=164,717] [--species-id=113,127] [--phase-id=5] [--quality-level=10] [--quality-byte=1,2,3] [--station=berlin,brandenburg] [--species=hazel,snowdrop] [--species-preset=mellifera-primary] [--phase=flowering] [--quality=ROUTKLI] [--year=2017] [--humanize] [--show-ids] [--language=german] [--long-station] [--sort=Datum] [--format=csv]
+      phenodata (observations|forecast) --source=dwd --dataset=immediate --partition=recent [--filename=Hasel,Schneegloeckchen] [--station-id=164,717] [--species-id=113,127] [--phase-id=5] [--quality-level=10] [--quality-byte=1,2,3] [--station=berlin,brandenburg] [--species=hazel,snowdrop] [--species-preset=mellifera-primary] [--phase=flowering] [--quality=ROUTKLI] [--year=2017] [--humanize] [--show-ids] [--language=german] [--long-station] [--sort=Datum] [--format=csv] [--verbose]
       phenodata drop-cache --source=dwd
       phenodata --version
       phenodata (-h | --help)
@@ -104,7 +104,8 @@ Usage
       --station=<station>       Filter by strings from "stations" data (comma-separated list)
       --species=<species>       Filter by strings from "species" data (comma-separated list)
       --phase=<phase>           Filter by strings from "phases" data (comma-separated list)
-      --species-preset=<preset> Filter by strings from "species" data (comma-separated list) loaded from ``presets.json`` file
+      --species-preset=<preset> Filter by strings from "species" data (comma-separated list)
+                                The preset will get loaded from the ``presets.json`` file.
 
     Data output options:
       --format=<format>         Output data in designated format. Choose one of "tabular", "json", "csv" or "string".
@@ -118,6 +119,7 @@ Usage
       --long-station            Use long station name including "Naturraumgruppe" and "Naturraum".
       --limit=<limit>           Limit output of "nearest-stations" to designated number of entries.
                                 [default: 10]
+      --verbose                 Turn on verbose output
 
 ----
 
