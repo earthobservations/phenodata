@@ -6,7 +6,7 @@ README = open(os.path.join(here, 'README.rst')).read()
 CHANGES = open(os.path.join(here, 'CHANGES.rst')).read()
 
 requires = [
-    'requests==2.18.4',
+    'requests==2.20.0',
     'requests-ftp==0.3.1',
     'docopt==0.6.2',
     'attrs==17.4.0',
