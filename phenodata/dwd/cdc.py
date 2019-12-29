@@ -14,7 +14,7 @@ class DwdCdcClient(object):
     """
 
     # The base URL to data on the CDC FTP server
-    baseurl = 'ftp://ftp-cdc.dwd.de/pub/CDC'
+    baseurl = 'ftp://opendata.dwd.de/climate_environment/CDC'
 
     # Instance of ``phenodata.ftp.FTPSession`` object for lowlevel access to CDC FTP
     ftp = attr.ib()
