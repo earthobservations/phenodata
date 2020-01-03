@@ -23,8 +23,8 @@ Data sources
 
 Metadata
 --------
-ftp://ftp-cdc.dwd.de/pub/CDC/help/PH_Beschreibung_*.txt
+ftp://opendata.dwd.de/climate_environment/CDC/help/PH_Beschreibung_*.txt
 
 Raw data
 --------
-ftp://ftp-cdc.dwd.de/pub/CDC/observations_germany/phenology/
+ftp://opendata.dwd.de/climate_environment/CDC/observations_germany/phenology/
