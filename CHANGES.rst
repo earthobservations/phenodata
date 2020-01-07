@@ -5,6 +5,10 @@ phenodata changelog
 development
 ===========
 
+2020-01-07 0.9.1
+================
+- Update version badge within README header
+
 2020-01-07 0.9.0
 ================
 - Upgrade release support packages "twine" and "keyring"
