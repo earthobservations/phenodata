@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 # (c) 2018 Andreas Motl <andreas@hiveeyes.org>
+from __future__ import division
+from past.utils import old_div
 import re
 import sys
 import math
@@ -22,14 +24,15 @@ def setup_logging(level=logging.INFO):
 
 def normalize_options(options, encoding=None, list_items=None):
     normalized = {}
-    for key, value in options.items():
+    for key, value in list(options.items()):
 
         # Sanitize key
         key = key.strip('--<>')
 
         # Sanitize charset encoding
-        if encoding and (type(value) is str):
-            value = value.decode(encoding)
+        if sys.version_info.major == 2:
+            if encoding and type(value) is str:
+                value = value.decode(encoding)
 
         normalized[key] = value
 
@@ -37,7 +40,7 @@ def normalize_options(options, encoding=None, list_items=None):
 
 def options_convert_lists(options, list_items=None):
     list_items = list_items or []
-    for key, value in options.items():
+    for key, value in list(options.items()):
         # Decode list options
         if key in list_items:
             if value is None:
@@ -53,10 +56,10 @@ def to_list(obj):
         obj = [obj, ]
     return obj
 
-def read_list(data, separator=u','):
+def read_list(data, separator=','):
     if data is None:
         return []
-    result = list(map(lambda x: x.strip(), data.split(separator)))
+    result = list([x.strip() for x in data.split(separator)])
     if len(result) == 1 and not result[0]:
         result = []
     return result
@@ -76,8 +79,13 @@ def regex_run_matchers(matchers, text):
 
 def dataframe_strip_strings(col):
     # https://stackoverflow.com/questions/33788913/pythonic-efficient-way-to-strip-whitespace-from-every-pandas-data-frame-cell-tha/44740438#44740438
+
+    comptype = str
+    if sys.version_info.major == 2:
+        comptype = unicode
+
     if col.dtypes == object:
-        return (col.astype(unicode)
+        return (col.astype(comptype)
                 .str.strip(' \t')
                 .replace({'nan': np.nan}))
     return col
@@ -95,8 +103,8 @@ def haversine_distance(destination, origin):
 
     dlat = math.radians(lat2-lat1)
     dlon = math.radians(lon2-lon1)
-    a = math.sin(dlat/2) * math.sin(dlat/2) + math.cos(math.radians(lat1)) \
-        * math.cos(math.radians(lat2)) * math.sin(dlon/2) * math.sin(dlon/2)
+    a = math.sin(old_div(dlat,2)) * math.sin(old_div(dlat,2)) + math.cos(math.radians(lat1)) \
+        * math.cos(math.radians(lat2)) * math.sin(old_div(dlon,2)) * math.sin(old_div(dlon,2))
     c = 2 * math.atan2(math.sqrt(a), math.sqrt(1-a))
     d = radius * c
     return d

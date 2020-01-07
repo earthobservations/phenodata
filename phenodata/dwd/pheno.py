@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 # (c) 2018 Andreas Motl <andreas@hiveeyes.org>
+from __future__ import print_function
+from builtins import object
 import attr
 import json
 import logging
@@ -108,7 +110,7 @@ class DwdPhenoData(object):
 
             expression = False
             for reference_field in reference_fields:
-                print reference_field, filter
+                print(reference_field, filter)
                 expression |= data[reference_field].str.contains(filter, case=False)
 
             # Apply filter expression to DataFrame
@@ -270,7 +272,6 @@ class DwdPhenoData(object):
         # Search FTP server
         paths = self.scan_files(partition, include=files, field='url')
 
-
         logger.info('Starting data acquisition with {} files'.format(len(paths)))
 
         # The main DataFrame object
@@ -292,8 +293,7 @@ class DwdPhenoData(object):
             # Coerce "Eintrittsdatum" column into date format
             data['Eintrittsdatum'] = pd.to_datetime(data['Eintrittsdatum'], errors='coerce', format='%Y%m%d')
 
-            # Append to DataFrame
-            results = results.append(data)
+            results = results.append(data, sort=False)
 
         # Sanity checks
         if results.empty:
@@ -309,14 +309,19 @@ class DwdPhenoData(object):
 
         # https://pandas.pydata.org/pandas-docs/stable/merging.html#database-style-dataframe-joining-merging
 
+        # Prevent errors like::
+        #   FutureWarning: 'XXX_id' is both an index level and a column label.
+        #   Defaulting to column, but this will raise an ambiguity error in a future version
+        #frame.drop(columns=['Stations_id'], inplace=True)
+
         # Stations
-        frame = pd.merge(frame, self.get_stations(), left_on='Stations_id', right_index=True)
+        frame = pd.merge(frame, self.get_stations(), left_on='Stations_id', right_on='Stations_id')
 
         # Species
-        frame = pd.merge(frame, self.get_species(), left_on='Objekt_id', right_index=True)
+        frame = pd.merge(frame, self.get_species(), left_on='Objekt_id', right_on='Objekt_ID')
 
         # Phases
-        frame = pd.merge(frame, self.get_phases(), left_on='Phase_id', right_index=True)
+        frame = pd.merge(frame, self.get_phases(), left_on='Phase_id', right_on='Phase_ID')
 
         # Quality level
         if 'Qualitaetsniveau' in frame:
@@ -366,7 +371,7 @@ class DwdPhenoData(object):
         # Lowlevel filtering based on IDs
         # For each designated field, add ``.isin`` criteria to "boolean index" expression
         expression = True
-        for key, field in isin_map.items():
+        for key, field in list(isin_map.items()):
             if field not in results:
                 continue
             reference = results[field]
@@ -395,7 +400,7 @@ class DwdPhenoData(object):
 
         expression = True
         is_megaframe = False
-        for field, reference_fields in patterns_map.items():
+        for field, reference_fields in list(patterns_map.items()):
 
             if criteria[field]:
 

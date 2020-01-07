@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 # (c) 2018 Andreas Motl <andreas@hiveeyes.org>
+from builtins import object
 import os
 import re
+import sys
 import arrow
 import shutil
 import appdirs
@@ -12,12 +14,15 @@ from phenodata.util import regex_make_matchers, regex_run_matchers
 
 logger = logging.getLogger(__name__)
 
+
 class CacheManager(object):
 
     def __init__(self):
 
         # Path to cache directory, system agnostic
         self.cache_path = os.path.join(appdirs.user_cache_dir(appname='phenodata', appauthor=False), 'dwd-ftp')
+        if sys.version_info.major >= 3:
+            self.cache_path = os.path.join(self.cache_path, 'py{}'.format(sys.version_info.major))
         if not os.path.exists(self.cache_path):
             os.makedirs(self.cache_path)
 
@@ -120,7 +125,7 @@ class FTPSession(requests_ftp.ftp.FTPSession):
 
         # Decode LIST response
         entries = []
-        for line in response.content.split('\n'):
+        for line in response.text.split('\n'):
 
             # Skip empty lines
             line = line.strip()
@@ -168,7 +173,7 @@ class FTPSession(requests_ftp.ftp.FTPSession):
         }
 
         # Regex-compile filter patterns, inplace
-        for key, value in filter.items():
+        for key, value in list(filter.items()):
             value = value or []
             value = regex_make_matchers(value)
             filter[key] = value
@@ -268,7 +273,7 @@ class FTPSession(requests_ftp.ftp.FTPSession):
 
             # Populate cache with valid response content
             if response.status_code == 226:
-                payload = response.content
+                payload = response.text
                 self.cache.content.set(content_key, payload)
                 self.cache.content.set(mtime_key, mtime)
 

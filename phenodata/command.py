@@ -199,7 +199,7 @@ def run():
                 tablefmt = 'psql'
 
             # TODO: How to make "tabulate" print index column name?
-            output = tabulate(data, headers=data.columns, showindex=showindex, tablefmt=tablefmt).encode('utf-8')
+            output = tabulate(data, headers=data.columns, showindex=showindex, tablefmt=tablefmt)
 
         elif output_format == 'csv':
             output = data.to_csv(encoding='utf-8', index=showindex)
@@ -216,6 +216,9 @@ def run():
             sys.exit(1)
 
         if output is not None:
-            print(output)
+            if sys.version_info.major == 2:
+                print(output.encode('utf-8'))
+            else:
+                print(output)
         else:
             logger.warning('Empty output')

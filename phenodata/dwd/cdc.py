@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 # (c) 2018 Andreas Motl <andreas@hiveeyes.org>
+from builtins import object
 import re
 import attr
 import pandas as pd
@@ -73,7 +74,7 @@ class DwdCdcClient(object):
                 'EINTRITTSDATUM_QB': 'Eintrittsdatum_QB',
                 'QUALITAETSNIVEAU': 'Qualitaetsniveau',
             }
-            for old, new in fieldmap.items():
+            for old, new in list(fieldmap.items()):
                 content = content.replace(old, new)
 
         # Debugging
@@ -93,14 +94,15 @@ class DwdCdcClient(object):
         """
 
         # Sanity checks
-        if not stream or stream.len == 0:
-            return
+        #if not stream or stream.len == 0:
+        #    return
 
         # Read CSV into Pandas DataFrame
         # https://pandas.pydata.org/pandas-docs/stable/io.html
         df = pd.read_csv(
-            stream, engine='c', encoding='Windows-1252',
+            stream, engine='c', encoding='utf-8',
             delimiter=';', skipinitialspace=True, skip_blank_lines=True,
+            low_memory=False
         )
 
 

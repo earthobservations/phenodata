@@ -1,4 +1,5 @@
 import os
+import sys
 from setuptools import setup, find_packages
 
 here = os.path.abspath(os.path.dirname(__file__))
@@ -6,17 +7,22 @@ README = open(os.path.join(here, 'README.rst')).read()
 CHANGES = open(os.path.join(here, 'CHANGES.rst')).read()
 
 requires = [
-    'requests==2.20.0',
-    'requests-ftp==0.3.1',
-    'docopt==0.6.2',
-    'attrs==17.4.0',
-    'pandas>=0.18.1,<=0.22.0',
-    'tabulate==0.8.2',
-    'dogpile.cache==0.6.5',
-    'arrow==0.12.1',
-    'tqdm==4.19.7',
-    'appdirs==1.4.3',
+    'requests>=2.18.4',
+    'requests-ftp>=0.3.1',
+    'docopt>=0.6.2',
+    'attrs>=17.4.0',
+    'tabulate>=0.8.2',
+    'dogpile.cache>=0.6.5',
+    'arrow>=0.12.1',
+    'tqdm>=4.19.7',
+    'appdirs>=1.4.3',
+    'future',
 ]
+
+if sys.version_info.major == 2:
+    requires += ['pandas==0.23.4', 'numpy==1.16.6']
+else:
+    requires += ['pandas==0.23.4', 'numpy==1.18.1']
 
 test_requires = [
 ]

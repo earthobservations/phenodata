@@ -4,7 +4,12 @@ phenodata changelog
 
 development
 ===========
+
+2020-01-07 0.9.0
+================
 - Upgrade release support packages "twine" and "keyring"
+- Change base URL to new opendata URL. Thanks, @mgrrx!
+- Futurize for Python 3 compatibility.
 
 2018-03-29 0.8.0
 ================
