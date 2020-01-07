@@ -376,8 +376,8 @@ Project information
 
 About
 =====
-The "phenodata" program is released under the AGPL license.
-The code lives on `GitHub <https://github.com/hiveeyes/phenodata>`_ and
+The "phenodata" program is released under the GNU AGPL license.
+Its source code lives on `GitHub <https://github.com/hiveeyes/phenodata>`_ and
 the Python package is published to `PyPI <https://pypi.org/project/phenodata/>`_.
 You might also want to have a look at the `documentation <https://hiveeyes.org/docs/phenodata/>`_.
 
@@ -391,7 +391,7 @@ Thanks in advance for your efforts, we really appreciate any help or feedback.
 
 Code license
 ============
-Licensed under the AGPL license. See LICENSE_ file for details.
+Licensed under the GNU AGPL license. See LICENSE_ file for details.
 
 .. _LICENSE: https://github.com/hiveeyes/phenodata/blob/master/LICENSE
 

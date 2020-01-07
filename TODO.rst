@@ -24,6 +24,12 @@ Prio 2
 - [x] Use "appdirs" module for computing cache storage location
 - [x] Add command "phenodata drop-cache"
 - [x] "Jultag" auch bei "--humanize" nicht unterdrücken wegen https://community.hiveeyes.org/t/phanologischer-kalender/664/45
+
+
+******
+Prio 3
+******
+- [o] Render like https://www.zamg.ac.at/zamgWeb/pict/phaenospiegel/archive/pheno_overview_Austria_web_1_2016.png
 - [o] Display effective criteria just before performing the work
 - [o] Output "phenodata info" as DataFrame
 - [o] Complete offline mode running from - even stale - cache entries
@@ -39,3 +45,11 @@ Prio 2
 - [o] Don't skip "Kulturpflanze_Ruebe_akt" and "Kulturpflanze_Ruebe_hist"
 - [o] Scan https://community.hiveeyes.org/t/phanologischer-kalender/664 for more bug reports and feature requests
 - [o] Exporter for Kotori annotations, see https://community.hiveeyes.org/t/annotationen-im-grafana-uber-die-http-mqtt-api/111/17
+- [o] Remark: Take care about filtering by "filename" vs. "species"
+- [o] mqtt-publish adapter
+
+
+****
+Misc
+****
+- https://www.researchgate.net/publication/266211199_Guidelines_for_Plant_Phenological_Observations
