@@ -1,0 +1,29 @@
+###########################################
+Pan European Phenological database (PEP725)
+###########################################
+
+*****
+About
+*****
+- http://www.pep725.eu/
+
+Pan European Phenological database (PEP725): a single point of access for European data.
+
+The main objective of PEP725 is to promote and facilitate phenological research by
+delivering a pan European phenological database with an open, unrestricted data access
+for science, research and education.
+
+
+*******
+Details
+*******
+- https://www.ncbi.nlm.nih.gov/pubmed/29455297
+- http://adsabs.harvard.edu/abs/2017EGUGA..19.9610U
+
+
+***
+API
+***
+- http://www.pep725.eu/dachs.json
+- Alder: http://www.pep725.eu/data_102_0_60.tsv
+- Hazel: http://www.pep725.eu/data_107_0_60.tsv
