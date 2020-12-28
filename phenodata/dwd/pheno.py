@@ -249,7 +249,7 @@ class DwdPhenoData(object):
 
         # Optionally humanize DataFrame
         if humanize:
-            megaframe = self.create_megaframe(forecast)
+            megaframe = self.create_megaframe(forecast, drop_index_columns=True)
             forecast = self.humanizer.get_forecast(megaframe)
 
         # or pass-through with minor cosmetic amendments
@@ -306,14 +306,14 @@ class DwdPhenoData(object):
 
         return results
 
-    def create_megaframe(self, frame):
+    def create_megaframe(self, frame, drop_index_columns=False):
 
         # https://pandas.pydata.org/pandas-docs/stable/merging.html#database-style-dataframe-joining-merging
 
         # Prevent errors like::
-        #   FutureWarning: 'XXX_id' is both an index level and a column label.
-        #   Defaulting to column, but this will raise an ambiguity error in a future version
-        #frame.drop(columns=['Stations_id'], inplace=True)
+        #   ValueError: 'Stations_id' is both an index level and a column label, which is ambiguous.
+        if drop_index_columns:
+            frame.drop(columns=['Stations_id'], axis='columns', inplace=True)
 
         # Stations
         frame = pd.merge(frame, self.get_stations(), left_on='Stations_id', right_on='Stations_id')
