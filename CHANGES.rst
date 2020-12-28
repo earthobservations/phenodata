@@ -5,6 +5,7 @@ phenodata changelog
 development
 ===========
 - Add basic examples about how to use the module as a library
+- Relax dependencies to be able to use a more recent version of Pandas
 
 2020-01-07 0.9.1
 ================

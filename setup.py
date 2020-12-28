@@ -7,6 +7,7 @@ README = open(os.path.join(here, 'README.rst')).read()
 CHANGES = open(os.path.join(here, 'CHANGES.rst')).read()
 
 requires = [
+    'pandas>=0.23.4',
     'requests>=2.18.4',
     'requests-ftp>=0.3.1',
     'docopt>=0.6.2',
@@ -18,11 +19,6 @@ requires = [
     'appdirs>=1.4.3',
     'future',
 ]
-
-if sys.version_info.major == 2:
-    requires += ['pandas==0.23.4', 'numpy==1.16.6']
-else:
-    requires += ['pandas==0.23.4', 'numpy==1.18.1']
 
 test_requires = [
 ]
