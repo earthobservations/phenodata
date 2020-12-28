@@ -7,7 +7,7 @@
 .. image:: https://img.shields.io/github/tag/earthobservations/phenodata.svg
     :target: https://github.com/earthobservations/phenodata
 
-.. image:: https://img.shields.io/pypi/dm/kotori.svg
+.. image:: https://img.shields.io/pypi/dm/phenodata.svg
     :target: https://pypi.org/project/phenodata/
 
 |
