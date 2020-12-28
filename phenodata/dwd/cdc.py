@@ -106,7 +106,9 @@ class DwdCdcClient(object):
         # https://pandas.pydata.org/pandas-docs/stable/io.html
         df = pd.read_csv(
             stream, engine='c', encoding='utf-8',
-            delimiter=';', skipinitialspace=True, skip_blank_lines=True,
+            delimiter=';', skipinitialspace=True,
+            skip_blank_lines=True,
+            error_bad_lines=False,
             low_memory=False
         )
 

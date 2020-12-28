@@ -6,6 +6,7 @@ development
 ===========
 - Add basic examples about how to use the module as a library
 - Relax dependencies to be able to use a more recent version of Pandas
+- Be graceful about malformed lines within ingress CSV
 
 2020-01-07 0.9.1
 ================
