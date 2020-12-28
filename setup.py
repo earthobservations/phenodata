@@ -24,7 +24,7 @@ test_requires = [
 ]
 
 setup(name='phenodata',
-    version='0.9.1',
+    version='0.9.2',
     description='phenodata is a data acquisition and manipulation toolkit for open access phenology data',
     long_description=README,
     license="AGPL 3",
