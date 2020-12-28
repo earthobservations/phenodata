@@ -1,11 +1,15 @@
 # -*- coding: utf-8 -*-
 # (c) 2018 Andreas Motl <andreas@hiveeyes.org>
+import logging
 from builtins import object
 import re
 import attr
 import pandas as pd
 from six import StringIO
 from phenodata.util import dataframe_strip_strings, dataframe_coerce_columns
+
+logger = logging.getLogger(__name__)
+
 
 @attr.s
 class DwdCdcClient(object):
@@ -36,6 +40,7 @@ class DwdCdcClient(object):
         """
         if path:
             url = self.baseurl + path
+        logger.info("Retrieving resource {}".format(url))
         return self.csv_to_dataframe(self.read_csv(url), index_column=index_column, coerce_int=coerce_int)
 
     def read_csv(self, url):
@@ -78,7 +83,7 @@ class DwdCdcClient(object):
                 content = content.replace(old, new)
 
         # Debugging
-        #print 'content:\n', response.content.decode('Windows-1252').encode('utf8')
+        #print('content:\n', content)
 
         return StringIO(content)
 

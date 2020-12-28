@@ -13,6 +13,7 @@ from phenodata.util import haversine_distance
 
 logger = logging.getLogger(__name__)
 
+
 @attr.s
 class DwdPhenoData(object):
     """
@@ -110,7 +111,7 @@ class DwdPhenoData(object):
 
             expression = False
             for reference_field in reference_fields:
-                print(reference_field, filter)
+                #print(reference_field, filter)
                 expression |= data[reference_field].str.contains(filter, case=False)
 
             # Apply filter expression to DataFrame
