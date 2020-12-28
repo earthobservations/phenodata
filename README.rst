@@ -1,11 +1,14 @@
-.. image:: https://img.shields.io/badge/Python-2.7,%203.7-green.svg
+.. image:: https://img.shields.io/badge/Python-2.7,%203.7,%203.8,%203.9-green.svg
     :target: https://pypi.org/project/phenodata/
 
 .. image:: https://img.shields.io/pypi/v/phenodata.svg
     :target: https://pypi.org/project/phenodata/
 
-.. image:: https://img.shields.io/github/tag/hiveeyes/phenodata.svg
-    :target: https://github.com/hiveeyes/phenodata
+.. image:: https://img.shields.io/github/tag/earthobservations/phenodata.svg
+    :target: https://github.com/earthobservations/phenodata
+
+.. image:: https://img.shields.io/pypi/dm/kotori.svg
+    :target: https://pypi.org/project/phenodata/
 
 |
 
@@ -64,7 +67,7 @@ If you know your way around Python, installing this software is really easy::
 
 Please refer to the `virtualenv`_ page about further recommendations how to install and use this software.
 
-.. _virtualenv: https://github.com/hiveeyes/phenodata/blob/master/doc/virtualenv.rst
+.. _virtualenv: https://github.com/earthobservations/phenodata/blob/master/doc/virtualenv.rst
 
 
 Usage
@@ -367,7 +370,7 @@ Sort by date.
 .. note::
 
     The species presets like ``mellifera-de-primary`` and others are currently stored in
-    `presets.json <https://github.com/hiveeyes/phenodata/blob/master/phenodata/dwd/presets.json>`__.
+    `presets.json <https://github.com/earthobservations/phenodata/blob/master/phenodata/dwd/presets.json>`__.
 
 
 *******************
@@ -377,7 +380,7 @@ Project information
 About
 =====
 The "phenodata" program is released under the GNU AGPL license.
-Its source code lives on `GitHub <https://github.com/hiveeyes/phenodata>`_ and
+Its source code lives on `GitHub <https://github.com/earthobservations/phenodata>`_ and
 the Python package is published to `PyPI <https://pypi.org/project/phenodata/>`_.
 You might also want to have a look at the `documentation <https://hiveeyes.org/docs/phenodata/>`_.
 
@@ -389,11 +392,23 @@ spelling mistake and then send us a pull request or create an issue.
 
 Thanks in advance for your efforts, we really appreciate any help or feedback.
 
+Development
+===========
+Discussions around the development of ``phenodata`` and its applications are taking place at:
+
+- https://community.hiveeyes.org/t/phanologischer-kalender-fur-trachtpflanzen/664
+- https://community.hiveeyes.org/t/phenodata-ein-datenbezug-und-manipulations-toolkit-fur-open-access-phanologiedaten/2892
+- https://community.hiveeyes.org/t/phanologischer-kalender-2020/2893
+- https://community.hiveeyes.org/t/klimadatenkalender-zur-anzeige-der-phanologischen-daten-des-deutschen-wetterdienstes/948
+- https://community.hiveeyes.org/t/phanologie-und-imkerliche-eingriffe-bei-den-bienen/705
+- https://community.hiveeyes.org/t/phenological-calendar-for-france/800
+
+
 Code license
 ============
 Licensed under the GNU AGPL license. See LICENSE_ file for details.
 
-.. _LICENSE: https://github.com/hiveeyes/phenodata/blob/master/LICENSE
+.. _LICENSE: https://github.com/earthobservations/phenodata/blob/master/LICENSE
 
 Data license
 ============

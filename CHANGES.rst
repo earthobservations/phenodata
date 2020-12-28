@@ -4,6 +4,9 @@ phenodata changelog
 
 development
 ===========
+
+2020-12-28 0.9.2
+================
 - Add basic examples about how to use the module as a library
 - Relax dependencies to be able to use a more recent version of Pandas
 - Be graceful about malformed lines within ingress CSV
