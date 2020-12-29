@@ -31,7 +31,7 @@ def run():
       phenodata list-quality-bytes --source=dwd [--format=csv]
       phenodata list-filenames --source=dwd --dataset=immediate --partition=recent [--filename=Hasel,Schneegloeckchen] [--year=2017]
       phenodata list-urls --source=dwd --dataset=immediate --partition=recent [--filename=Hasel,Schneegloeckchen] [--year=2017]
-      phenodata (observations|forecast) --source=dwd --dataset=immediate --partition=recent [--filename=Hasel,Schneegloeckchen] [--station-id=164,717] [--species-id=113,127] [--phase-id=5] [--quality-level=10] [--quality-byte=1,2,3] [--station=berlin,brandenburg] [--species=hazel,snowdrop] [--species-preset=mellifera-de-primary] [--phase=flowering] [--quality=ROUTKLI] [--year=2017] [--humanize] [--show-ids] [--language=german] [--long-station] [--sort=Datum] [--format=csv] [--verbose]
+      phenodata (observations|forecast) --source=dwd --dataset=immediate --partition=recent [--filename=Hasel,Schneegloeckchen] [--station-id=164,717] [--species-id=113,127] [--phase-id=5] [--quality-level=10] [--quality-byte=1,2,3] [--station=berlin,brandenburg] [--species=hazel,snowdrop] [--species-preset=mellifera-de-primary] [--phase=flowering] [--quality=ROUTKLI] [--year=2017] [--forecast-year=2021] [--humanize] [--show-ids] [--language=german] [--long-station] [--sort=Datum] [--format=csv] [--verbose]
       phenodata drop-cache --source=dwd
       phenodata --version
       phenodata (-h | --help)
@@ -43,7 +43,7 @@ def run():
       --filename=<file>         Filter by file names (comma-separated list)
 
     Direct filtering options:
-      --years=<years>           Filter by years (comma-separated list)
+      --year=<year>             Filter by year (comma-separated list)
       --station-id=<station-id> Filter by station ids (comma-separated list)
       --species-id=<species-id> Filter by species ids (comma-separated list)
       --phase-id=<phase-id>     Filter by phase ids (comma-separated list)
@@ -54,6 +54,9 @@ def run():
       --phase=<phase>           Filter by strings from "phases" data (comma-separated list)
       --species-preset=<preset> Filter by strings from "species" data (comma-separated list)
                                 The preset will get loaded from the ``presets.json`` file.
+
+    Forecasting options:
+      --forecast-year=<year>    Use as designated forecast year.
 
     Data output options:
       --format=<format>         Output data in designated format. Choose one of "tabular", "json", "csv" or "string".
@@ -159,7 +162,7 @@ def run():
         data = client.get_observations(options, humanize=options['humanize'])
 
     elif options['forecast']:
-        data = client.get_forecast(options, humanize=options['humanize'])
+        data = client.get_forecast(options, forecast_year=options['forecast-year'], humanize=options['humanize'])
 
     elif options['nearest-station']:
         data = client.nearest_station(float(options['latitude']), float(options['longitude']), all=options['all'])

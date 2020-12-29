@@ -8,7 +8,7 @@ import logging
 import pandas as pd
 import pkg_resources
 from tqdm import tqdm
-from datetime import datetime
+from datetime import datetime, timedelta
 from phenodata.util import haversine_distance
 
 logger = logging.getLogger(__name__)
@@ -201,7 +201,7 @@ class DwdPhenoData(object):
 
         return observations
 
-    def get_forecast(self, options, humanize=False):
+    def get_forecast(self, options, forecast_year=None, humanize=False):
         """
         Forecast observations.
 
@@ -210,6 +210,11 @@ class DwdPhenoData(object):
         - Group results by (Stations_id, Objekt_id, Phase_id)
         - Aggregate mean "day of the year" value of the "Jultag" values for each group
         """
+
+        # Compute target year.
+        target_year = datetime.today().year
+        if forecast_year is not None:
+            target_year = datetime.strptime(str(forecast_year), "%Y").year
 
         # Get current observations
         observations = self.get_observations(options)
@@ -230,7 +235,7 @@ class DwdPhenoData(object):
 
 
         # Compute ISO date from "day of the year" values and insert as new column
-        real_dates = pd.to_datetime(datetime.today().year * 1000 + forecast['Jultag'], errors='coerce', format='%Y%j')
+        real_dates = pd.to_datetime(target_year * 1000 + forecast['Jultag'], errors='coerce', format='%Y%j')
         forecast.insert(0, 'Datum', real_dates)
 
         # Resolve index column to real columns
@@ -250,7 +255,7 @@ class DwdPhenoData(object):
         # Optionally humanize DataFrame
         if humanize:
             megaframe = self.create_megaframe(forecast, drop_index_columns=True)
-            forecast = self.humanizer.get_forecast(megaframe)
+            forecast = self.humanizer.get_forecast(megaframe, target_year=target_year)
 
         # or pass-through with minor cosmetic amendments
         else:
@@ -506,7 +511,7 @@ class DwdPhenoDataHumanizer(object):
 
         return canvas
 
-    def get_forecast(self, frame):
+    def get_forecast(self, frame, target_year):
 
         canvas = pd.DataFrame()
 
@@ -518,6 +523,8 @@ class DwdPhenoDataHumanizer(object):
         canvas['Spezies'] = species
         canvas['Phase'] = phases
         canvas['Station'] = stations
+
+        canvas.insert(0, 'Jahr', target_year)
 
         return canvas
 

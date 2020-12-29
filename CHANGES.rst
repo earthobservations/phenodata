@@ -5,6 +5,10 @@ phenodata changelog
 development
 ===========
 
+2020-12-29 0.10.0
+=================
+- Add ``--forecast-year`` option
+
 2020-12-29 0.9.4
 ================
 - Be more graceful if some filter constraints are not given
