@@ -5,6 +5,10 @@ phenodata changelog
 development
 ===========
 
+2020-12-29 0.11.0
+=================
+- Add ``--sql`` option to postprocess the egress dataframe using SQL
+
 2020-12-29 0.10.0
 =================
 - Add ``--forecast-year`` option

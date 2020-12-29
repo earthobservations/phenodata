@@ -31,7 +31,7 @@ def run():
       phenodata list-quality-bytes --source=dwd [--format=csv]
       phenodata list-filenames --source=dwd --dataset=immediate --partition=recent [--filename=Hasel,Schneegloeckchen] [--year=2017]
       phenodata list-urls --source=dwd --dataset=immediate --partition=recent [--filename=Hasel,Schneegloeckchen] [--year=2017]
-      phenodata (observations|forecast) --source=dwd --dataset=immediate --partition=recent [--filename=Hasel,Schneegloeckchen] [--station-id=164,717] [--species-id=113,127] [--phase-id=5] [--quality-level=10] [--quality-byte=1,2,3] [--station=berlin,brandenburg] [--species=hazel,snowdrop] [--species-preset=mellifera-de-primary] [--phase=flowering] [--quality=ROUTKLI] [--year=2017] [--forecast-year=2021] [--humanize] [--show-ids] [--language=german] [--long-station] [--sort=Datum] [--format=csv] [--verbose]
+      phenodata (observations|forecast) --source=dwd --dataset=immediate --partition=recent [--filename=Hasel,Schneegloeckchen] [--station-id=164,717] [--species-id=113,127] [--phase-id=5] [--quality-level=10] [--quality-byte=1,2,3] [--station=berlin,brandenburg] [--species=hazel,snowdrop] [--species-preset=mellifera-de-primary] [--phase=flowering] [--quality=ROUTKLI] [--year=2017] [--forecast-year=2021] [--humanize] [--show-ids] [--language=german] [--long-station] [--sort=Datum] [--sql=sql] [--format=csv] [--verbose]
       phenodata drop-cache --source=dwd
       phenodata --version
       phenodata (-h | --help)
@@ -57,6 +57,9 @@ def run():
 
     Forecasting options:
       --forecast-year=<year>    Use as designated forecast year.
+
+    Postprocess filtering options:
+      --sql=<sql>               Apply given SQL query before output
 
     Data output options:
       --format=<format>         Output data in designated format. Choose one of "tabular", "json", "csv" or "string".
@@ -178,6 +181,10 @@ def run():
             logger.warning('Dropping the cache failed')
         return
 
+    # Query results
+    if data is not None and options["sql"]:
+        import duckdb
+        data = duckdb.query(data, "data", options["sql"]).df()
 
     # Format and output results
     if data is not None:

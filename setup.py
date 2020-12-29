@@ -76,6 +76,7 @@ setup(name='phenodata',
     install_requires=requires,
     tests_require=test_requires,
     extras_require={
+        'sql': ['duckdb']
     },
     dependency_links=[
     ],
