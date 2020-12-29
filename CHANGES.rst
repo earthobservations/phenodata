@@ -4,6 +4,7 @@ phenodata changelog
 
 development
 ===========
+- Be more graceful if some filter constraints are not given
 
 2020-12-28 0.9.3
 ================

@@ -176,7 +176,7 @@ class DwdPhenoData(object):
         """
 
         # Acquire data
-        observations = self.query(partition=options['partition'], files=options['filename'])
+        observations = self.query(partition=options['partition'], files=options.get('filename'))
 
         # Sanity checks
         if observations is None:
@@ -376,7 +376,7 @@ class DwdPhenoData(object):
             if field not in results:
                 continue
             reference = results[field]
-            if criteria[key]:
+            if key in criteria and criteria[key]:
                 expression &= reference.isin(criteria[key])
 
         # Apply filter expression to DataFrame
@@ -403,7 +403,7 @@ class DwdPhenoData(object):
         is_megaframe = False
         for field, reference_fields in list(patterns_map.items()):
 
-            if criteria[field]:
+            if field in criteria and criteria[field]:
 
                 # Create megaframe as this will contain all information required for advanced searching
                 if not is_megaframe:
