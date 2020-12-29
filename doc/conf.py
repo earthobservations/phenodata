@@ -24,9 +24,9 @@ copyright = u'2018, Andreas Motl'
 author = u'Andreas Motl'
 
 # The short X.Y version
-version = u'0.9.3'
+version = u'0.9.4'
 # The full version, including alpha/beta/rc tags
-release = u'0.9.3'
+release = u'0.9.4'
 
 
 # -- General configuration ---------------------------------------------------
