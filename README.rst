@@ -67,7 +67,7 @@ If you know your way around Python, installing this software is really easy::
 
 Please refer to the `virtualenv`_ page about further recommendations how to install and use this software.
 
-.. _virtualenv: https://github.com/earthobservations/phenodata/blob/master/doc/virtualenv.rst
+.. _virtualenv: https://github.com/earthobservations/phenodata/blob/main/doc/virtualenv.rst
 
 
 Usage
@@ -370,7 +370,7 @@ Sort by date.
 .. note::
 
     The species presets like ``mellifera-de-primary`` and others are currently stored in
-    `presets.json <https://github.com/earthobservations/phenodata/blob/master/phenodata/dwd/presets.json>`__.
+    `presets.json <https://github.com/earthobservations/phenodata/blob/main/phenodata/dwd/presets.json>`__.
 
 
 *******************
@@ -408,7 +408,7 @@ Code license
 ============
 Licensed under the GNU AGPL license. See LICENSE_ file for details.
 
-.. _LICENSE: https://github.com/earthobservations/phenodata/blob/master/LICENSE
+.. _LICENSE: https://github.com/earthobservations/phenodata/blob/main/LICENSE
 
 Data license
 ============
