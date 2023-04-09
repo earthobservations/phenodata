@@ -4,33 +4,24 @@ Python virtualenv
 
 About
 =====
-virtualenv_ is a tool to create isolated Python environments.
+
+`virtualenv`_ is a tool to create isolated Python environments.
 We recommend it for installing the software and its dependencies
 independently of your Python distribution.
-
 
 Install
 =======
 
-Create Python virtualenv::
+Create a Python `virtualenv`_::
 
-    # Either use Python 2.7 ...
-    virtualenv --no-site-packages --python=python2 .venv27
-
-    # ... or Python 3.6
-    virtualenv --no-site-packages --python=python3 .venv36
+    python3 -m venv .venv
 
 Install::
 
     # Activate virtualenv
-    source .venv27/bin/activate
-
-    # or
-    source .venv36/bin/activate
+    source .venv/bin/activate
 
     # Install Python package
-    pip install phenodata
-
+    pip install phenodata[sql]
 
 .. _virtualenv: https://virtualenv.pypa.io/
-

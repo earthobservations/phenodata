@@ -9,12 +9,15 @@ phenodata - phenology data acquisition for humans
 .. toctree::
     :maxdepth: 2
     :caption: Contents:
+    :glob:
 
     dwd
     usa-npn
     ipg-gpm
-    links
+    research
     virtualenv
+
+    *
 
 
 Indices and tables

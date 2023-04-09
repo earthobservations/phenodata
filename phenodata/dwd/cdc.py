@@ -26,7 +26,7 @@ class DwdCdcClient(object):
 
     def get_dataframe(self, url=None, path=None, index_column=None, coerce_int=False):
         """
-        Read single CSV file from FTP url and convert to Pandas DataFrame object.
+        Read single CSV file from FTP url and convert to pandas DataFrame object.
 
         Obtains either a full ``url`` parameter or a ``path`` parameter
         for addressing the remote resource. If the ``path`` parameter is given,
@@ -89,7 +89,7 @@ class DwdCdcClient(object):
 
     def csv_to_dataframe(self, stream, index_column=None, coerce_int=False):
         """
-        Read CSV data from stream into Pandas DataFrame object.
+        Read CSV data from stream into pandas DataFrame object.
 
         Optionally obtains ``index_column`` parameter.
         Use this to set the index of designated index column.
@@ -102,7 +102,7 @@ class DwdCdcClient(object):
         #if not stream or stream.len == 0:
         #    return
 
-        # Read CSV into Pandas DataFrame
+        # Read CSV into pandas DataFrame.
         # https://pandas.pydata.org/pandas-docs/stable/io.html
         df = pd.read_csv(
             stream, engine='c', encoding='utf-8',

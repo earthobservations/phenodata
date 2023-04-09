@@ -1,40 +1,55 @@
-.. image:: https://img.shields.io/badge/Python-2.7,%203.7,%203.8,%203.9-green.svg
+.. image:: https://github.com/earthobservations/phenodata/workflows/Tests/badge.svg
+    :target: https://github.com/earthobservations/phenodata/actions?workflow=Tests
+
+.. image:: https://codecov.io/gh/earthobservations/phenodata/branch/main/graph/badge.svg
+    :target: https://codecov.io/gh/earthobservations/phenodata
+    :alt: Test suite code coverage
+
+.. image:: https://img.shields.io/pypi/pyversions/phenodata.svg
     :target: https://pypi.org/project/phenodata/
 
 .. image:: https://img.shields.io/pypi/v/phenodata.svg
     :target: https://pypi.org/project/phenodata/
 
-.. image:: https://img.shields.io/github/tag/earthobservations/phenodata.svg
-    :target: https://github.com/earthobservations/phenodata
-
-.. image:: https://img.shields.io/pypi/dm/phenodata.svg
+.. image:: https://img.shields.io/pypi/status/phenodata.svg
     :target: https://pypi.org/project/phenodata/
+
+.. image:: https://img.shields.io/pypi/l/phenodata.svg
+    :target: https://pypi.org/project/phenodata/
+
+.. image:: https://static.pepy.tech/badge/phenodata/month
+    :target: https://pepy.tech/project/phenodata
 
 |
 
-#################################################
-phenodata - phenology data acquisition for humans
-#################################################
+#########
+phenodata
+#########
+
+*Phenology data acquisition for humans.*
 
 
 *****
 About
 *****
-phenodata is a data acquisition and manipulation toolkit for open access phenology data.
-It is written in Python.
 
-Currently, it implements data wrappers for acquiring phenology observation data published
-on the DWD Climate Data Center (CDC) FTP server operated by »Deutscher Wetterdienst« (DWD).
+phenodata is a data acquisition and manipulation toolkit for open access
+phenology data. It is written in Python.
 
-Under the hood, it uses the fine Pandas_ data analysis library for data mangling, amongst others.
+Currently, it implements data wrappers for acquiring phenology observation
+data published on the DWD Climate Data Center (CDC) FTP server operated by
+»Deutscher Wetterdienst« (DWD).
 
-.. _Pandas: https://pandas.pydata.org/
+Under the hood, it uses the `pandas`_ data analysis library for data mangling,
+amongst others.
+
 
 
 ****************
 Acknowledgements
 ****************
-Thanks to the many observers, »Deutscher Wetterdienst«,
+
+Thanks to the many observers of »Deutscher Wetterdienst« (DWD),
 the »Global Phenological Monitoring programme« and all people working behind
 the scenes for their commitment in recording the observations and for making
 the excellent datasets available to the community. You know who you are.
@@ -46,7 +61,8 @@ Getting started
 
 Introduction
 ============
-For most acquisition tasks, you must choose from one of two different datasets: `annual-reporters`_ and `immediate-reporters`_.
+For most acquisition tasks, you must choose from one of two different datasets:
+`annual-reporters`_ and `immediate-reporters`_.
 
 To improve data acquisition performance, also consider applying
 the ``--filename=`` parameter for file name filtering.
@@ -55,19 +71,17 @@ Example: When using ``--filename=Hasel,Schneegloeckchen``, only file names conta
 ``Hasel`` or ``Schneegloeckchen`` will be retrieved, thus minimizing the required effort
 to acquire all files.
 
-.. _annual-reporters: https://www.dwd.de/DE/klimaumwelt/klimaueberwachung/phaenologie/daten_deutschland/jahresmelder/jahresmelder_node.html
-.. _immediate-reporters: https://www.dwd.de/DE/klimaumwelt/klimaueberwachung/phaenologie/daten_deutschland/sofortmelder/sofortmelder_node.html
 
 
 Install
 =======
+
 If you know your way around Python, installing this software is really easy::
 
-    pip install phenodata --upgrade
+    pip install 'phenodata[sql]' --upgrade
 
-Please refer to the `virtualenv`_ page about further recommendations how to install and use this software.
-
-.. _virtualenv: https://github.com/earthobservations/phenodata/blob/main/doc/virtualenv.rst
+Please refer to the `virtualenv`_ page about further recommendations how to
+install and use this software.
 
 
 Usage
@@ -81,12 +95,12 @@ Usage
       phenodata list-phases --source=dwd [--format=csv]
       phenodata list-stations --source=dwd --dataset=immediate [--all] [--filter=berlin] [--sort=Stationsname] [--format=csv]
       phenodata nearest-station --source=dwd --dataset=immediate --latitude=52.520007 --longitude=13.404954 [--format=csv]
-      phenodata nearest-stations --source=dwd --dataset=immediate [--all] --latitude=52.520007 --longitude=13.404954 [--limit=10] [--format=csv]
+      phenodata nearest-stations --source=dwd --dataset=immediate --latitude=52.520007 --longitude=13.404954 [--all] [--limit=10] [--format=csv]
       phenodata list-quality-levels --source=dwd [--format=csv]
       phenodata list-quality-bytes --source=dwd [--format=csv]
       phenodata list-filenames --source=dwd --dataset=immediate --partition=recent [--filename=Hasel,Schneegloeckchen] [--year=2017]
       phenodata list-urls --source=dwd --dataset=immediate --partition=recent [--filename=Hasel,Schneegloeckchen] [--year=2017]
-      phenodata (observations|forecast) --source=dwd --dataset=immediate --partition=recent [--filename=Hasel,Schneegloeckchen] [--station-id=164,717] [--species-id=113,127] [--phase-id=5] [--quality-level=10] [--quality-byte=1,2,3] [--station=berlin,brandenburg] [--species=hazel,snowdrop] [--species-preset=mellifera-de-primary] [--phase=flowering] [--quality=ROUTKLI] [--year=2017] [--humanize] [--show-ids] [--language=german] [--long-station] [--sort=Datum] [--format=csv] [--verbose]
+      phenodata (observations|forecast) --source=dwd --dataset=immediate --partition=recent [--filename=Hasel,Schneegloeckchen] [--station-id=7521,7532] [--species-id=113,127] [--phase-id=5] [--quality-level=10] [--quality-byte=1,2,3] [--station=berlin,brandenburg] [--species=hazel,snowdrop] [--species-preset=mellifera-de-primary] [--phase=flowering] [--quality=ROUTKLI] [--year=2017] [--humanize] [--show-ids] [--language=german] [--long-station] [--sort=Datum] [--format=csv] [--verbose]
       phenodata drop-cache --source=dwd
       phenodata --version
       phenodata (-h | --help)
@@ -202,19 +216,19 @@ Observations of hazel and snowdrop (dito), but for station ids 164 and 717 only:
 
     phenodata observations \
         --source=dwd --dataset=annual --partition=recent \
-        --filename=Hasel,Schneegloeckchen --station-id=164,717
+        --filename=Hasel,Schneegloeckchen --station-id=7521,7532
 
 All observations for station ids 164 and 717 in years 2016 and 2017::
 
     phenodata observations \
         --source=dwd --dataset=annual --partition=recent \
-        --station-id=164,717 --year=2016,2017
+        --station-id=7521,7532 --year=2020,2021
 
 All observations for station ids 164 and 717 and species ids 113 and 127::
 
     phenodata observations \
         --source=dwd --dataset=annual --partition=recent \
-        --station-id=164,717 --species-id=113,127
+        --station-id=7521,7532 --species-id=113,127
 
 All invalid observations::
 
@@ -230,7 +244,7 @@ using grouping and by computing the "mean" value of the "Jultag" column::
     phenodata forecast \
         --source=dwd --dataset=annual --partition=recent \
         --filename=Hasel,Schneegloeckchen,Apfel,Birne \
-        --station-id=12132,10961 --format=string
+        --station-id=7521,7532 --format=string
 
 
 
@@ -250,7 +264,6 @@ output texts in the German language if possible::
         --filename=Hasel,Schneegloeckchen,Apfel,Birne \
         --station-id=12132 \
         --humanize --language=german
-
 
 Forecasting
 ===========
@@ -300,32 +313,32 @@ Query observations by using textual representation of "station" information::
         --station=berlin,brandenburg \
         --humanize --sort=Datum
 
-Observations near Munich for species "hazel" or "snowdrop" in 2018::
+Observations near Munich for species "hazel" or "snowdrop" in 2022::
 
     phenodata observations \
         --source=dwd --dataset=annual --partition=recent \
         --station=münchen \
         --species=hazel,snowdrop \
-        --year=2018 \
+        --year=2022 \
         --humanize --sort=Datum
 
-Observations for any "flowering" events in 2017 and 2018 around Munich::
+Observations for any "flowering" events in 2021 and 2022 around Munich::
 
     phenodata observations \
         --source=dwd --dataset=annual --partition=recent \
         --station=münchen \
         --phase=flowering \
-        --year=2017,2018 \
+        --year=2021,2022 \
         --humanize --sort=Datum
 
-Same observations but with "ROUTKLI" quality::
+Same observations but with ``ROUTKLI`` quality::
 
     phenodata observations \
         --source=dwd --dataset=annual --partition=recent \
         --station=münchen \
         --phase=flowering \
-        --quality=ROUTKLI \
-        --year=2017 \
+        --quality='nicht beanstandet' \
+        --year=2021 \
         --humanize --sort=Datum
 
 Investigate some "flowering" observations near Munich which have seen corrections last year::
@@ -335,7 +348,7 @@ Investigate some "flowering" observations near Munich which have seen correction
         --station=münchen \
         --phase=flowering \
         --quality=korrigiert \
-        --year=2017 \
+        --year=2022 \
         --humanize --sort=Datum
 
 
@@ -350,7 +363,7 @@ Sort by species and date.
         --station=thüringen,bayern \
         --species=Hasel,Schneeglöckchen,Sal-Weide,Löwenzahn,Süßkirsche,Apfel,Winterraps,Robinie,Winter-Linde,Heidekraut \
         --phase-id=5 \
-        --year=2015,2016,2017 \
+        --year=2021,2022,2023 \
         --humanize --language=german \
         --sort=Spezies,Datum
 
@@ -362,7 +375,7 @@ Sort by date.
         --source=dwd --dataset=annual --partition=recent \
         --station=köln \
         --phase="beginning of flowering" \
-        --year=2015,2016,2017 \
+        --year=2021,2022,2023 \
         --humanize --language=german \
         --sort=Datum \
         --species-preset=mellifera-de-primary
@@ -373,28 +386,29 @@ Sort by date.
     `presets.json <https://github.com/earthobservations/phenodata/blob/main/phenodata/dwd/presets.json>`__.
 
 
+
 *******************
 Project information
 *******************
 
-About
-=====
-The "phenodata" program is released under the GNU AGPL license.
-Its source code lives on `GitHub <https://github.com/earthobservations/phenodata>`_ and
-the Python package is published to `PyPI <https://pypi.org/project/phenodata/>`_.
-You might also want to have a look at the `documentation <https://hiveeyes.org/docs/phenodata/>`_.
+Resources
+=========
+- `Source code <https://github.com/earthobservations/phenodata>`_
+- `Documentation <https://github.com/earthobservations/phenodata>`_
+- `Python Package Index (PyPI) <https://pypi.org/project/phenodata/>`_
 
-The software has been tested on Python 2.7.
-
+Contributions
+=============
 If you'd like to contribute you're most welcome!
 Spend some time taking a look around, locate a bug, design issue or
 spelling mistake and then send us a pull request or create an issue.
 
 Thanks in advance for your efforts, we really appreciate any help or feedback.
 
-Development
+Discussions
 ===========
-Discussions around the development of ``phenodata`` and its applications are taking place at:
+Discussions around the development of ``phenodata`` and its applications are
+taking place at the Hiveeyes forum:
 
 - https://community.hiveeyes.org/t/phanologischer-kalender-fur-trachtpflanzen/664
 - https://community.hiveeyes.org/t/phenodata-ein-datenbezug-und-manipulations-toolkit-fur-open-access-phanologiedaten/2892
@@ -403,16 +417,19 @@ Discussions around the development of ``phenodata`` and its applications are tak
 - https://community.hiveeyes.org/t/phanologie-und-imkerliche-eingriffe-bei-den-bienen/705
 - https://community.hiveeyes.org/t/phenological-calendar-for-france/800
 
+Development
+===========
+In order to setup a development environment on your workstation, please head
+over to the `development sandbox`_ documentation. When you see the software
+tests succeed, you should be ready to start hacking.
 
 Code license
 ============
-Licensed under the GNU AGPL license. See LICENSE_ file for details.
-
-.. _LICENSE: https://github.com/earthobservations/phenodata/blob/main/LICENSE
+The project is licensed under the terms of the GNU AGPL license, see `LICENSE`_.
 
 Data license
 ============
-The DWD has information about their re-use policy in German and English.
+The DWD has information about their data re-use policy in German and English.
 Please refer to the respective Disclaimer
 (`de <https://www.dwd.de/DE/service/disclaimer/disclaimer_node.html>`__,
 `en <https://www.dwd.de/EN/service/disclaimer/disclaimer.html>`__)
@@ -426,3 +443,11 @@ Disclaimer
 The project and its authors are not affiliated with DWD, USA-NPN or any
 other data provider in any way. It is a sole project from the community
 for making data more accessible in the spirit of open data.
+
+
+.. _annual-reporters: https://www.dwd.de/DE/klimaumwelt/klimaueberwachung/phaenologie/daten_deutschland/jahresmelder/jahresmelder_node.html
+.. _development sandbox: doc/development.rst
+.. _immediate-reporters: https://www.dwd.de/DE/klimaumwelt/klimaueberwachung/phaenologie/daten_deutschland/sofortmelder/sofortmelder_node.html
+.. _LICENSE: https://github.com/earthobservations/phenodata/blob/main/LICENSE
+.. _pandas: https://pandas.pydata.org/
+.. _virtualenv: https://github.com/earthobservations/phenodata/blob/main/doc/virtualenv.rst

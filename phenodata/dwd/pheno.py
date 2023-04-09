@@ -255,8 +255,8 @@ class DwdPhenoData(object):
 
     def query(self, partition=None, files=None):
         """
-        The FTP/Pandas workhorse, converges data from multiple observation data
-        CSV files on upstream CDC FTP server into a single Pandas DataFrame object.
+        The FTP/pandas workhorse, converges data from multiple observation data
+        CSV files on upstream CDC FTP server into a single pandas DataFrame object.
 
         - Obtains ``partition`` parameter which can be either ``annual`` or ``immediate``.
         - Obtains optional ``files`` parameter which will be applied
@@ -364,7 +364,7 @@ class DwdPhenoData(object):
             'phase-id': 'Phase_id',
         }
 
-        # Lowlevel filtering based on IDs
+        # Low-level filtering based on IDs
         # For each designated field, add ``.isin`` criteria to "boolean index" expression
         expression = True
         for key, field in list(isin_map.items()):
