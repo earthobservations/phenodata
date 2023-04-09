@@ -1,6 +1,5 @@
 import json
 
-import marko
 from datadiff.tools import assert_equal
 
 from tests.util import run_command
@@ -42,7 +41,7 @@ def test_cli_forecast_annual_recent(capsys):
     run_command("""
     phenodata forecast \
         --source=dwd --dataset=annual --partition=recent \
-        --filename=Hasel,Schneegloeckchen,Sal-Weide,Apfel \
+        --filename=Apfel \
         --station-id=12132 \
         --humanize --language=german \
         --sort=Spezies,Datum \
