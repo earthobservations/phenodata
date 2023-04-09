@@ -15,7 +15,7 @@ requires = [
     'platformdirs<4',
     'requests>=2.18.4,<3',
     'requests-ftp>=0.3.1,<4',  # Verified to work on 0.3.1.
-    'tabulate>=0.8.2,<0.9',  # Verified to work on 0.8.7.
+    'tabulate>=0.8.2,<0.10',  # Verified to work on 0.8.7.
     'tqdm>=4,<5',
 ]
 
