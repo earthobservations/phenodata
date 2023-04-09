@@ -52,16 +52,16 @@ pypi-upload: install-releasetools
 
 install-package:
 	@test -e $(python) || python3 -m venv $(venv)
-	@$(pip) install --quiet --use-pep517 --prefer-binary --editable=.[test,develop,release,sql]
+	$(pip) install --prefer-binary --editable=.[test,develop,release,sql]
 
 install-doctools:
 	@test -e $(python) || python3 -m venv $(venv)
-	@$(pip) install --quiet --requirement requirements-docs.txt --upgrade
+	$(pip) install --requirement requirements-docs.txt --upgrade
 
 install-releasetools:
 	@test -e $(python) || python3 -m venv $(venv)
-	@$(pip) install --quiet --requirement requirements-release.txt --upgrade
+	$(pip) install --requirement requirements-release.txt --upgrade
 
 install-tests:
 	@test -e $(python) || python3 -m venv $(venv)
-	@$(pip) install --quiet --requirement requirements-tests.txt --upgrade
+	$(pip) install --requirement requirements-tests.txt --upgrade
