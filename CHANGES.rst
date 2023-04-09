@@ -10,6 +10,7 @@ development
 - Tests: Add software tests
 - Improve documentation
 - CI: Add GHA configuration to invoke software tests
+- CI/Tests: Fix installation on Python 3.7 to 3.9
 
 2020-12-29 0.11.0
 =================
