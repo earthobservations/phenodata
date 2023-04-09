@@ -3,26 +3,26 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-phenodata - phenology data acquisition for humans
-=================================================
+.. include:: readme.rst
+
+----
+
 
 .. toctree::
     :maxdepth: 2
-    :caption: Contents:
+    :caption: Documentation
+    :hidden:
+
+    README <readme>
+    notebook/index
+
+
+.. toctree::
+    :maxdepth: 1
+    :caption: Workbench
+    :hidden:
     :glob:
 
-    dwd
-    usa-npn
-    ipg-gpm
-    research
+    development
     virtualenv
-
-    *
-
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+    backlog

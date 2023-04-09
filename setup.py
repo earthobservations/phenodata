@@ -67,7 +67,8 @@ setup(name='phenodata',
     author='Andreas Motl',
     author_email='andreas@hiveeyes.org',
     url='https://github.com/earthobservations/phenodata',
-    keywords='dwd usa-npn phenology phenometrics opendata bulk data download information research search',
+    keywords='phenology phenology-data phenology-models phenology-modelling phenometrics'
+             'opendata scientific research-data dwd usa-npn',
     packages=find_packages(),
     include_package_data=True,
     package_data={
