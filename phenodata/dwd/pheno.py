@@ -122,23 +122,13 @@ class DwdPhenoData(object):
 
     def nearest_station(self, latitude, longitude, all=False):
         """
-        Select most current stations datasets.
-
-        Stolen from https://github.com/marians/dwd-weather
+        Select closest station.
         """
-        closest = None
-        closest_distance = 99999999999
-        for index, station in self.get_stations(all=all).iterrows():
-            d = haversine_distance((longitude, latitude),
-                (station["geograph.Laenge"], station["geograph.Breite"]))
-            if d < closest_distance:
-                closest = station
-                closest_distance = d
-        return closest.to_frame()
+        return self.nearest_stations(latitude, longitude, all=all).head(1)
 
     def nearest_stations(self, latitude, longitude, all=False, limit=10):
         """
-        Select most current stations datasets.
+        Select closest stations.
 
         Stolen from https://github.com/marians/dwd-weather
         """
