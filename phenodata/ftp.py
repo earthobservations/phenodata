@@ -6,7 +6,7 @@ import re
 import sys
 import arrow
 import shutil
-import appdirs
+import platformdirs
 import logging
 import requests_ftp
 import dogpile.cache
@@ -20,7 +20,7 @@ class CacheManager(object):
     def __init__(self):
 
         # Path to cache directory, system agnostic
-        self.cache_path = os.path.join(appdirs.user_cache_dir(appname='phenodata', appauthor=False), 'dwd-ftp')
+        self.cache_path = os.path.join(platformdirs.user_cache_dir(appname='phenodata', appauthor=False), 'dwd-ftp')
         if sys.version_info.major >= 3:
             self.cache_path = os.path.join(self.cache_path, 'py{}'.format(sys.version_info.major))
         if not os.path.exists(self.cache_path):
