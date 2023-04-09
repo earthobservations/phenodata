@@ -1,3 +1,4 @@
-bumpversion==0.5.3
-twine==1.11.0
-keyring==11.1.0
+build
+bump2version>=1,<2
+keyring>=20,<24
+twine>=3,<5
