@@ -11,7 +11,7 @@ requires = [
     'docopt>=0.6.2',
     'dogpile.cache>=0.6.5,<1',  # Verified to work on 1.1.1.
     'future',
-    'pandas>=0.23.4,<1.3',  # Verified to work on 1.2.0.
+    'pandas>=0.23.4,<2',
     'platformdirs<4',
     'requests>=2.18.4,<3',
     'requests-ftp>=0.3.1,<4',  # Verified to work on 0.3.1.
