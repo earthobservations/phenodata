@@ -6,7 +6,7 @@ README = open(os.path.join(here, 'README.rst')).read()
 CHANGES = open(os.path.join(here, 'CHANGES.rst')).read()
 
 requires = [
-    'arrow>=0.12.1,<0.18',  # Verified to work on 0.17.0.
+    'arrow>=0.12.1,<1.3',  # Verified to work on 0.17.0.
     'attrs>=17.4.0',
     'docopt>=0.6.2',
     'dogpile.cache>=0.6.5,<1',  # Verified to work on 1.1.1.
