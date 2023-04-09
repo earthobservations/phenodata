@@ -372,7 +372,8 @@ class DwdPhenoData(object):
                 continue
             reference = results[field]
             if key in criteria and criteria[key]:
-                expression &= reference.isin(criteria[key])
+                values = map(int, criteria[key])
+                expression &= reference.isin(values)
 
         # Apply filter expression to DataFrame
         if type(expression) is not bool:
