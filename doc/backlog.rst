@@ -1,10 +1,32 @@
-##############
-phenodata todo
-##############
+#################
+phenodata backlog
+#################
 
-******
-Prio 1
-******
+
+***********
+Iteration 1
+***********
+
+Bugs
+====
+- [o] Croaks when acquiring "forecast" data with "--humanize" and "--show-ids" options
+  https://github.com/earthobservations/phenodata/issues/6
+
+Features
+========
+- [o] Switch from FTP to HTTP
+- [o] Docs: Add remark about outdated ``--year`` values in README
+
+Infrastructure
+==============
+- [o] Provide Docker images
+- [o] Migrate to ``pyproject.toml``, with all the bells
+  and whistles like ``poe check``
+
+
+***********
+Iteration 2
+***********
 - [x] Introduce parameter "--format", which can be "tabulate:psql", "json", "xml", "vcf"
 - [x] There are still spaces around, e.g. "phenodata list-phases --source=dwd --format=csv"
 - [x] Filter by quality indicators
@@ -17,18 +39,19 @@ Prio 1
 - [x] Implement text-searching in stations, species, phases and quality information
 - [x] Implement wishlist re. preselected groups of species as "mellifera" flavours
 
-******
-Prio 2
-******
+
+***********
+Iteration 3
+***********
 - [x] Suppress or move resource acquisition log messages to DEBUG log level and replace by progress indicator
 - [x] Use "appdirs" module for computing cache storage location
 - [x] Add command "phenodata drop-cache"
 - [x] "Jultag" auch bei "--humanize" nicht unterdrücken wegen https://community.hiveeyes.org/t/phanologischer-kalender/664/45
 
 
-******
-Prio 3
-******
+***********
+Iteration 4
+***********
 - [o] Render like https://www.zamg.ac.at/zamgWeb/pict/phaenospiegel/archive/pheno_overview_Austria_web_1_2016.png
 - [o] Display effective criteria just before performing the work
 - [o] Output "phenodata info" as DataFrame

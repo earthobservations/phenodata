@@ -8,6 +8,7 @@ development
 - Fix filtering by ``int64``-type identifiers, see GH-7
 - Fix SQL filtering with DuckDB
 - Tests: Add software tests
+- Improve documentation
 
 2020-12-29 0.11.0
 =================
