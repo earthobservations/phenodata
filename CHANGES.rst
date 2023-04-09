@@ -5,6 +5,7 @@ phenodata changelog
 development
 ===========
 - Fix ``nearest-station`` with ``--format=json``
+- Fix filtering by ``int64``-type identifiers, see GH-7
 
 2020-12-29 0.11.0
 =================
