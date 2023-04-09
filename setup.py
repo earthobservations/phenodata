@@ -9,7 +9,7 @@ requires = [
     'arrow>=0.12.1,<1.3',  # Verified to work on 0.17.0.
     'attrs>=17.4.0',
     'docopt>=0.6.2',
-    'dogpile.cache>=0.6.5,<1',  # Verified to work on 1.1.1.
+    'dogpile.cache>=0.6.5,<2',  # Verified to work on 1.1.1.
     'future',
     'pandas>=0.23.4,<2',
     'platformdirs<4',
