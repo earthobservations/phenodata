@@ -184,7 +184,7 @@ def run():
     # Query results
     if data is not None and options["sql"]:
         import duckdb
-        data = duckdb.query(data, "data", options["sql"]).df()
+        data = duckdb.query(query=options["sql"], alias="data").df()
 
     # Format and output results
     if data is not None:
