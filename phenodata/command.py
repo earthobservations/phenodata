@@ -215,7 +215,9 @@ def run():
             output = data.to_csv(encoding='utf-8', index=showindex)
 
         elif output_format == 'json':
-            output = data.to_json(orient='table', date_format='iso')
+            if showindex:
+                data = data.reset_index()
+            output = data.to_json(orient='records', date_format='iso')
 
         elif output_format == 'string':
             output = data.to_string()
