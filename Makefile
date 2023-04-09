@@ -1,43 +1,67 @@
+# =============
+# Configuration
+# =============
+
+$(eval venv         := .venv)
+$(eval pip          := $(venv)/bin/pip)
+$(eval python       := $(venv)/bin/python)
+$(eval pytest       := $(venv)/bin/pytest)
+$(eval bumpversion  := $(venv)/bin/bumpversion)
+$(eval twine        := $(venv)/bin/twine)
+
+
 # ============
 # Main targets
 # ============
 
+# Run software tests.
+.PHONY: test
+test: install-package install-tests
+	$(pytest)
+
 # Release this piece of software
 # Synopsis:
 #   make release bump=minor  (major,minor,patch)
-release: bumpversion push sdist pypi-upload
+release: bumpversion push build pypi-upload
 
 # Build the documentation
 docs-html: install-doctools
-	$(eval venvpath := ".venv_project")
 	touch doc/index.rst
-	export SPHINXBUILD="`pwd`/$(venvpath)/bin/sphinx-build"; cd doc; make html
+	export SPHINXBUILD="`pwd`/$(venv)/bin/sphinx-build"; cd doc; make html
 
 
 # ===============
 # Utility targets
 # ===============
 bumpversion: install-releasetools
-	$(eval venvpath := ".venv_project")
-	@$(venvpath)/bin/bumpversion $(bump)
+	@$(bumpversion) $(bump)
 
 push:
 	git push && git push --tags
 
-sdist:
-	$(eval venvpath := ".venv_project")
-	@$(venvpath)/bin/python setup.py sdist
+build:
+	@$(python) -m build
 
 pypi-upload: install-releasetools
-	$(eval venvpath := ".venv_project")
-	@$(venvpath)/bin/twine upload --skip-existing dist/*.tar.gz
+	@$(twine) upload --skip-existing dist/*.tar.gz
+
+
+# =================
+# Installer targets
+# =================
+
+install-package:
+	@test -e $(python) || python3 -m venv $(venv)
+	@$(pip) install --quiet --use-pep517 --prefer-binary --editable=.[test,develop,release,sql]
 
 install-doctools:
-	$(eval venvpath := ".venv_project")
-	@test -e $(venvpath)/bin/python || `command -v virtualenv` --python=`command -v python` $(venvpath)
-	@$(venvpath)/bin/pip install --quiet --requirement requirements-docs.txt --upgrade
+	@test -e $(python) || python3 -m venv $(venv)
+	@$(pip) install --quiet --requirement requirements-docs.txt --upgrade
 
 install-releasetools:
-	$(eval venvpath := ".venv_project")
-	@test -e $(venvpath)/bin/python || `command -v virtualenv` --python=`command -v python` $(venvpath)
-	@$(venvpath)/bin/pip install --quiet --requirement requirements-release.txt --upgrade
+	@test -e $(python) || python3 -m venv $(venv)
+	@$(pip) install --quiet --requirement requirements-release.txt --upgrade
+
+install-tests:
+	@test -e $(python) || python3 -m venv $(venv)
+	@$(pip) install --quiet --requirement requirements-tests.txt --upgrade
