@@ -1,6 +1,6 @@
-#################
-phenodata backlog
-#################
+#######
+Backlog
+#######
 
 
 ***********
@@ -14,8 +14,13 @@ Bugs
 
 Features
 ========
+- [o] ``appdirs`` => ``platformdirs``
+- [o] Add CITATION.CFF
 - [o] Switch from FTP to HTTP
 - [o] Docs: Add remark about outdated ``--year`` values in README
+- [o] Get rid of ``sql`` extra?
+- [o] Docs: Library use
+- [o] Test examples
 
 Infrastructure
 ==============

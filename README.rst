@@ -89,6 +89,7 @@ Usage
 ::
 
     $ phenodata --help
+
     Usage:
       phenodata info
       phenodata list-species --source=dwd [--format=csv]
@@ -272,8 +273,10 @@ Specific events
 ---------------
 Forecast of "beginning of flowering" events at station "Berlin-Dahlem".
 Use all species of the "primary group": "hazel", "snowdrop", "goat willow",
-"dandelion", "cherry", "apple", "winter oilseed rape", "black locust" and "common heather".
-Sort by date, ascending.
+"dandelion", "cherry", "apple", "winter oilseed rape", "black locust", and
+"common heather". Sort by date, ascending. Rendered in reStructuredText
+table format.
+
 ::
 
     phenodata forecast \
