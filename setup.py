@@ -6,13 +6,13 @@ README = open(os.path.join(here, 'README.rst')).read()
 CHANGES = open(os.path.join(here, 'CHANGES.rst')).read()
 
 requires = [
-    'appdirs>=1.4.3,<2',
     'arrow>=0.12.1,<0.18',  # Verified to work on 0.17.0.
     'attrs>=17.4.0',
     'docopt>=0.6.2',
     'dogpile.cache>=0.6.5,<1',  # Verified to work on 1.1.1.
     'future',
     'pandas>=0.23.4,<1.3',  # Verified to work on 1.2.0.
+    'platformdirs<4',
     'requests>=2.18.4,<3',
     'requests-ftp>=0.3.1,<4',  # Verified to work on 0.3.1.
     'tabulate>=0.8.2,<0.9',  # Verified to work on 0.8.7.
