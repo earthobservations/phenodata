@@ -155,6 +155,15 @@ Library use
 
 For ready-to-run code snippets, please also have a look at the `examples directory`_.
 
+.. hidden
+
+    .. code-block:: python
+
+        >>> import os
+        >>> import pytest
+        >>> if "GITHUB_ACTION" in os.environ:
+        ...     pytest.skip(msg="pytest-doctest-ellipsis-markers does not work on CI/GHA. Works on macOS though.", allow_module_level=True)
+
 .. code-block:: python
 
     >>> import pandas as pd
