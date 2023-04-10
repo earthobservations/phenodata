@@ -25,4 +25,5 @@ directly, like::
     source .venv/bin/activate
     pytest -k sql
     pytest -k readme
+    pytest -k example
 
