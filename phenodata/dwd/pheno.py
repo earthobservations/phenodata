@@ -1,21 +1,20 @@
 # -*- coding: utf-8 -*-
 # (c) 2018 Andreas Motl <andreas@hiveeyes.org>
 from __future__ import print_function
-from builtins import object
 import attr
 import json
 import logging
 import pandas as pd
 import pkg_resources
 from tqdm import tqdm
-from datetime import datetime, timedelta
+from datetime import datetime
 from phenodata.util import haversine_distance
 
 logger = logging.getLogger(__name__)
 
 
 @attr.s
-class DwdPhenoData(object):
+class DwdPhenoData:
     """
     Conveniently access phenology information from the Climate Data Center (CDC)
     FTP server operated by »Deutscher Wetterdienst« (DWD).
@@ -470,7 +469,7 @@ class DwdPhenoData(object):
             raise KeyError(message)
 
 @attr.s
-class DwdPhenoDataHumanizer(object):
+class DwdPhenoDataHumanizer:
     """
     Bring result DataFrame in a more pleasant shape.
     """

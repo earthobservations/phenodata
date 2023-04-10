@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 # (c) 2018 Andreas Motl <andreas@hiveeyes.org>
 import logging
-from builtins import object
 import re
 import attr
 import pandas as pd
@@ -12,7 +11,7 @@ logger = logging.getLogger(__name__)
 
 
 @attr.s
-class DwdCdcClient(object):
+class DwdCdcClient:
     """
     Base functionality for conveniently accessing the Climate Data Center (CDC)
     FTP server operated by »Deutscher Wetterdienst« (DWD).
