@@ -21,10 +21,14 @@ over 30 organisations, 8,000 volunteers and hundreds of school children.
 ***
 API
 ***
-- Example: https://www.naturetoday.com/index.cfm?act=waarnemingen.json&fenofase=10&periode=jaar&jaar=2019&soort=3073
-- Flow:
-    - Plant: https://www.naturetoday.com/index.cfm?act=waarnemingen.jsonsoort&badmin&mod=1&taal=en&groep=3
-    - Hazel: https://www.naturetoday.com/index.cfm?act=waarnemingen.jsonsoort&badmin&mod=1&taal=en&groep=3&soort=3073
-    - Y2018: https://www.naturetoday.com/index.cfm?act=waarnemingen.jsonsoort&badmin&mod=1&taal=en&groep=3&soort=3073&jaar=2018
-    - Search (All events): https://www.naturetoday.com/intl/en/observations/natuurkalender/sightings/view-sightings/?groep=3&soort=3073&jaar=2018&fenofase=
-    - Data: https://www.naturetoday.com/index.cfm?act=waarnemingen.json&fenofase=&periode=jaar&jaar=2018&soort=3073
+- Example
+
+  - https://www.naturetoday.com/index.cfm?act=waarnemingen.json&fenofase=10&periode=jaar&jaar=2019&soort=3073
+
+- Resources
+
+  - Plant: https://www.naturetoday.com/index.cfm?act=waarnemingen.jsonsoort&badmin&mod=1&taal=en&groep=3
+  - Hazel: https://www.naturetoday.com/index.cfm?act=waarnemingen.jsonsoort&badmin&mod=1&taal=en&groep=3&soort=3073
+  - Y2018: https://www.naturetoday.com/index.cfm?act=waarnemingen.jsonsoort&badmin&mod=1&taal=en&groep=3&soort=3073&jaar=2018
+  - Search (All events): https://www.naturetoday.com/intl/en/observations/natuurkalender/sightings/view-sightings/?groep=3&soort=3073&jaar=2018&fenofase=
+  - Data: https://www.naturetoday.com/index.cfm?act=waarnemingen.json&fenofase=&periode=jaar&jaar=2018&soort=3073

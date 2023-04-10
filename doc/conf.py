@@ -165,8 +165,16 @@ linkcheck_ignore = [
 ]
 sphinx_tabs_valid_builders = ["linkcheck"]
 
-# Configure Sphinx-copybutton
+
+# Configure sphinx-copybutton
 copybutton_remove_prompts = True
 copybutton_line_continuation_character = "\\"
 copybutton_prompt_text = r">>> |\.\.\. |\$ |sh\$ |PS> |cr> |mysql> |In \[\d*\]: | {2,5}\.\.\.: | {5,8}: "
 copybutton_prompt_is_regexp = True
+
+
+# Configure sphinxext-opengraph
+ogp_site_url = "https://phenodata.readthedocs.io/"
+# ogp_image = "http://example.org/image.png"
+ogp_description_length = 300
+ogp_enable_meta_description = True

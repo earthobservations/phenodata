@@ -37,43 +37,44 @@ def run():
       phenodata (-h | --help)
 
     Data acquisition options:
-      --source=<source>         Data source. Currently "dwd" only.
-      --dataset=<dataset>       Data set. Use "immediate" or "annual" for --source=dwd.
-      --partition=<dataset>     Partition. Use "recent" or "historical" for --source=dwd.
+      --source=<source>         Data source. Currently, only "dwd" is a valid identifier.
+      --dataset=<dataset>       Data set. Use "immediate" or "annual" for "--source=dwd".
+      --partition=<dataset>     Partition. Use "recent" or "historical" for "--source=dwd".
       --filename=<file>         Filter by file names (comma-separated list)
 
     Direct filtering options:
       --year=<year>             Filter by year (comma-separated list)
-      --station-id=<station-id> Filter by station ids (comma-separated list)
-      --species-id=<species-id> Filter by species ids (comma-separated list)
-      --phase-id=<phase-id>     Filter by phase ids (comma-separated list)
+      --station-id=<station-id> Filter by station identifiers (comma-separated list)
+      --species-id=<species-id> Filter by species identifiers (comma-separated list)
+      --phase-id=<phase-id>     Filter by phase identifiers (comma-separated list)
 
     Humanized filtering options:
       --station=<station>       Filter by strings from "stations" data (comma-separated list)
       --species=<species>       Filter by strings from "species" data (comma-separated list)
       --phase=<phase>           Filter by strings from "phases" data (comma-separated list)
       --species-preset=<preset> Filter by strings from "species" data (comma-separated list)
-                                The preset will get loaded from the ``presets.json`` file.
+                                The preset will get loaded from the "presets.json" file.
 
     Forecasting options:
       --forecast-year=<year>    Use as designated forecast year.
 
     Postprocess filtering options:
-      --sql=<sql>               Apply given SQL query before output
+      --sql=<sql>               Apply given SQL query before output.
 
     Data output options:
-      --format=<format>         Output data in designated format. Choose one of "tabular", "json", "csv" or "string".
-                                With "tabular", it is also possible to specify the table format,
-                                see https://bitbucket.org/astanin/python-tabulate. e.g. "tabular:presto".
-                                [default: tabular:psql]
-      --sort=<sort>             Sort by given column names (comma-separated list)
-      --humanize                Resolve ID-based columns to real names with "observations" and "forecast" output.
-      --show-ids                Show IDs alongside resolved text representation when using ``--humanize``.
-      --language=<language>     Use labels in designated language when using ``--humanize`` [default: english].
+      --format=<format>         Output data in designated format. Choose one of "tabular", "json",
+                                "csv", or "string". With "tabular", it is also possible to specify
+                                the table format. Use "tabular:pipe" for Markdown output, or
+                                "tabular:rst" for reStructuredText. [default: tabular:psql]
+      --sort=<sort>             Sort by given field names. (comma-separated list)
+      --humanize                Resolve identifier-based fields to human-readable labels.
+      --show-ids                Show identifiers alongside resolved labels, when using "--humanize".
+      --language=<language>     Use labels in designated language, when using "--humanize"
+                                [default: english].
       --long-station            Use long station name including "Naturraumgruppe" and "Naturraum".
       --limit=<limit>           Limit output of "nearest-stations" to designated number of entries.
                                 [default: 10]
-      --verbose                 Turn on verbose output
+      --verbose                 Turn on verbose output.
     """
 
     # Use generic commandline options schema and amend with current program name
