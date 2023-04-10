@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
 # (c) 2018 Andreas Motl <andreas@hiveeyes.org>
+"""
+phenodata is an acquisition and manipulation toolkit for open access phenology data.
+"""
 import sys
 import logging
 from docopt import docopt, DocoptExit
@@ -9,10 +12,6 @@ from phenodata.ftp import FTPSession
 from phenodata.dwd.cdc import DwdCdcClient
 from phenodata.dwd.pheno import DwdPhenoData, DwdPhenoDataHumanizer
 from phenodata.util import boot_logging, normalize_options, options_convert_lists
-
-"""
-phenodata is a data acquisition and manipulation toolkit for open access phenology data.
-"""
 
 logger = logging.getLogger(__name__)
 
@@ -125,7 +124,7 @@ def run():
 
     if options['info']:
         print('Name:         phenodata-{version}'.format(version=__version__))
-        print('Description:  phenodata is a data acquisition and manipulation toolkit for open access phenology data')
+        print('Description:  phenodata is an acquisition and manipulation toolkit for open access phenology data')
         print('Data sources: DWD')
         # TODO: Add cache location and info
         return
