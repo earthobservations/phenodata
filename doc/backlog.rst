@@ -15,14 +15,11 @@ Bugs
   - using ``--species-preset`` w/o ``--humanize``. Maybe implicitly select it?
   - acquiring "forecast" data with "--humanize" and "--show-ids" options
     https://github.com/earthobservations/phenodata/issues/6
+- [o] Why do some of the tests fail on CI/GHA/Linux?
 
 Documentation
 =============
 - [o] Add remark about outdated ``--year`` values in README
-- [o] Rework Usage » General section
-- [o] Better hide the "forecasting" feature from GA
-- [o] What's a ``.zenodo.json`` file?
-  https://github.com/citation-file-format/citation-file-format/blob/main/.zenodo.json
 
 Code & refactoring
 ==================
@@ -39,7 +36,6 @@ Features
 - [o] Produce condensed example like outlined within README » Output example
   => The ``forecast`` examples do that!
 - [o] How long is data being cached?
-- [o] Switch from FTP to HTTP
 - [o] Get rid of ``sql`` extra?
 - [o] License: LGPL?
 - [o] Probably acquire data from CDC portal instead?
@@ -52,9 +48,17 @@ Infrastructure
   and whistles like ``poe check``
 
 
-********
-Unsorted
-********
+**********
+Unsorted I
+**********
+- [o] Switch from FTP to HTTP
+- [o] What's a ``.zenodo.json`` file?
+  https://github.com/citation-file-format/citation-file-format/blob/main/.zenodo.json
+
+
+***********
+Unsorted II
+***********
 - [o] Render like https://www.zamg.ac.at/zamgWeb/pict/phaenospiegel/archive/pheno_overview_Austria_web_1_2016.png
 - [o] Display effective criteria just before performing the work
 - [o] Output "phenodata info" as DataFrame
@@ -105,3 +109,5 @@ Done
 - [x] Docs: Library use
 - [x] Test examples
 - [x] Deprecation warnings re. pandas
+- [x] Rework Usage » General section
+- [x] Better hide the "forecasting" feature from GA
