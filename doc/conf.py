@@ -19,14 +19,9 @@
 
 # -- Project information -----------------------------------------------------
 
-project = u'phenodata'
-copyright = u'2018-2023, earthobservations'
-author = u'Andreas Motl'
-
-# The short X.Y version
-version = u'0.11.0'
-# The full version, including alpha/beta/rc tags
-release = u'0.11.0'
+project = "Phenodata"
+copyright = "2018-2023, The Earth Observations Developers"
+author = "The Earth Observations Developers"
 
 
 # -- General configuration ---------------------------------------------------
@@ -39,10 +34,13 @@ release = u'0.11.0'
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
+    "sphinx_copybutton",
     'sphinx.ext.intersphinx',
     'sphinx.ext.todo',
     'sphinx.ext.ifconfig',
+    "sphinxext.opengraph",
 ]
+
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -66,7 +64,7 @@ language = "en"
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
 # This pattern also affects html_static_path and html_extra_path .
-exclude_patterns = [u'_build', 'Thumbs.db', '.DS_Store']
+exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 
 # The name of the Pygments (syntax highlighting) style to use.
 pygments_style = 'sphinx'
@@ -77,7 +75,7 @@ pygments_style = 'sphinx'
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
-html_theme = 'sphinx_rtd_theme'
+html_theme = "furo"
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
@@ -131,8 +129,8 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'phenodata.tex', u'phenodata Documentation',
-     u'Andreas Motl', 'manual'),
+    (master_doc, 'phenodata.tex', 'phenodata Documentation',
+     'Andreas Motl', 'manual'),
 ]
 
 
@@ -141,7 +139,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'phenodata', u'phenodata Documentation',
+    (master_doc, 'phenodata', 'phenodata Documentation',
      [author], 1)
 ]
 
@@ -152,7 +150,7 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'phenodata', u'phenodata Documentation',
+    (master_doc, 'phenodata', 'phenodata Documentation',
      author, 'phenodata', 'One line description of project.',
      'Miscellaneous'),
 ]
@@ -160,12 +158,15 @@ texinfo_documents = [
 
 # -- Extension configuration -------------------------------------------------
 
-# -- Options for intersphinx extension ---------------------------------------
-
-# Example configuration for intersphinx: refer to the Python standard library.
-intersphinx_mapping = {'https://docs.python.org/': None}
-
-# -- Options for todo extension ----------------------------------------------
-
-# If true, `todo` and `todoList` produce output, else they produce nothing.
 todo_include_todos = True
+intersphinx_mapping = {'https://docs.python.org/': None}
+linkcheck_ignore = [
+    # r'https://community.hiveeyes.org/.*'
+]
+sphinx_tabs_valid_builders = ["linkcheck"]
+
+# Configure Sphinx-copybutton
+copybutton_remove_prompts = True
+copybutton_line_continuation_character = "\\"
+copybutton_prompt_text = r">>> |\.\.\. |\$ |sh\$ |PS> |cr> |mysql> |In \[\d*\]: | {2,5}\.\.\.: | {5,8}: "
+copybutton_prompt_is_regexp = True

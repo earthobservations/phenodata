@@ -56,7 +56,7 @@ install-package:
 
 install-doctools:
 	@test -e $(python) || python3 -m venv $(venv)
-	$(pip) install --requirement requirements-docs.txt --upgrade
+	$(pip) install --requirement doc/requirements.txt --upgrade
 
 install-releasetools:
 	@test -e $(python) || python3 -m venv $(venv)
