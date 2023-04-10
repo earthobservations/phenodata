@@ -1,5 +1,10 @@
 .. image:: https://github.com/earthobservations/phenodata/workflows/Tests/badge.svg
     :target: https://github.com/earthobservations/phenodata/actions?workflow=Tests
+    :alt: CI outcome
+
+.. image:: https://readthedocs.org/projects/phenodata/badge/
+    :target: https://phenodata.readthedocs.io/
+    :alt: Documentation build status
 
 .. image:: https://codecov.io/gh/earthobservations/phenodata/branch/main/graph/badge.svg
     :target: https://codecov.io/gh/earthobservations/phenodata
@@ -33,7 +38,7 @@ phenodata
 About
 *****
 
-phenodata is a data acquisition and manipulation toolkit for open access
+Phenodata is a data acquisition and manipulation toolkit for open access
 phenology data. It is written in Python.
 
 Currently, it implements data wrappers for acquiring phenology observation
@@ -432,7 +437,7 @@ Project information
 Resources
 =========
 - `Source code <https://github.com/earthobservations/phenodata>`_
-- `Documentation <https://github.com/earthobservations/phenodata>`_
+- `Documentation <https://phenodata.readthedocs.io/>`_
 - `Python Package Index (PyPI) <https://pypi.org/project/phenodata/>`_
 
 Contributions
