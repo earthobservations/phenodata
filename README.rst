@@ -1,4 +1,4 @@
-.. image:: https://github.com/earthobservations/phenodata/workflows/Tests/badge.svg
+.. image:: https://github.com/earthobservations/phenodata/actions/workflows/tests.yml/badge.svg
     :target: https://github.com/earthobservations/phenodata/actions?workflow=Tests
     :alt: CI outcome
 
@@ -10,20 +10,17 @@
     :target: https://codecov.io/gh/earthobservations/phenodata
     :alt: Test suite code coverage
 
+.. image:: https://static.pepy.tech/badge/phenodata/month
+    :target: https://pepy.tech/project/phenodata
+
 .. image:: https://img.shields.io/pypi/pyversions/phenodata.svg
     :target: https://pypi.org/project/phenodata/
 
 .. image:: https://img.shields.io/pypi/v/phenodata.svg
     :target: https://pypi.org/project/phenodata/
 
-.. image:: https://img.shields.io/pypi/status/phenodata.svg
-    :target: https://pypi.org/project/phenodata/
-
 .. image:: https://img.shields.io/pypi/l/phenodata.svg
     :target: https://pypi.org/project/phenodata/
-
-.. image:: https://static.pepy.tech/badge/phenodata/month
-    :target: https://pepy.tech/project/phenodata
 
 |
 
@@ -39,121 +36,133 @@ About
 *****
 
 Phenodata is a data acquisition and manipulation toolkit for open access
-phenology data. It is written in Python.
+phenology data. It is written in Python, is based on `pandas`_, and can be
+used both as a standalone program, and as a library.
 
 Currently, it implements data wrappers for acquiring phenology observation
 data published on the DWD Climate Data Center (CDC) FTP server operated by
-»Deutscher Wetterdienst« (DWD).
+»Deutscher Wetterdienst« (DWD). Adding adapters for other phenology databases
+and APIs is possible and welcome.
 
-Under the hood, it uses the `pandas`_ data analysis library for data mangling,
-amongst others.
-
-
-
-****************
 Acknowledgements
-****************
+================
 
-Thanks to the many observers of »Deutscher Wetterdienst« (DWD),
-the »Global Phenological Monitoring programme« and all people working behind
-the scenes for their commitment in recording the observations and for making
-the excellent datasets available to the community. You know who you are.
-
-
-***************
-Getting started
-***************
-
-Introduction
-============
-For most acquisition tasks, you must choose from one of two different datasets:
-`annual-reporters`_ and `immediate-reporters`_.
-
-To improve data acquisition performance, also consider applying
-the ``--filename=`` parameter for file name filtering.
-
-Example: When using ``--filename=Hasel,Schneegloeckchen``, only file names containing
-``Hasel`` or ``Schneegloeckchen`` will be retrieved, thus minimizing the required effort
-to acquire all files.
+Thanks to the many observers of »Deutscher Wetterdienst« (DWD), the »Global
+Phenological Monitoring programme« (GPM), and all people working behind the
+scenes for their commitment on recording observations and making the excellent
+datasets available to the community. You know who you are.
 
 
-Install
-=======
+********
+Synopsis
+********
 
-If you know your way around Python, installing this software is really easy::
+The easiest way to use ``phenodata``, and to explore the dataset interactively,
+is to use its command-line interface.
 
-    pip install 'phenodata[sql]' --upgrade
+Those two examples will acquire observation data from DWD's network, only focus
+on the "beginning of flowering" phase event, and present the results in tabular
+format using values suitable for human consumption.
 
-Please refer to the `virtualenv`_ page about further recommendations how to
-install and use this software.
+.. code-block:: bash
+
+    # Acquire data from DWD's "immediate" dataset (Sofortmelder).
+    phenodata observations \
+        --source=dwd --dataset=immediate --partition=recent \
+        --year=2023 --station=brandenburg \
+        --species-preset=mellifera-de-primary \
+        --phase="beginning of flowering" \
+        --humanize --sort=Datum --format=tabular:rst
+
+.. code-block:: bash
+
+    # Acquire data from DWD's "annual" dataset (Jahresmelder).
+    phenodata observations \
+        --source=dwd --dataset=annual --partition=recent \
+        --year=2022 --station=berlin \
+        --species-preset=mellifera-de-primary \
+        --phase="beginning of flowering" \
+        --humanize --sort=Datum --format=tabular:rst
+
+.. tip::
+
+    The authors recommend to copy one of those snippets into a file and invoke it
+    as a script program, in order to make subsequent invocations easier while
+    editing and exploring different option values. If you discover a bug, or want
+    to make your program available to others because you think it is useful, feel
+    free to `share it back with us`_.
+
+Output example
+==============
+
+Phenodata can produce output in different formats. This is a table in
+`reStructuredText`_ format.
+
+==========  ======================  ======================  =====================
+Datum       Spezies                 Phase                   Station
+==========  ======================  ======================  =====================
+2018-02-17  common snowdrop         beginning of flowering  Berlin-Dahlem, Berlin
+2018-02-19  common hazel            beginning of flowering  Berlin-Dahlem, Berlin
+2018-03-30  goat willow             beginning of flowering  Berlin-Dahlem, Berlin
+2018-04-07  dandelion               beginning of flowering  Berlin-Dahlem, Berlin
+2018-04-15  cherry (late ripeness)  beginning of flowering  Berlin-Dahlem, Berlin
+2018-04-21  winter oilseed rape     beginning of flowering  Berlin-Dahlem, Berlin
+2018-04-23  apple (early ripeness)  beginning of flowering  Berlin-Dahlem, Berlin
+2018-05-03  apple (late ripeness)   beginning of flowering  Berlin-Dahlem, Berlin
+2018-05-24  black locust            beginning of flowering  Berlin-Dahlem, Berlin
+2018-08-20  common heather          beginning of flowering  Berlin-Dahlem, Berlin
+==========  ======================  ======================  =====================
+
+.. note::
+
+    Using the example snippet provided above, it rendered a table in `reStructuredText`_
+    format using ``--format=tabular:rst``. In order to render tables in `Markdown`_ format,
+    use ``--format=tabular:pipe``. For more output formats, please consult the documentation
+    of the `tabulate`_  package.
 
 
 *****
 Usage
 *****
 
+Introduction
+============
 
-Command-line use
-================
+For most acquisition tasks, you will have to select one of two different
+datasets of DWD, `annual-reporters`_ or `immediate-reporters`_. Further, the
+data partition has to be selected, it is either ``recent``, or ``historical``.
 
-::
+The DWD publishes data in files separated by species, this means each plant's
+data will be in a different file. By default, phenodata will acquire data for
+all species (plants), in order to be able to respond to all kinds of queries
+across the whole dataset.
 
-    $ phenodata --help
+If you are only interested in a limited set of species (plants), you can
+improve data acquisition performance by using the ``filename`` option to limit
+downloading to selected files only.
 
-    Usage:
-      phenodata info
-      phenodata list-species --source=dwd [--format=csv]
-      phenodata list-phases --source=dwd [--format=csv]
-      phenodata list-stations --source=dwd --dataset=immediate [--all] [--filter=berlin] [--sort=Stationsname] [--format=csv]
-      phenodata nearest-station --source=dwd --dataset=immediate --latitude=52.520007 --longitude=13.404954 [--format=csv]
-      phenodata nearest-stations --source=dwd --dataset=immediate --latitude=52.520007 --longitude=13.404954 [--all] [--limit=10] [--format=csv]
-      phenodata list-quality-levels --source=dwd [--format=csv]
-      phenodata list-quality-bytes --source=dwd [--format=csv]
-      phenodata list-filenames --source=dwd --dataset=immediate --partition=recent [--filename=Hasel,Schneegloeckchen] [--year=2017]
-      phenodata list-urls --source=dwd --dataset=immediate --partition=recent [--filename=Hasel,Schneegloeckchen] [--year=2017]
-      phenodata (observations|forecast) --source=dwd --dataset=immediate --partition=recent [--filename=Hasel,Schneegloeckchen] [--station-id=7521,7532] [--species-id=113,127] [--phase-id=5] [--quality-level=10] [--quality-byte=1,2,3] [--station=berlin,brandenburg] [--species=hazel,snowdrop] [--species-preset=mellifera-de-primary] [--phase=flowering] [--quality=ROUTKLI] [--year=2017] [--humanize] [--show-ids] [--language=german] [--long-station] [--sort=Datum] [--format=csv] [--verbose]
-      phenodata drop-cache --source=dwd
-      phenodata --version
-      phenodata (-h | --help)
+For example, when using ``--filename=Hasel,Schneegloeckchen``, only file names
+containing ``Hasel`` or ``Schneegloeckchen`` will be retrieved, thus minimizing
+the effort needed to acquire *all* files.
 
-    Data acquisition options:
-      --source=<source>         Data source. Currently "dwd" only.
-      --dataset=<dataset>       Data set. Use "immediate" or "annual" for --source=dwd.
-      --partition=<dataset>     Partition. Use "recent" or "historical" for --source=dwd.
-      --filename=<file>         Filter by file names (comma-separated list)
+Install
+=======
 
-    Direct filtering options:
-      --years=<years>           Filter by years (comma-separated list)
-      --station-id=<station-id> Filter by station ids (comma-separated list)
-      --species-id=<species-id> Filter by species ids (comma-separated list)
-      --phase-id=<phase-id>     Filter by phase ids (comma-separated list)
+To install the software from PyPI, invoke::
 
-    Humanized filtering options:
-      --station=<station>       Filter by strings from "stations" data (comma-separated list)
-      --species=<species>       Filter by strings from "species" data (comma-separated list)
-      --phase=<phase>           Filter by strings from "phases" data (comma-separated list)
-      --species-preset=<preset> Filter by strings from "species" data (comma-separated list)
-                                The preset will get loaded from the ``presets.json`` file.
+    pip install 'phenodata[sql]' --upgrade
 
-    Data output options:
-      --format=<format>         Output data in designated format. Choose one of "tabular", "json", "csv" or "string".
-                                With "tabular", it is also possible to specify the table format,
-                                see https://bitbucket.org/astanin/python-tabulate. e.g. "tabular:presto".
-                                [default: tabular:psql]
-      --sort=<sort>             Sort by given column names (comma-separated list)
-      --humanize                Resolve ID-based columns to real names with "observations" and "forecast" output.
-      --show-ids                Show IDs alongside resolved text representation when using ``--humanize``.
-      --language=<language>     Use labels in designated language when using ``--humanize`` [default: english].
-      --long-station            Use long station name including "Naturraumgruppe" and "Naturraum".
-      --limit=<limit>           Limit output of "nearest-stations" to designated number of entries.
-                                [default: 10]
-      --verbose                 Turn on verbose output
+.. note::
 
+    Please refer to the `virtualenv`_ page about best-practice recommendations to
+    install the software separate from your system environment.
 
 Library use
 ===========
 
-For ready-to-run code snippets, please also have a look at the `examples directory`_.
+This snippet demonstrates how to use phenodata as a library within individual
+programs. For ready-to-run code examples, please have a look into the `examples
+directory`_.
 
 .. hidden
 
@@ -174,79 +183,128 @@ For ready-to-run code snippets, please also have a look at the `examples directo
     >>> cdc_client = DwdCdcClient(ftp=FTPSession())
     >>> client = DwdPhenoData(cdc=cdc_client, humanizer=None, dataset="immediate")
     >>> options = {
+    ...     # Select data partition.
     ...     "partition": "recent",
+    ...
+    ...     # Filter by file names and years.
     ...     "filename": ["Hasel", "Raps", "Mais"],
     ...     "year": [2018, 2019, 2020],
     ...
-    ...     # ID parameters
+    ...     # Filter by station identifier.
     ...     "station-id": [13346]
     ... }
 
     >>> observations: pd.DataFrame = client.get_observations(options, humanize=False)
-
-
-
-**************
-Output example
-**************
-
-==========  ======================  ======================  =====================
-Datum       Spezies                 Phase                   Station
-==========  ======================  ======================  =====================
-2018-02-17  common snowdrop         beginning of flowering  Berlin-Dahlem, Berlin
-2018-02-19  common hazel            beginning of flowering  Berlin-Dahlem, Berlin
-2018-03-30  goat willow             beginning of flowering  Berlin-Dahlem, Berlin
-2018-04-07  dandelion               beginning of flowering  Berlin-Dahlem, Berlin
-2018-04-15  cherry (late ripeness)  beginning of flowering  Berlin-Dahlem, Berlin
-2018-04-21  winter oilseed rape     beginning of flowering  Berlin-Dahlem, Berlin
-2018-04-23  apple (early ripeness)  beginning of flowering  Berlin-Dahlem, Berlin
-2018-05-03  apple (late ripeness)   beginning of flowering  Berlin-Dahlem, Berlin
-2018-05-24  black locust            beginning of flowering  Berlin-Dahlem, Berlin
-2018-08-20  common heather          beginning of flowering  Berlin-Dahlem, Berlin
-==========  ======================  ======================  =====================
-
-----
-
     >>> observations.info()
-    '...'
+    [...]
     >>> observations
-    '...'
+    [...]
 
-*******************
-Invocation examples
-*******************
+
+Command-line use
+================
+
+This section gives you an idea about how to use the ``phenodata`` program on
+the command-line.
+
+::
+
+    $ phenodata --help
+
+    Usage:
+      phenodata info
+      phenodata list-species --source=dwd [--format=csv]
+      phenodata list-phases --source=dwd [--format=csv]
+      phenodata list-stations --source=dwd --dataset=immediate [--all] [--filter=berlin] [--sort=Stationsname] [--format=csv]
+      phenodata nearest-station --source=dwd --dataset=immediate --latitude=52.520007 --longitude=13.404954 [--format=csv]
+      phenodata nearest-stations --source=dwd --dataset=immediate --latitude=52.520007 --longitude=13.404954 [--all] [--limit=10] [--format=csv]
+      phenodata list-quality-levels --source=dwd [--format=csv]
+      phenodata list-quality-bytes --source=dwd [--format=csv]
+      phenodata list-filenames --source=dwd --dataset=immediate --partition=recent [--filename=Hasel,Schneegloeckchen] [--year=2017]
+      phenodata list-urls --source=dwd --dataset=immediate --partition=recent [--filename=Hasel,Schneegloeckchen] [--year=2017]
+      phenodata (observations|forecast) --source=dwd --dataset=immediate --partition=recent [--filename=Hasel,Schneegloeckchen] [--station-id=164,717] [--species-id=113,127] [--phase-id=5] [--quality-level=10] [--quality-byte=1,2,3] [--station=berlin,brandenburg] [--species=hazel,snowdrop] [--species-preset=mellifera-de-primary] [--phase=flowering] [--quality=ROUTKLI] [--year=2017] [--forecast-year=2021] [--humanize] [--show-ids] [--language=german] [--long-station] [--sort=Datum] [--sql=sql] [--format=csv] [--verbose]
+      phenodata drop-cache --source=dwd
+      phenodata --version
+      phenodata (-h | --help)
+
+    Data acquisition options:
+      --source=<source>         Data source. Currently, only "dwd" is a valid identifier.
+      --dataset=<dataset>       Data set. Use "immediate" or "annual" for "--source=dwd".
+      --partition=<dataset>     Partition. Use "recent" or "historical" for "--source=dwd".
+      --filename=<file>         Filter by file names (comma-separated list)
+
+    Direct filtering options:
+      --year=<year>             Filter by year (comma-separated list)
+      --station-id=<station-id> Filter by station identifiers (comma-separated list)
+      --species-id=<species-id> Filter by species identifiers (comma-separated list)
+      --phase-id=<phase-id>     Filter by phase identifiers (comma-separated list)
+
+    Humanized filtering options:
+      --station=<station>       Filter by strings from "stations" data (comma-separated list)
+      --species=<species>       Filter by strings from "species" data (comma-separated list)
+      --phase=<phase>           Filter by strings from "phases" data (comma-separated list)
+      --species-preset=<preset> Filter by strings from "species" data (comma-separated list)
+                                The preset will get loaded from the "presets.json" file.
+
+    Forecasting options:
+      --forecast-year=<year>    Use as designated forecast year.
+
+    Postprocess filtering options:
+      --sql=<sql>               Apply given SQL query before output.
+
+    Data output options:
+      --format=<format>         Output data in designated format. Choose one of "tabular", "json",
+                                "csv", or "string". With "tabular", it is also possible to specify
+                                the table format. Use "tabular:pipe" for Markdown output, or
+                                "tabular:rst" for reStructuredText. [default: tabular:psql]
+      --sort=<sort>             Sort by given field names. (comma-separated list)
+      --humanize                Resolve identifier-based fields to human-readable labels.
+      --show-ids                Show identifiers alongside resolved labels, when using "--humanize".
+      --language=<language>     Use labels in designated language, when using "--humanize"
+                                [default: english].
+      --long-station            Use long station name including "Naturraumgruppe" and "Naturraum".
+      --limit=<limit>           Limit output of "nearest-stations" to designated number of entries.
+                                [default: 10]
+      --verbose                 Turn on verbose output.
+
+
+********
+Examples
+********
+
+The best way to explore phenodata is by running a few example invocations.
+
+- The "Metadata" section will walk you through different commands which can be
+  used to inquire information about monitoring stations/sites, and to list
+  the actual files which will be acquired, in order to learn about data lineage.
+
+- The "Observations" section will demonstrate command examples to acquire,
+  process, and format actual observation data.
 
 
 Metadata
 ========
 
-List of species::
+Display list of species, with their German, English, and Latin names::
 
     phenodata list-species --source=dwd
 
-List of phases::
+Display list of phases, with their German and English names::
 
     phenodata list-phases --source=dwd
 
-List of all stations::
+List of all reporting/monitoring stations::
 
     phenodata list-stations --source=dwd --dataset=immediate
 
-List of filtered stations::
+List of stations, with filtering::
 
     phenodata list-stations --source=dwd --dataset=annual --filter="Fränkische Alb"
 
-List of file names of recent observations by the annual reporters::
-
-    phenodata list-filenames --source=dwd --dataset=annual --partition=recent
-
-List of full URLs to observations using filename-based filtering::
-
-    phenodata list-urls --source=dwd --dataset=annual --partition=recent --filename=Hasel,Schneegloeckchen
-
 Display nearest station for given position::
 
-    phenodata nearest-station --source=dwd --dataset=immediate --latitude=52.520007 --longitude=13.404954
+    phenodata nearest-station --source=dwd --dataset=immediate \
+        --latitude=52.520007 --longitude=13.404954
 
 Display 20 nearest stations for given position::
 
@@ -254,36 +312,57 @@ Display 20 nearest stations for given position::
         --source=dwd --dataset=immediate \
         --latitude=52.520007 --longitude=13.404954 --limit=20
 
+List of file names of recent observations by the annual reporters::
+
+    phenodata list-filenames \
+        --source=dwd --dataset=annual --partition=recent
+
+Same as above, but with filtering by file name::
+
+    phenodata list-filenames \
+        --source=dwd --dataset=annual --partition=recent \
+        --filename=Hasel,Kornelkirsche,Loewenzahn,Schneegloeckchen
+
+List full URLs instead of only file names::
+
+    phenodata list-urls \
+        --source=dwd --dataset=annual --partition=recent \
+        --filename=Hasel,Kornelkirsche,Loewenzahn,Schneegloeckchen
+
 
 Observations
 ============
 
 Observations of hazel and snowdrop, using filename-based filtering at data acquisition time::
 
-    phenodata observations --source=dwd --dataset=annual --partition=recent --filename=Hasel,Schneegloeckchen
+    phenodata observations \
+        --source=dwd --dataset=annual --partition=recent \
+        --filename=Hasel,Schneegloeckchen
 
-Observations of hazel and snowdrop (dito), but for station ids 164 and 717 only::
+Observations of hazel and snowdrop (dito), but for specific station identifiers::
 
     phenodata observations \
         --source=dwd --dataset=annual --partition=recent \
         --filename=Hasel,Schneegloeckchen --station-id=7521,7532
 
-All observations for station ids 164 and 717 in years 2016 and 2017::
+All observations for specific station identifiers and specific years::
 
     phenodata observations \
         --source=dwd --dataset=annual --partition=recent \
         --station-id=7521,7532 --year=2020,2021
 
-All observations for station ids 164 and 717 and species ids 113 and 127::
+All observations for specific station and species identifiers::
 
     phenodata observations \
         --source=dwd --dataset=annual --partition=recent \
         --station-id=7521,7532 --species-id=113,127
 
-All invalid observations::
+All observations marked as invalid::
 
     phenodata list-quality-bytes --source=dwd
-    phenodata observations --source=dwd --dataset=annual --partition=recent --quality-byte=5,6,7,8
+    phenodata observations \
+        --source=dwd --dataset=annual --partition=recent \
+        --quality-byte=5,6,7,8
 
 
 Forecasting
@@ -301,13 +380,14 @@ using grouping and by computing the "mean" value of the "Jultag" column::
 *************************
 Humanized output examples
 *************************
-The option ``--humanize`` will improve textual output by resolving ID columns
-in the observation data to their appropriate text representions from metadata files.
+
+The option ``--humanize`` will improve textual output by resolving identifier
+fields to appropriate human-readable text labels.
 
 Observations
 ============
-Observations for species "hazel", "snowdrop", "apple" and "pear" at station "Berlin-Dahlem",
-output texts in the German language if possible::
+Observations for species "hazel", "snowdrop", "apple" and "pear" at station
+"Berlin-Dahlem", output texts in the German language if possible::
 
     phenodata observations \
         --source=dwd --dataset=annual --partition=recent \
@@ -365,7 +445,7 @@ Query observations by using textual representation of "station" information::
         --station=berlin,brandenburg \
         --humanize --sort=Datum
 
-Observations near Munich for species "hazel" or "snowdrop" in 2022::
+Observations near Munich for species "hazel" and "snowdrop" in specific year::
 
     phenodata observations \
         --source=dwd --dataset=annual --partition=recent \
@@ -374,7 +454,7 @@ Observations near Munich for species "hazel" or "snowdrop" in 2022::
         --year=2022 \
         --humanize --sort=Datum
 
-Observations for any "flowering" events in 2021 and 2022 around Munich::
+Observations for any "flowering" events in specific years around Munich::
 
     phenodata observations \
         --source=dwd --dataset=annual --partition=recent \
@@ -383,7 +463,7 @@ Observations for any "flowering" events in 2021 and 2022 around Munich::
         --year=2021,2022 \
         --humanize --sort=Datum
 
-Same observations but with ``ROUTKLI`` quality::
+Same observations but with ``ROUTKLI`` quality marker::
 
     phenodata observations \
         --source=dwd --dataset=annual --partition=recent \
@@ -434,9 +514,10 @@ Sort by date.
 
 .. note::
 
-    The species presets like ``mellifera-de-primary`` and others are currently stored in
-    `presets.json <https://github.com/earthobservations/phenodata/blob/main/phenodata/dwd/presets.json>`__.
-
+    The species presets like ``mellifera-de-primary`` and others are stored
+    within the `presets.json`_ file, which is essentially bundling lists of
+    species names into groups. Contributions are welcome to introduce other
+    groups of species which fit into different phenology domains.
 
 
 *******************
@@ -451,16 +532,17 @@ Resources
 
 Contributions
 =============
-If you'd like to contribute you're most welcome!
-Spend some time taking a look around, locate a bug, design issue or
-spelling mistake and then send us a pull request or create an issue.
-
-Thanks in advance for your efforts, we really appreciate any help or feedback.
+If you would like to contribute, you are most welcome. Spend some time taking a
+look around, locate a bug, design issue or spelling mistake and then send us a
+pull request or create an issue. Thank you in advance for your efforts, the
+authors really appreciate any kind of help and feedback.
 
 Discussions
 ===========
 Discussions around the development of ``phenodata`` and its applications are
-taking place at the Hiveeyes forum:
+taking place at the Hiveeyes forum. Enjoy reading them, and don't hesitate to
+write in, if you think you may be able to contribute a thing or another, or
+to share what you have been doing with it in form of a "show and tell" post.
 
 - https://community.hiveeyes.org/t/phanologischer-kalender-fur-trachtpflanzen/664
 - https://community.hiveeyes.org/t/phenodata-ein-datenbezug-und-manipulations-toolkit-fur-open-access-phanologiedaten/2892
@@ -492,9 +574,12 @@ information.
 
 Disclaimer
 ==========
-The project and its authors are not affiliated with DWD, USA-NPN or any
-other data provider in any way. It is a sole project from the community
-for making data more accessible in the spirit of open data.
+The project and its authors are not affiliated with DWD, GPM, USA-NPN, or any
+other organization in any way. It is a sole project conceived by the community,
+in order to make data more accessible, in the spirit of `open data`_ and `open
+scientific data`_. The authors believe the world would be a better place if
+public data could be loaded into `pandas`_ dataframes and `Xarray`_ datasets
+easily.
 
 
 .. _annual-reporters: https://www.dwd.de/DE/klimaumwelt/klimaueberwachung/phaenologie/daten_deutschland/jahresmelder/jahresmelder_node.html
@@ -502,5 +587,13 @@ for making data more accessible in the spirit of open data.
 .. _examples directory: https://github.com/earthobservations/phenodata/tree/main/examples
 .. _immediate-reporters: https://www.dwd.de/DE/klimaumwelt/klimaueberwachung/phaenologie/daten_deutschland/sofortmelder/sofortmelder_node.html
 .. _LICENSE: https://github.com/earthobservations/phenodata/blob/main/LICENSE
+.. _Markdown: https://en.wikipedia.org/wiki/Markdown
+.. _open data: https://en.wikipedia.org/wiki/Open_data
+.. _open scientific data: https://en.wikipedia.org/wiki/Open_scientific_data
 .. _pandas: https://pandas.pydata.org/
+.. _presets.json: https://github.com/earthobservations/phenodata/blob/main/phenodata/dwd/presets.json
+.. _reStructuredText: https://en.wikipedia.org/wiki/ReStructuredText
+.. _share it back with us: https://github.com/earthobservations/phenodata/discussions/new?category=show-and-tell
+.. _tabulate: https://github.com/astanin/python-tabulate
 .. _virtualenv: https://github.com/earthobservations/phenodata/blob/main/doc/virtualenv.rst
+.. _Xarray: https://xarray.dev/
