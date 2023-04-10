@@ -12,7 +12,7 @@ development
 - CI: Add GHA configuration to invoke software tests
 - CI/Tests: Fix installation on Python 3.7 to 3.9
 - Dependencies: Switch from ``appdirs`` to ``platformdirs``
-- Dependencies: Update to ``pandas<2`
+- Dependencies: Add compatibility with pandas 2
 - Docs: Add `examples` snippets to README and tests
 - Tests: Add code snippet in README to test suite, per doctest
 - Docs: Add configuration for "Read the Docs"

@@ -102,12 +102,12 @@ class DwdCdcClient:
         #    return
 
         # Read CSV into pandas DataFrame.
-        # https://pandas.pydata.org/pandas-docs/stable/io.html
+        # https://pandas.pydata.org/pandas-docs/stable/user_guide/io.html#csv-text-files
         df = pd.read_csv(
             stream, engine='c', encoding='utf-8',
             delimiter=';', skipinitialspace=True,
             skip_blank_lines=True,
-            error_bad_lines=False,
+            on_bad_lines="warn",
             low_memory=False
         )
 
