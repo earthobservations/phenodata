@@ -1,0 +1,30 @@
+---
+cff-version: 1.2.0
+message: If you use this software, please cite it using these metadata.
+
+title: phenodata
+url: https://phenodata.readthedocs.org/
+abstract: Phenodata is a data acquisition and manipulation toolkit for open access phenology data.
+authors:
+  - name: Andreas Motl
+    email: andreas@hiveeyes.org
+
+date-published: 2018-03-11
+date-released: 2023-04-10
+type: software
+license: AGPL
+license-url: https://github.com/earthobservations/phenodata/blob/main/LICENSE
+repository-code: https://github.com/earthobservations/phenodata
+keywords:
+  - dwd
+  - gpm
+  - opendata
+  - open-data
+  - phenology
+  - phenology-data
+  - phenology-models
+  - phenology-modelling
+  - phenometrics
+  - research-data
+  - scientific
+  - usa-npn
