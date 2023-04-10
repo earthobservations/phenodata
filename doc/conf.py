@@ -174,7 +174,7 @@ copybutton_prompt_is_regexp = True
 
 
 # Configure sphinxext-opengraph
-ogp_site_url = "https://phenodata.readthedocs.io/"
+# ogp_site_url = "https://phenodata.readthedocs.io/"
 # ogp_image = "http://example.org/image.png"
-ogp_description_length = 300
-ogp_enable_meta_description = True
+# ogp_description_length = 300
+# ogp_enable_meta_description = True
