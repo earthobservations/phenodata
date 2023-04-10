@@ -44,7 +44,7 @@ jobs:
             setup.py
 
       - name: Run tests
-        run: make test
+        run: make check
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
