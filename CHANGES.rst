@@ -14,6 +14,7 @@ development
 - Dependencies: Switch from ``appdirs`` to ``platformdirs``
 - Dependencies: Update to ``pandas<2`
 - Docs: Add `examples` snippets to README and tests
+- Tests: Add code snippet in README to test suite, per doctest
 
 2020-12-29 0.11.0
 =================
