@@ -14,6 +14,7 @@
     :hidden:
 
     notebook/index
+    forecasts
 
 
 .. toctree::

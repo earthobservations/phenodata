@@ -57,7 +57,7 @@ datasets available to the community. You know who you are.
 Synopsis
 ********
 
-The easiest way to use ``phenodata``, and to explore the dataset interactively,
+The easiest way to use phenodata, and to explore the dataset interactively,
 is to use its command-line interface.
 
 Those two examples will acquire observation data from DWD's network, only focus
@@ -333,6 +333,9 @@ List full URLs instead of only file names::
 Observations
 ============
 
+Basic
+-----
+
 Observations of hazel and snowdrop, using filename-based filtering at data acquisition time::
 
     phenodata observations \
@@ -365,79 +368,31 @@ All observations marked as invalid::
         --quality-byte=5,6,7,8
 
 
-Forecasting
-===========
-Acquire data from observations in Berlin-Dahlem and München-Pasing and forecast to current year
-using grouping and by computing the "mean" value of the "Jultag" column::
-
-    phenodata forecast \
-        --source=dwd --dataset=annual --partition=recent \
-        --filename=Hasel,Schneegloeckchen,Apfel,Birne \
-        --station-id=7521,7532 --format=string
-
-
-
-*************************
-Humanized output examples
-*************************
+Humanized output
+----------------
 
 The option ``--humanize`` will improve textual output by resolving identifier
 fields to appropriate human-readable text labels.
 
-Observations
-============
 Observations for species "hazel", "snowdrop", "apple" and "pear" at station
-"Berlin-Dahlem", output texts in the German language if possible::
+"Berlin-Dahlem", output texts in the German language, if possible::
 
     phenodata observations \
         --source=dwd --dataset=annual --partition=recent \
         --filename=Hasel,Schneegloeckchen,Apfel,Birne \
         --station-id=12132 \
-        --humanize --language=german
-
-Forecasting
-===========
-
-Specific events
----------------
-Forecast of "beginning of flowering" events at station "Berlin-Dahlem".
-Use all species of the "primary group": "hazel", "snowdrop", "goat willow",
-"dandelion", "cherry", "apple", "winter oilseed rape", "black locust", and
-"common heather". Sort by date, ascending. Rendered in reStructuredText
-table format.
-
-::
-
-    phenodata forecast \
-        --source=dwd --dataset=annual --partition=recent \
-        --filename=Hasel,Schneegloeckchen,Sal-Weide,Loewenzahn,Suesskirsche,Apfel,Winterraps,Robinie,Winter-Linde,Heidekraut \
-        --station-id=12132 --phase-id=5 \
         --humanize \
-        --sort=Datum \
-        --format=tabular:rst
-
-Event sequence for each species
--------------------------------
-Forecast of all events at station "Berlin-Dahlem".
-Use all species of the "primary group" (dito).
-Sort by species and date, ascending.
-::
-
-    phenodata forecast \
-        --source=dwd --dataset=annual --partition=recent \
-        --filename=Hasel,Schneegloeckchen,Sal-Weide,Loewenzahn,Suesskirsche,Apfel,Winterraps,Robinie,Winter-Linde,Heidekraut \
-        --station-id=12132 \
-        --humanize --language=german \
-        --sort=Spezies,Datum
+        --language=german
 
 
-*************************
-Humanized search examples
-*************************
+Humanized search
+----------------
 
-Observations
-============
-Query observations by using textual representation of "station" information::
+When using the ``--humanize`` option, you can use the non-identifier-based
+filtering options ``--station``, ``--species``, and ``--phase``, to use
+human-readable text labels for filtering instead of numeric identifiers.
+
+Query observations by using real-world location names::
 
     phenodata observations \
         --source=dwd --dataset=annual --partition=recent \
@@ -445,7 +400,7 @@ Query observations by using textual representation of "station" information::
         --station=berlin,brandenburg \
         --humanize --sort=Datum
 
-Observations near Munich for species "hazel" and "snowdrop" in specific year::
+Query observations near Munich with species names "hazel" and "snowdrop" in specific year::
 
     phenodata observations \
         --source=dwd --dataset=annual --partition=recent \
@@ -454,26 +409,28 @@ Observations near Munich for species "hazel" and "snowdrop" in specific year::
         --year=2022 \
         --humanize --sort=Datum
 
-Observations for any "flowering" events in specific years around Munich::
+Now, let's query for any "flowering" observations. There will be ``beginning
+of flowering``, ``general flowering``, and ``end of flowering``::
 
     phenodata observations \
         --source=dwd --dataset=annual --partition=recent \
         --station=münchen \
         --phase=flowering \
-        --year=2021,2022 \
+        --year=2022 \
         --humanize --sort=Datum
 
-Same observations but with ``ROUTKLI`` quality marker::
+Same observations as before but with ``ROUTKLI`` quality marker::
 
     phenodata observations \
         --source=dwd --dataset=annual --partition=recent \
         --station=münchen \
         --phase=flowering \
-        --quality='nicht beanstandet' \
-        --year=2021 \
+        --quality="nicht beanstandet" \
+        --year=2022 \
         --humanize --sort=Datum
 
-Investigate some "flowering" observations near Munich which have seen corrections last year::
+Now, let's inquire those field values which have seen corrections instead
+(``Feldwert korrigiert``)::
 
     phenodata observations \
         --source=dwd --dataset=annual --partition=recent \
@@ -484,40 +441,35 @@ Investigate some "flowering" observations near Munich which have seen correction
         --humanize --sort=Datum
 
 
-Forecasting
-===========
-Forecast based on "beginning of flowering" events of 2015-2017 in Thüringen and Bayern for the given list of species.
-Sort by species and date.
-::
+Filtering with presets
+----------------------
 
-    phenodata forecast \
+When using the ``--humanize`` option, you can use also define shortcuts for
+lists of species by name. For example, the ``mellifera-de-primary`` preset is
+defined within the `presets.json`_ file like::
+
+    Hasel, Schneeglöckchen, Sal-Weide, Löwenzahn, Süßkirsche, Apfel, Winterraps, Robinie, Winter-Linde, Heidekraut
+
+Then, you can use the option ``--species-preset=mellifera-de-primary`` instead
+of the ``--species`` option for filtering only those specified species.
+
+This example lists all "beginning of flowering" observations for the specified
+years in Köln, only for the named list of species ``mellifera-de-primary``.
+The result will be sorted by species and date, and human-readable labels will
+be displayed in German, when possible::
+
+    phenodata observations \
         --source=dwd --dataset=annual --partition=recent \
-        --station=thüringen,bayern \
-        --species=Hasel,Schneeglöckchen,Sal-Weide,Löwenzahn,Süßkirsche,Apfel,Winterraps,Robinie,Winter-Linde,Heidekraut \
-        --phase-id=5 \
-        --year=2021,2022,2023 \
-        --humanize --language=german \
-        --sort=Spezies,Datum
-
-Forecast based on "beginning of flowering" events of 2015-2017 in Berlin for the named list of species "mellifera-de-primary".
-Sort by date.
-::
-
-    phenodata forecast \
-        --source=dwd --dataset=annual --partition=recent \
-        --station=köln \
         --phase="beginning of flowering" \
         --year=2021,2022,2023 \
-        --humanize --language=german \
-        --sort=Datum \
-        --species-preset=mellifera-de-primary
+        --station=köln \
+        --species-preset=mellifera-de-primary \
+        --humanize --language=german --sort=Spezies,Datum
 
 .. note::
 
-    The species presets like ``mellifera-de-primary`` and others are stored
-    within the `presets.json`_ file, which is essentially bundling lists of
-    species names into groups. Contributions are welcome to introduce other
-    groups of species which fit into different phenology domains.
+    Contributions are welcome to introduce other groups of species which fit
+    into different phenology domains or use-case categories.
 
 
 *******************
@@ -539,7 +491,7 @@ authors really appreciate any kind of help and feedback.
 
 Discussions
 ===========
-Discussions around the development of ``phenodata`` and its applications are
+Discussions around the development of phenodata and its applications are
 taking place at the Hiveeyes forum. Enjoy reading them, and don't hesitate to
 write in, if you think you may be able to contribute a thing or another, or
 to share what you have been doing with it in form of a "show and tell" post.
