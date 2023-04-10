@@ -8,6 +8,7 @@ $(eval python       := $(venv)/bin/python)
 $(eval pytest       := $(venv)/bin/pytest)
 $(eval bumpversion  := $(venv)/bin/bumpversion)
 $(eval twine        := $(venv)/bin/twine)
+$(eval proselint    := $(venv)/bin/proselint)
 
 
 # ============
@@ -28,6 +29,11 @@ release: bumpversion push build pypi-upload
 docs-html: install-doctools
 	touch doc/index.rst
 	export SPHINXBUILD="`pwd`/$(venv)/bin/sphinx-build"; cd doc; make html
+
+docs-lint: install-tests
+	$(proselint) *.rst doc/**/*.rst
+
+check: docs-lint test
 
 
 # ===============

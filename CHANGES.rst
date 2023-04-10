@@ -18,6 +18,7 @@ development
 - Docs: Add configuration for "Read the Docs"
 - Docs: Make the "forecast" feature less prominent, because it
   only offers a naive approach.
+- Docs: Add proselint
 
 2020-12-29 0.11.0
 =================
@@ -50,7 +51,7 @@ development
 2020-01-07 0.9.0
 ================
 - Upgrade release support packages "twine" and "keyring"
-- Change base URL to new opendata URL. Thanks, @mgrrx!
+- Change base URL to new opendata URL. Thanks, @mgrrx.
 - Futurize for Python 3 compatibility.
 
 2018-03-29 0.8.0
@@ -115,7 +116,7 @@ development
 2018-03-14 0.4.0
 ================
 - Refactoring and modularization
-- Make FTP client wrapper for DWD CDC server more universal
+- Make FTP client wrapper for DWD CDC server universal
 - Improve inline documentation
 - Improve CSV import string data cleansing and integer type coercion
 - Improve filtering mechanics
