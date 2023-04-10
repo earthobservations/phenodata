@@ -152,24 +152,27 @@ For ready-to-run code snippets, please also have a look at the `examples directo
 
 .. code-block:: python
 
-    import pandas as pd
-    from phenodata.ftp import FTPSession
-    from phenodata.dwd.cdc import DwdCdcClient
-    from phenodata.dwd.pheno import DwdPhenoData
+    >>> import pandas as pd
+    >>> from phenodata.ftp import FTPSession
+    >>> from phenodata.dwd.cdc import DwdCdcClient
+    >>> from phenodata.dwd.pheno import DwdPhenoData
 
-    client = DwdPhenoData(cdc=cdc_client, humanizer=None, dataset="immediate")
-    options = {
-        "partition": "recent",
-        "filename": ["Hasel", "Raps", "Mais"],
-        "year": [2018, 2019, 2020],
+    >>> cdc_client = DwdCdcClient(ftp=FTPSession())
+    >>> client = DwdPhenoData(cdc=cdc_client, humanizer=None, dataset="immediate")
+    >>> options = {
+    ...     "partition": "recent",
+    ...     "filename": ["Hasel", "Raps", "Mais"],
+    ...     "year": [2018, 2019, 2020],
+    ...
+    ...     # ID parameters
+    ...     "station-id": [13346]
+    ... }
 
-        # ID parameters
-        "station-id": [13346]
-    }
-
-    observations: pd.DataFrame = client.get_observations(options, humanize=False)
-    observations.info()
-    print(observations)
+    >>> observations: pd.DataFrame = client.get_observations(options, humanize=False)
+    >>> observations.info()  # doctest: +ELLIPSIS
+    [...]
+    >>> observations  # doctest: +ELLIPSIS
+    [...]
 
 
 
