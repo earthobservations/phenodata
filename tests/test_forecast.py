@@ -33,7 +33,7 @@ def test_cli_forecast_annual_recent(capsys):
 
     Event sequence for each species
     -------------------------------
-    Forecast of all events at station "Berlin-Dahlem".
+    Forecast of all observations at station "Berlin-Dahlem".
     Use all species of the "primary group" (dito).
     Sort by species and date, ascending.
 

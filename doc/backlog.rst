@@ -9,9 +9,12 @@ By topic
 
 Bugs
 ====
-- [o] Croaks when acquiring "forecast" data with "--humanize" and "--show-ids" options
-  https://github.com/earthobservations/phenodata/issues/6
 - [o] tqdm + logger improvements
+- [o] Improve input data validation. Currently, the program croaks when
+
+  - using ``--species-preset`` w/o ``--humanize``. Maybe implicitly select it?
+  - acquiring "forecast" data with "--humanize" and "--show-ids" options
+    https://github.com/earthobservations/phenodata/issues/6
 
 Documentation
 =============
@@ -24,6 +27,7 @@ Documentation
 Code & refactoring
 ==================
 - [o] Type annotations
+- [o] Code formatting
 - [o] Why are the ``dataset`` and ``partition`` on different levels of the API?
 
 Features
@@ -33,10 +37,13 @@ Features
   - tabular:pipe => markdown, md
   - tabular:rst => restructuredtext, rst
 - [o] Produce condensed example like outlined within README » Output example
+  => The ``forecast`` examples do that!
 - [o] How long is data being cached?
 - [o] Switch from FTP to HTTP
 - [o] Get rid of ``sql`` extra?
 - [o] License: LGPL?
+- [o] Probably acquire data from CDC portal instead?
+- [o] Specify output order of columns
 
 Infrastructure
 ==============
