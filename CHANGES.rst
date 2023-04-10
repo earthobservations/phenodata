@@ -16,6 +16,8 @@ development
 - Docs: Add `examples` snippets to README and tests
 - Tests: Add code snippet in README to test suite, per doctest
 - Docs: Add configuration for "Read the Docs"
+- Docs: Make the "forecast" feature less prominent, because it
+  only offers a naive approach.
 
 2020-12-29 0.11.0
 =================
