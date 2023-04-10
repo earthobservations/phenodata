@@ -288,7 +288,7 @@ class DwdPhenoData:
             # Coerce "Eintrittsdatum" column into date format
             data['Eintrittsdatum'] = pd.to_datetime(data['Eintrittsdatum'], errors='coerce', format='%Y%m%d')
 
-            results = results.append(data, sort=False)
+            results = pd.concat([results, data], sort=False)
 
         # Sanity checks
         if results.empty:
