@@ -174,10 +174,6 @@ For ready-to-run code snippets, please also have a look at the `examples directo
     ... }
 
     >>> observations: pd.DataFrame = client.get_observations(options, humanize=False)
-    >>> observations.info()  # doctest: +ELLIPSIS
-    [...]
-    >>> observations  # doctest: +ELLIPSIS
-    [...]
 
 
 
@@ -202,6 +198,10 @@ Datum       Spezies                 Phase                   Station
 
 ----
 
+    >>> observations.info()
+    '...'
+    >>> observations
+    '...'
 
 *******************
 Invocation examples
