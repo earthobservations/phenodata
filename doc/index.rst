@@ -13,7 +13,6 @@
     :caption: Documentation
     :hidden:
 
-    README <readme>
     notebook/index
 
 

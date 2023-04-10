@@ -11,13 +11,32 @@ Bugs
 ====
 - [o] Croaks when acquiring "forecast" data with "--humanize" and "--show-ids" options
   https://github.com/earthobservations/phenodata/issues/6
+- [o] tqdm + logger improvements
+
+Documentation
+=============
+- [o] Add remark about outdated ``--year`` values in README
+- [o] Rework Usage » General section
+- [o] Better hide the "forecasting" feature from GA
+- [o] What's a ``.zenodo.json`` file?
+  https://github.com/citation-file-format/citation-file-format/blob/main/.zenodo.json
+
+Code & refactoring
+==================
+- [o] Type annotations
+- [o] Why are the ``dataset`` and ``partition`` on different levels of the API?
 
 Features
 ========
+- [o] Alias --format:
+
+  - tabular:pipe => markdown, md
+  - tabular:rst => restructuredtext, rst
+- [o] Produce condensed example like outlined within README » Output example
+- [o] How long is data being cached?
 - [o] Switch from FTP to HTTP
-- [o] Docs: Add remark about outdated ``--year`` values in README
 - [o] Get rid of ``sql`` extra?
-- [x] Deprecation warnings re. pandas
+- [o] License: LGPL?
 
 Infrastructure
 ==============
@@ -46,7 +65,8 @@ Unsorted
 - [o] Scan https://community.hiveeyes.org/t/phanologischer-kalender/664 for more bug reports and feature requests
 - [o] Exporter for Kotori annotations, see https://community.hiveeyes.org/t/annotationen-im-grafana-uber-die-http-mqtt-api/111/17
 - [o] Remark: Take care about filtering by "filename" vs. "species"
-- [o] mqtt-publish adapter
+- [o] Adapter for ``mqtt-publish``
+- [o] Adapter for exporting data into databases
 
 
 *****
@@ -77,3 +97,4 @@ Done
 - [x] Add ``CITATION.cff``
 - [x] Docs: Library use
 - [x] Test examples
+- [x] Deprecation warnings re. pandas
