@@ -1,14 +1,11 @@
 .. image:: https://github.com/earthobservations/phenodata/actions/workflows/tests.yml/badge.svg
     :target: https://github.com/earthobservations/phenodata/actions?workflow=Tests
-    :alt: CI outcome
 
 .. image:: https://readthedocs.org/projects/phenodata/badge/
     :target: https://phenodata.readthedocs.io/
-    :alt: Documentation build status
 
 .. image:: https://codecov.io/gh/earthobservations/phenodata/branch/main/graph/badge.svg
     :target: https://codecov.io/gh/earthobservations/phenodata
-    :alt: Test suite code coverage
 
 .. image:: https://static.pepy.tech/badge/phenodata/month
     :target: https://pepy.tech/project/phenodata
