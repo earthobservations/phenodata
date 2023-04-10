@@ -13,6 +13,7 @@ development
 - CI/Tests: Fix installation on Python 3.7 to 3.9
 - Dependencies: Switch from ``appdirs`` to ``platformdirs``
 - Dependencies: Update to ``pandas<2`
+- Docs: Add `examples` snippets to README and tests
 
 2020-12-29 0.11.0
 =================

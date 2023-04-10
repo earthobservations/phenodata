@@ -72,7 +72,6 @@ Example: When using ``--filename=Hasel,Schneegloeckchen``, only file names conta
 to acquire all files.
 
 
-
 Install
 =======
 
@@ -84,8 +83,14 @@ Please refer to the `virtualenv`_ page about further recommendations how to
 install and use this software.
 
 
+*****
 Usage
-=====
+*****
+
+
+Command-line use
+================
+
 ::
 
     $ phenodata --help
@@ -139,7 +144,34 @@ Usage
                                 [default: 10]
       --verbose                 Turn on verbose output
 
-----
+
+Library use
+===========
+
+For ready-to-run code snippets, please also have a look at the `examples directory`_.
+
+.. code-block:: python
+
+    import pandas as pd
+    from phenodata.ftp import FTPSession
+    from phenodata.dwd.cdc import DwdCdcClient
+    from phenodata.dwd.pheno import DwdPhenoData
+
+    client = DwdPhenoData(cdc=cdc_client, humanizer=None, dataset="immediate")
+    options = {
+        "partition": "recent",
+        "filename": ["Hasel", "Raps", "Mais"],
+        "year": [2018, 2019, 2020],
+
+        # ID parameters
+        "station-id": [13346]
+    }
+
+    observations: pd.DataFrame = client.get_observations(options, humanize=False)
+    observations.info()
+    print(observations)
+
+
 
 **************
 Output example
@@ -450,6 +482,7 @@ for making data more accessible in the spirit of open data.
 
 .. _annual-reporters: https://www.dwd.de/DE/klimaumwelt/klimaueberwachung/phaenologie/daten_deutschland/jahresmelder/jahresmelder_node.html
 .. _development sandbox: doc/development.rst
+.. _examples directory: https://github.com/earthobservations/phenodata/tree/main/examples
 .. _immediate-reporters: https://www.dwd.de/DE/klimaumwelt/klimaueberwachung/phaenologie/daten_deutschland/sofortmelder/sofortmelder_node.html
 .. _LICENSE: https://github.com/earthobservations/phenodata/blob/main/LICENSE
 .. _pandas: https://pandas.pydata.org/
