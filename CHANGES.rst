@@ -4,6 +4,9 @@ phenodata changelog
 
 development
 ===========
+
+2023-04-11 0.12.0
+=================
 - Fix ``nearest-station`` with ``--format=json``
 - Fix filtering by ``int64``-type identifiers, see GH-7
 - Fix SQL filtering with DuckDB
