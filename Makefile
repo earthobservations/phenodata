@@ -49,7 +49,7 @@ build:
 	@$(python) -m build
 
 pypi-upload: install-releasetools
-	@$(twine) upload --skip-existing dist/*.tar.gz
+	@$(twine) upload --skip-existing --verbose dist/{*.tar.gz,*.whl}
 
 
 # =================
