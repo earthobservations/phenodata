@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 # (c) 2018 Andreas Motl <andreas@hiveeyes.org>
-from builtins import object
 import os
 import re
 import sys
@@ -15,7 +14,7 @@ from phenodata.util import regex_make_matchers, regex_run_matchers
 logger = logging.getLogger(__name__)
 
 
-class CacheManager(object):
+class CacheManager:
 
     def __init__(self):
 
