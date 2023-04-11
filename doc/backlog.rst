@@ -9,16 +9,16 @@ By topic
 
 Bugs
 ====
-- [o] tqdm + logger improvements
+- [x] tqdm + logger improvements
 - [o] Improve input data validation. Currently, the program croaks when
 
   - using ``--species-preset`` w/o ``--humanize``. Maybe implicitly select it?
   - acquiring "forecast" data with "--humanize" and "--show-ids" options
     https://github.com/earthobservations/phenodata/issues/6
-- [o] Why do some of the tests fail on CI/GHA/Linux?
 
 Documentation
 =============
+- [o] Add section outlining SQL filtering
 - [o] Add remark about outdated ``--year`` values in README
 - [o] Citation does not include description text
 
@@ -35,18 +35,21 @@ Features
   - tabular:pipe => markdown, md
   - tabular:rst => restructuredtext, rst
 - [o] Produce condensed example like outlined within README » Output example
-  => The ``forecast`` examples do that!
+  => The ``forecast`` examples do that.
 - [o] How long is data being cached?
 - [o] Get rid of ``sql`` extra?
 - [o] License: LGPL?
 - [o] Probably acquire data from CDC portal instead?
-- [o] Specify output order of columns
 
 Infrastructure
 ==============
 - [o] Provide Docker images
 - [o] Migrate to ``pyproject.toml``, with all the bells
   and whistles like ``poe check``
+
+Ideas
+=====
+- [o] Work on PPODB2
 
 
 **********
@@ -55,6 +58,8 @@ Unsorted I
 - [o] Switch from FTP to HTTP
 - [o] What's a ``.zenodo.json`` file?
   https://github.com/citation-file-format/citation-file-format/blob/main/.zenodo.json
+- [o] Why do some of the tests fail on CI/GHA/Linux?
+- [o] Specify output order of columns
 
 
 ***********

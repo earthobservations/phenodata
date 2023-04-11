@@ -7,9 +7,9 @@ Forecasts
 About
 *****
 
-For computing "forecasts", phenodata implements a very naive approach,
-which should be taken with a grain of salt. The computation is based on
-the ``Jultag`` field from observation data of the previous years.
+For computing "forecasts", phenodata implements a naive approach, which should
+be taken with a grain of salt. The computation is based on the ``Jultag`` field
+from observation data of the previous years.
 
 Details
 =======
