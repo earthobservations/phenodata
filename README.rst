@@ -49,6 +49,16 @@ Phenological Monitoring programme« (GPM), and all people working behind the
 scenes for their commitment on recording observations and making the excellent
 datasets available to the community. You know who you are.
 
+Notes
+=====
+
+Please note that phenodata is beta-quality software, and a work in progress.
+Contributions of all kinds are welcome, in order to make it more solid.
+
+Breaking changes should be expected until a 1.0 release, so version pinning
+is recommended, especially when you use phenodata as a library.
+
+
 
 ********
 Synopsis
@@ -131,6 +141,10 @@ Introduction
 For most acquisition tasks, you will have to select one of two different
 datasets of DWD, `annual-reporters`_ or `immediate-reporters`_. Further, the
 data partition has to be selected, it is either ``recent``, or ``historical``.
+
+Currently, as of 2023, the ``historical`` datasets extend from the past until
+2021. All subsequent observations are stored within the ``recent`` dataset
+partition.
 
 The DWD publishes data in files separated by species, this means each plant's
 data will be in a different file. By default, phenodata will acquire data for
@@ -437,7 +451,6 @@ Now, let's inquire those field values which have seen corrections instead
         --station=münchen \
         --phase=flowering \
         --quality=korrigiert \
-        --year=2022 \
         --humanize --sort=Datum
 
 
@@ -510,7 +523,8 @@ Discussions
 Discussions around the development of phenodata and its applications are
 taking place at the Hiveeyes forum. Enjoy reading them, and don't hesitate to
 write in, if you think you may be able to contribute a thing or another, or
-to share what you have been doing with it in form of a "show and tell" post.
+to share what you have been doing with the program in form of a "show and tell"
+post.
 
 - https://community.hiveeyes.org/t/phanologischer-kalender-fur-trachtpflanzen/664
 - https://community.hiveeyes.org/t/phenodata-ein-datenbezug-und-manipulations-toolkit-fur-open-access-phanologiedaten/2892

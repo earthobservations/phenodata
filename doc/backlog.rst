@@ -9,7 +9,6 @@ By topic
 
 Bugs
 ====
-- [x] tqdm + logger improvements
 - [o] Improve input data validation. Currently, the program croaks when
 
   - using ``--species-preset`` w/o ``--humanize``. Maybe implicitly select it?
@@ -18,7 +17,6 @@ Bugs
 
 Documentation
 =============
-- [o] Add section outlining SQL filtering
 - [o] Add remark about outdated ``--year`` values in README
 - [o] Citation does not include description text
 
@@ -30,26 +28,20 @@ Code & refactoring
 
 Features
 ========
-- [o] Alias --format:
-
-  - tabular:pipe => markdown, md
-  - tabular:rst => restructuredtext, rst
 - [o] Produce condensed example like outlined within README » Output example
   => The ``forecast`` examples do that.
 - [o] How long is data being cached?
 - [o] Get rid of ``sql`` extra?
-- [o] License: LGPL?
-- [o] Probably acquire data from CDC portal instead?
+- [o] Look into acquiring data from the CDC portal instead of using the FTP/HTTP server
 
 Infrastructure
 ==============
 - [o] Provide Docker images
-- [o] Migrate to ``pyproject.toml``, with all the bells
-  and whistles like ``poe check``
+- [o] Migrate to ``pyproject.toml``, with all the bells and whistles like ``poe check``
 
 Ideas
 =====
-- [o] Work on PPODB2
+- [o] Work on proposal for PPODB-next
 
 
 **********
@@ -117,3 +109,9 @@ Done
 - [x] Deprecation warnings re. pandas
 - [x] Rework Usage » General section
 - [x] Better hide the "forecasting" feature from GA
+- [x] tqdm + logger improvements
+- [x] Add section outlining SQL filtering
+- [x] Alias --format:
+
+  - tabular:pipe => markdown, md
+  - tabular:rst => restructuredtext, rst
