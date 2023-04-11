@@ -3,18 +3,17 @@ from setuptools import setup, find_packages
 
 here = os.path.abspath(os.path.dirname(__file__))
 README = open(os.path.join(here, 'README.rst')).read()
-CHANGES = open(os.path.join(here, 'CHANGES.rst')).read()
 
 requires = [
-    'arrow>=0.12.1,<1.3',  # Verified to work on 0.17.0.
+    'arrow>=0.12.1,<1.3',
     'attrs>=17.4.0',
     'docopt>=0.6.2',
-    'dogpile.cache>=0.6.5,<2',  # Verified to work on 1.1.1.
+    'dogpile.cache>=0.6.5,<2',
     'pandas>=1.3,<2.1',
     'platformdirs<4',
     'requests>=2.18.4,<3',
-    'requests-ftp>=0.3.1,<4',  # Verified to work on 0.3.1.
-    'tabulate>=0.8.2,<0.10',  # Verified to work on 0.8.7.
+    'requests-ftp>=0.3.1,<4',
+    'tabulate>=0.8.2,<0.10',
     'tqdm>=4.60,<5',
 ]
 
@@ -83,15 +82,11 @@ setup(name='phenodata',
         ],
     },
     zip_safe=False,
-    test_suite='nose.collector',
     install_requires=requires,
     extras_require={
         'sql': ['duckdb>=0.3,<0.8'],
         'test': test_requires,
     },
-    dependency_links=[
-    ],
-
     entry_points={
         'console_scripts': [
             'phenodata  = phenodata.command:run',
