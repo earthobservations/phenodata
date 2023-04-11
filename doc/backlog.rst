@@ -41,7 +41,8 @@ Infrastructure
 
 Ideas
 =====
-- [o] Work on proposal for PPODB-next
+- [o] Work on proposal for PPODB-next, see :ref:`ppodb`
+- [o] Add HTTP API endpoint based on SQL interface
 
 
 **********
