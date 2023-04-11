@@ -1,8 +1,11 @@
 .. highlight:: sql
 
+.. _ppodb:
+
 ##################################
 Plant-Phenological Online Database
 ##################################
+
 
 *****
 About
