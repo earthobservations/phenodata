@@ -5,7 +5,7 @@ Dutch phenological network (Natuurkalender)
 *****
 About
 *****
-- https://www.wur.nl/en/show/Natures-Calendar-The-Dutch-phenological-network.htm
+- https://web.archive.org/web/20221006005303/https://www.wur.nl/en/show/Natures-Calendar-The-Dutch-phenological-network.htm
 - https://www.naturetoday.com/intl/en/observations/natuurkalender/sightings/view-sightings
 
 Nature’s Calendar (De Natuurkalender) is a national citizen science project
