@@ -20,14 +20,14 @@ requires = [
 test_requires = [
     'datadiff>=2.0,<3',
     'marko<2',
-    'proselint==0.13.0',
+    'proselint==0.13.1',
     'pytest>=6.1.0,<8',
     'pytest-cov<5',
     'pytest-doctest-ellipsis-markers',
 ]
 
 setup(name='phenodata',
-    version='0.13.0',
+    version='0.13.1',
     description='phenodata is an acquisition and processing toolkit for open access phenology data',
     long_description=README,
     license="AGPL 3, EUPL 1.2",
