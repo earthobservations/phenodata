@@ -7,6 +7,8 @@ import sys
 import math
 import logging
 import numpy as np
+from tqdm import tqdm
+from tqdm.contrib.logging import logging_redirect_tqdm
 
 
 def boot_logging(options=None):
@@ -82,7 +84,7 @@ def dataframe_strip_strings(col):
 
     comptype = str
     if sys.version_info.major == 2:
-        comptype = unicode
+        comptype = unicode  # FIXME
 
     if col.dtypes == object:
         return (col.astype(comptype)
@@ -108,3 +110,8 @@ def haversine_distance(destination, origin):
     c = 2 * math.atan2(math.sqrt(a), math.sqrt(1-a))
     d = radius * c
     return d
+
+def iterate_with_progressbar(items):
+    with logging_redirect_tqdm():
+        for path in tqdm(items, ncols=80):
+            yield path
