@@ -12,7 +12,7 @@ and run software tests::
 
     git clone https://github.com/earthobservations/phenodata
     cd phenodata
-    make test
+    make check
 
 
 *****
