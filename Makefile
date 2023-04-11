@@ -17,7 +17,7 @@ $(eval proselint    := $(venv)/bin/proselint)
 
 # Run software tests.
 .PHONY: test
-test: install-package install-tests
+test:
 	$(pytest)
 
 # Release this piece of software
@@ -30,10 +30,11 @@ docs-html: install-doctools
 	touch doc/index.rst
 	export SPHINXBUILD="`pwd`/$(venv)/bin/sphinx-build"; cd doc; make html
 
-docs-lint: install-tests
+docs-lint:
 	$(proselint) *.rst doc/*.rst doc/**/*.rst
 
-check: docs-lint test
+.PHONY: check
+check: install-package docs-lint test
 
 
 # ===============
@@ -67,7 +68,3 @@ install-doctools:
 install-releasetools:
 	@test -e $(python) || python3 -m venv $(venv)
 	$(pip) install --requirement requirements-release.txt --upgrade
-
-install-tests:
-	@test -e $(python) || python3 -m venv $(venv)
-	$(pip) install --requirement requirements-tests.txt --upgrade
