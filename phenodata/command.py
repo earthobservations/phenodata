@@ -210,7 +210,7 @@ def run():
         if output_format.startswith('tabular'):
 
             try:
-                tablefmt = options['format'].split(':')[1]
+                tablefmt = output_format.split(':')[1]
             except:
                 tablefmt = 'psql'
 
