@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 # (c) 2018-2023, The Earth Observations Developers
 from __future__ import division
-from past.utils import old_div
+
+import numbers
 import re
 import sys
 import math
@@ -115,3 +116,16 @@ def iterate_with_progressbar(items):
     with logging_redirect_tqdm():
         for path in tqdm(items, ncols=80):
             yield path
+
+# From `past.utils.old_div()` / `future.utils.old_div()`.
+def old_div(a, b):
+    """
+    Equivalent to ``a / b`` on Python 2 without ``from __future__ import
+    division``.
+
+    TODO: generalize this to other objects (like arrays etc.)
+    """
+    if isinstance(a, numbers.Integral) and isinstance(b, numbers.Integral):
+        return a // b
+    else:
+        return a / b
