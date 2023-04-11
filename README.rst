@@ -32,9 +32,9 @@ phenodata
 About
 *****
 
-Phenodata is an acquisition and manipulation toolkit for open access phenology
-data. It is written in Python, is based on `pandas`_, and can be used both as
-a standalone program, and as a library.
+Phenodata is an acquisition and processing toolkit for open access phenology
+data. It is based on `pandas`_, and can be used both as a standalone program,
+and as a library.
 
 Currently, it implements data wrappers for acquiring phenology observation
 data published on the DWD Climate Data Center (CDC) FTP server operated by

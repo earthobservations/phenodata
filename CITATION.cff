@@ -4,7 +4,7 @@ message: If you use this software, please cite it using these metadata.
 
 title: phenodata
 url: https://phenodata.readthedocs.org/
-abstract: phenodata is an acquisition and manipulation toolkit for open access phenology data.
+abstract: phenodata is an acquisition and processing toolkit for open access phenology data.
 authors:
   - name: Andreas Motl
     email: andreas@hiveeyes.org
