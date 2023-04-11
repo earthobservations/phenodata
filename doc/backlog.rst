@@ -24,7 +24,7 @@ Code & refactoring
 ==================
 - [o] Type annotations
 - [o] Code formatting
-- [o] Why are the ``dataset`` and ``partition`` on different levels of the API?
+- [o] Why are the ``dataset`` and ``partition`` options on different levels of the API?
 
 Features
 ========

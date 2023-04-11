@@ -21,7 +21,6 @@
     :maxdepth: 1
     :caption: Workbench
     :hidden:
-    :glob:
 
     development
     virtualenv
