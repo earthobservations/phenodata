@@ -189,7 +189,7 @@ def run():
     # Format and output results
     if data is not None:
 
-        output_format = options['format']
+        output_format = options['format'].lower()
 
         # Whether to show the index column or not
         showindex = True
@@ -199,6 +199,12 @@ def run():
         # Sort columns
         if options['sort']:
             data.sort_values(options['sort'], inplace=True)
+
+        # Handle aliases for reStructuredText and Markdown
+        if output_format in ["restructuredtext", "rst"]:
+            output_format = "tabular:rst"
+        elif output_format in ["markdown", "md"]:
+            output_format = "tabular:pipe"
 
         output = None
         if output_format.startswith('tabular'):

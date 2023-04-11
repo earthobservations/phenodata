@@ -70,7 +70,7 @@ Acquire data from DWD's "immediate" dataset (Sofortmelder).
         --year=2023 --station=brandenburg \
         --species-preset=mellifera-de-primary \
         --phase="beginning of flowering" \
-        --humanize --sort=Datum --format=tabular:rst
+        --humanize --sort=Datum --format=rst
 
 Acquire data from DWD's "annual" dataset (Jahresmelder).
 
@@ -81,7 +81,7 @@ Acquire data from DWD's "annual" dataset (Jahresmelder).
         --year="2022,2023" --station=berlin \
         --species-preset=mellifera-de-primary \
         --phase="beginning of flowering" \
-        --humanize --sort=Datum --format=tabular:rst
+        --humanize --sort=Datum --format=rst
 
 .. tip::
 
@@ -115,9 +115,10 @@ Datum       Spezies                 Phase                   Station
 .. note::
 
     Using the example snippet provided above, the program rendered a table in
-    `reStructuredText`_ format using ``--format=tabular:rst``. In order to render
-    tables in `Markdown`_ format, use ``--format=tabular:pipe``. For more output
-    formats, please consult the documentation of the `tabulate`_ package.
+    `reStructuredText`_ format using ``--format=rst``. In order to render
+    tables in `Markdown`_ format, use ``--format=md``. For more tabular output
+    formats, use ``--format=tabular:foo``, and consult the documentation of the
+    `tabulate`_ package for choices of ``foo``.
 
 
 *****
@@ -253,9 +254,9 @@ the command-line.
 
     Data output options:
       --format=<format>         Output data in designated format. Choose one of "tabular", "json",
-                                "csv", or "string". With "tabular", it is also possible to specify
-                                the table format. Use "tabular:pipe" for Markdown output, or
-                                "tabular:rst" for reStructuredText. [default: tabular:psql]
+                                "csv", or "string". Use "md" for Markdown output, or "rst" for
+                                reStructuredText. With "tabular:foo", it is also possible to specify
+                                other tabular output formats.  [default: tabular:psql]
       --sort=<sort>             Sort by given field names. (comma-separated list)
       --humanize                Resolve identifier-based fields to human-readable labels.
       --show-ids                Show identifiers alongside resolved labels, when using "--humanize".
@@ -484,7 +485,7 @@ statement to filter the results by station name, and sort them by date::
         --species-preset=mellifera-de-primary --phase="beginning of flowering" \
         --humanize --language=german \
         --sql="SELECT * FROM data WHERE Station LIKE '%Berlin%' ORDER BY Datum" \
-        --format=tabular:pipe
+        --format=md
 
 
 *******************
