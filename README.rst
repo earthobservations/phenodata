@@ -61,9 +61,10 @@ Those two examples will acquire observation data from DWD's network, only focus
 on the "beginning of flowering" phase event, and present the results in tabular
 format using values suitable for human consumption.
 
+Acquire data from DWD's "immediate" dataset (Sofortmelder).
+
 .. code-block:: bash
 
-    # Acquire data from DWD's "immediate" dataset (Sofortmelder).
     phenodata observations \
         --source=dwd --dataset=immediate --partition=recent \
         --year=2023 --station=brandenburg \
@@ -71,9 +72,10 @@ format using values suitable for human consumption.
         --phase="beginning of flowering" \
         --humanize --sort=Datum --format=tabular:rst
 
+Acquire data from DWD's "annual" dataset (Jahresmelder).
+
 .. code-block:: bash
 
-    # Acquire data from DWD's "annual" dataset (Jahresmelder).
     phenodata observations \
         --source=dwd --dataset=annual --partition=recent \
         --year="2022,2023" --station=berlin \
@@ -112,10 +114,10 @@ Datum       Spezies                 Phase                   Station
 
 .. note::
 
-    Using the example snippet provided above, it rendered a table in `reStructuredText`_
-    format using ``--format=tabular:rst``. In order to render tables in `Markdown`_ format,
-    use ``--format=tabular:pipe``. For more output formats, please consult the documentation
-    of the `tabulate`_  package.
+    Using the example snippet provided above, the program rendered a table in
+    `reStructuredText`_ format using ``--format=tabular:rst``. In order to render
+    tables in `Markdown`_ format, use ``--format=tabular:pipe``. For more output
+    formats, please consult the documentation of the `tabulate`_ package.
 
 
 *****
@@ -441,9 +443,9 @@ Now, let's inquire those field values which have seen corrections instead
 Filtering with presets
 ----------------------
 
-When using the ``--humanize`` option, you can use also define shortcuts for
-lists of species by name. For example, the ``mellifera-de-primary`` preset is
-defined within the `presets.json`_ file like::
+When using the ``--humanize`` option, you can also use pre-defined shortcuts
+for lists of species by name. For example, the ``mellifera-de-primary`` preset
+is defined within the `presets.json`_ file like::
 
     Hasel, Schneeglöckchen, Sal-Weide, Löwenzahn, Süßkirsche, Apfel, Winterraps, Robinie, Winter-Linde, Heidekraut
 

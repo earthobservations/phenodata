@@ -31,7 +31,7 @@ docs-html: install-doctools
 	export SPHINXBUILD="`pwd`/$(venv)/bin/sphinx-build"; cd doc; make html
 
 docs-lint: install-tests
-	$(proselint) *.rst doc/**/*.rst
+	$(proselint) *.rst doc/*.rst doc/**/*.rst
 
 check: docs-lint test
 
