@@ -19,6 +19,12 @@ requires = [
 ]
 
 test_requires = [
+    'datadiff>=2.0,<3',
+    'marko<2',
+    'proselint==0.13.0',
+    'pytest>=6.1.0,<8',
+    'pytest-cov<5',
+    'pytest-doctest-ellipsis-markers',
 ]
 
 setup(name='phenodata',
@@ -79,9 +85,9 @@ setup(name='phenodata',
     zip_safe=False,
     test_suite='nose.collector',
     install_requires=requires,
-    tests_require=test_requires,
     extras_require={
-        'sql': ['duckdb>=0.3,<0.8']
+        'sql': ['duckdb>=0.3,<0.8'],
+        'test': test_requires,
     },
     dependency_links=[
     ],
