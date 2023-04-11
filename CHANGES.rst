@@ -5,6 +5,8 @@ phenodata changelog
 development
 ===========
 - CLI: Improve display of progressbar
+- CLI: Introduce shortcut labels to format output in Markdown and reStructuredText
+  ``--format=md`` ``--format=rst``
 - Documentation: Add an example how to use SQL for filtering to README
 
 2023-04-11 0.12.0
