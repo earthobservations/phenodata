@@ -19,7 +19,7 @@
 
 # -- Project information -----------------------------------------------------
 
-project = "Phenodata"
+project = "phenodata"
 copyright = "2018-2023, The Earth Observations Developers"
 author = "The Earth Observations Developers"
 

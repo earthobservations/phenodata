@@ -76,7 +76,7 @@ format using values suitable for human consumption.
     # Acquire data from DWD's "annual" dataset (Jahresmelder).
     phenodata observations \
         --source=dwd --dataset=annual --partition=recent \
-        --year=2022 --station=berlin \
+        --year=2022,2023 --station=berlin \
         --species-preset=mellifera-de-primary \
         --phase="beginning of flowering" \
         --humanize --sort=Datum --format=tabular:rst
@@ -135,8 +135,8 @@ all species (plants), in order to be able to respond to all kinds of queries
 across the whole dataset.
 
 If you are only interested in a limited set of species (plants), you can
-improve data acquisition performance by using the ``filename`` option to limit
-downloading to selected files only.
+improve data acquisition performance by using the ``filename`` option to only
+select specific files for retrieval.
 
 For example, when using ``--filename=Hasel,Schneegloeckchen``, only file names
 containing ``Hasel`` or ``Schneegloeckchen`` will be retrieved, thus minimizing

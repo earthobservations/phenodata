@@ -20,6 +20,7 @@ Bugs
 Documentation
 =============
 - [o] Add remark about outdated ``--year`` values in README
+- [o] Citation does not include description text
 
 Code & refactoring
 ==================
