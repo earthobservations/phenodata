@@ -471,6 +471,22 @@ be displayed in German, when possible::
     into different phenology domains or use-case categories.
 
 
+Filtering with SQL
+------------------
+
+Phenodata uses the `DuckDB Python API`_ to let you directly query the `pandas`_
+DataFrame produced by the data acquisition subsystem. This example uses an SQL
+statement to filter the results by station name, and sort them by date::
+
+    phenodata observations \
+        --source=dwd --dataset=annual --partition=recent \
+        --year=2019,2020,2021,2022,2023 \
+        --species-preset=mellifera-de-primary --phase="beginning of flowering" \
+        --humanize --language=german \
+        --sql="SELECT * FROM data WHERE Station LIKE '%Berlin%' ORDER BY Datum" \
+        --format=tabular:pipe
+
+
 *******************
 Project information
 *******************
@@ -535,6 +551,7 @@ easily.
 
 .. _annual-reporters: https://www.dwd.de/DE/klimaumwelt/klimaueberwachung/phaenologie/daten_deutschland/jahresmelder/jahresmelder_node.html
 .. _development sandbox: doc/development.rst
+.. _DuckDB Python API: https://duckdb.org/docs/api/python/overview
 .. _examples directory: https://github.com/earthobservations/phenodata/tree/main/examples
 .. _immediate-reporters: https://www.dwd.de/DE/klimaumwelt/klimaueberwachung/phaenologie/daten_deutschland/sofortmelder/sofortmelder_node.html
 .. _LICENSE: https://github.com/earthobservations/phenodata/blob/main/LICENSE
