@@ -76,7 +76,7 @@ format using values suitable for human consumption.
     # Acquire data from DWD's "annual" dataset (Jahresmelder).
     phenodata observations \
         --source=dwd --dataset=annual --partition=recent \
-        --year=2022,2023 --station=berlin \
+        --year="2022,2023" --station=berlin \
         --species-preset=mellifera-de-primary \
         --phase="beginning of flowering" \
         --humanize --sort=Datum --format=tabular:rst
