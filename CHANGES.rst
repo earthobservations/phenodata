@@ -4,6 +4,7 @@ phenodata changelog
 
 development
 ===========
+- CLI: Improve display of progressbar
 
 2023-04-11 0.12.0
 =================

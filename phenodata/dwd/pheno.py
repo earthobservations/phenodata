@@ -6,9 +6,8 @@ import json
 import logging
 import pandas as pd
 import pkg_resources
-from tqdm import tqdm
 from datetime import datetime
-from phenodata.util import haversine_distance
+from phenodata.util import haversine_distance, iterate_with_progressbar
 
 logger = logging.getLogger(__name__)
 
@@ -273,7 +272,7 @@ class DwdPhenoData:
         results = pd.DataFrame()
 
         # Load multiple files into single DataFrame
-        for path in tqdm(paths, ncols=80):
+        for path in iterate_with_progressbar(paths):
 
             logger.debug('Processing file "{}"'.format(path))
 
