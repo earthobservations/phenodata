@@ -17,6 +17,6 @@ Phenowatch
 Naturkalender
 =============
 - https://www.naturkalender.at/
-- https://www.zentrumfuercitizenscience.at/de/p/naturkalender
+- ``https://www.zentrumfuercitizenscience.at/de/p/naturkalender``
 - https://www.phenowatch.at/aktuell/was-gibt-es-neues/detail/start-des-top-citizen-science-projektes-naturkalender.html
 - https://www.phenowatch.at/aktuell/was-gibt-es-neues/100000-eintraege-im-naturkalender

@@ -161,7 +161,7 @@ texinfo_documents = [
 todo_include_todos = True
 #intersphinx_mapping = {'https://docs.python.org/': None}
 linkcheck_ignore = [
-    # r'https://community.hiveeyes.org/.*'
+    r'https://www.researchgate.net/publication/.*'
 ]
 sphinx_tabs_valid_builders = ["linkcheck"]
 
