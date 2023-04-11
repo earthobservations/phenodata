@@ -10,8 +10,7 @@ requires = [
     'attrs>=17.4.0',
     'docopt>=0.6.2',
     'dogpile.cache>=0.6.5,<2',  # Verified to work on 1.1.1.
-    'future',
-    'pandas>=0.23.4,<2.1',
+    'pandas>=1.3,<2.1',
     'platformdirs<4',
     'requests>=2.18.4,<3',
     'requests-ftp>=0.3.1,<4',  # Verified to work on 0.3.1.
