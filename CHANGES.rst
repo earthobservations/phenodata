@@ -4,6 +4,9 @@ phenodata changelog
 
 development
 ===========
+
+2023-04-11 0.13.1
+=================
 - Fix ``--format={md,rst}`` option for certain subcommands
 
 2023-04-11 0.13.0
