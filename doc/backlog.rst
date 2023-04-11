@@ -25,6 +25,7 @@ Code & refactoring
 - [o] Type annotations
 - [o] Code formatting
 - [o] Why are the ``dataset`` and ``partition`` options on different levels of the API?
+- [o] Introduce Enum constants for annual vs. immediate, and recent vs. historical
 
 Features
 ========
@@ -43,6 +44,7 @@ Ideas
 =====
 - [o] Work on proposal for PPODB-next, see :ref:`ppodb`
 - [o] Add HTTP API endpoint based on SQL interface
+- [o] Add adapter for xpublish
 
 
 **********
@@ -65,7 +67,12 @@ Unsorted II
 - [o] Display progress indicator when downloading large files
 - [o] What about introducing the BBCH code? ``--phase-bbch=60``
 - [o] Revisit the "historical" data sets
-- [o] Exporter for vis.js timeline
+- [o] Visualization: Exporter for vis.js timeline and Grafana annotations
+
+  - https://community.hiveeyes.org/t/phanologischer-kalender-fur-trachtpflanzen/664/17
+  - https://github.com/visjs/awesome-visjs
+  - https://github.com/javdome/timeline-arrows
+  - https://community.hiveeyes.org/t/phenodata-ein-datenbezug-und-manipulations-toolkit-fur-open-access-phanologiedaten/2892/25
 - [o] See what Nominatim could do
 - [o] Query directly by lat/lon instead of --station=
 - [o] Enrich "Output example" in README.rst

@@ -10,3 +10,13 @@ Unsorted / Miscellaneous
 - | Tierphänologie der österreichischen Zentralanstalt für Meteorologie und Geodynamik in Wien in Zusammenarbeit mit den DWD-Beobachtern
   | https://www.dwd.de/DE/klimaumwelt/klimaueberwachung/phaenologie/daten_international/tierphaeno/tierphaeno.html?nn=575710
 - http://www.phenowatch.at/beobachtung/beobachtungsanleitung/tiere/tiere/biene.html
+- https://essd.copernicus.org/articles/13/4621/2021/
+- https://zenodo.org/record/3982086
+- https://www.fieldsites.se/en-GB/sites-thematic-programs/phenology-32634262
+- https://link.springer.com/article/10.1007/s00484-013-0650-2
+- https://data.pheno.fr/
+- https://temporalecology.org/data/
+- https://www.usanpn.org/data/observational
+- https://data.usanpn.org/observations/
+- https://www.usanpn.org/data/dashboard
+- https://pubs.usgs.gov/of/2018/1060/ofr20181060.pdf
