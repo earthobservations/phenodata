@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # (c) 2018 Andreas Motl <andreas@hiveeyes.org>
 """
-phenodata is an acquisition and manipulation toolkit for open access phenology data.
+phenodata is an acquisition and processing toolkit for open access phenology data.
 """
 import sys
 import logging
@@ -124,7 +124,7 @@ def run():
 
     if options['info']:
         print('Name:         phenodata-{version}'.format(version=__version__))
-        print('Description:  phenodata is an acquisition and manipulation toolkit for open access phenology data')
+        print('Description:  phenodata is an acquisition and processing toolkit for open access phenology data')
         print('Data sources: DWD')
         # TODO: Add cache location and info
         return
