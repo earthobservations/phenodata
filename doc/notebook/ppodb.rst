@@ -96,3 +96,4 @@ length including all lengths and phases (see Figure 1 in the documentation)::
         GROUP BY stat_id,phase_id
     )
     AS sq GROUP BY c;
+
