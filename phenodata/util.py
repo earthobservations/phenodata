@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# (c) 2018 Andreas Motl <andreas@hiveeyes.org>
+# (c) 2018-2023, The Earth Observations Developers
 from __future__ import division
 from past.utils import old_div
 import re

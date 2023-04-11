@@ -7,7 +7,7 @@ url: https://phenodata.readthedocs.org/
 abstract: phenodata is an acquisition and processing toolkit for open access phenology data.
 authors:
   - name: Andreas Motl
-    email: andreas@hiveeyes.org
+    email: andreas.motl@panodata.org
 
 date-published: 2018-03-11
 date-released: 2023-04-10
