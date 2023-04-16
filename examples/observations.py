@@ -7,7 +7,7 @@ import pandas as pd
 
 from phenodata.ftp import FTPSession
 from phenodata.dwd.cdc import DwdCdcClient
-from phenodata.dwd.pheno import DwdPhenoData, DwdPhenoDataHumanizer
+from phenodata.dwd.pheno import DwdPhenoDataClient, DwdPhenoDataHumanizer
 
 
 def main():
@@ -18,7 +18,7 @@ def main():
         long_station=True,
         show_ids=True,
     )
-    client = DwdPhenoData(cdc=cdc_client, humanizer=humanizer, dataset="immediate")
+    client = DwdPhenoDataClient(cdc=cdc_client, humanizer=humanizer, dataset="immediate")
 
     # Query and filtering options.
     options = {

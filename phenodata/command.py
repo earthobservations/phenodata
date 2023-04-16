@@ -10,7 +10,7 @@ from tabulate import tabulate
 from phenodata import __version__
 from phenodata.ftp import FTPSession
 from phenodata.dwd.cdc import DwdCdcClient
-from phenodata.dwd.pheno import DwdPhenoData, DwdPhenoDataHumanizer
+from phenodata.dwd.pheno import DwdPhenoDataClient, DwdPhenoDataHumanizer
 from phenodata.util import boot_logging, normalize_options, options_convert_lists
 
 logger = logging.getLogger(__name__)
@@ -91,7 +91,7 @@ def run():
     # Expand options
     preset_name = options['species-preset']
     if preset_name:
-        options['species'] = DwdPhenoData.load_preset('options', 'species', preset_name)
+        options['species'] = DwdPhenoDataClient.load_preset('options', 'species', preset_name)
 
     # Coerce comma-separated list fields
     options_convert_lists(options, list_items=[
@@ -133,7 +133,7 @@ def run():
     if options['source'] == 'dwd':
         cdc_client = DwdCdcClient(ftp=FTPSession())
         humanizer = DwdPhenoDataHumanizer(language=options['language'], long_station=options['long-station'], show_ids=options['show-ids'])
-        client = DwdPhenoData(cdc=cdc_client, humanizer=humanizer, dataset=options.get('dataset'))
+        client = DwdPhenoDataClient(cdc=cdc_client, humanizer=humanizer, dataset=options.get('dataset'))
     else:
         message = 'Data source "{}" not implemented'.format(options['source'])
         logger.error(message)
