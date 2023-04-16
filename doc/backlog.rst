@@ -85,6 +85,9 @@ Unsorted II
 - [o] Adapter for ``mqtt-publish``
 - [o] Adapter for exporting data into databases
 
+  - SQLite: https://grafana.com/grafana/plugins/frser-sqlite-datasource/
+  - PostgreSQL: https://pgloader.readthedocs.io/en/latest/tutorial/tutorial.html#loading-sqlite-files-with-pgloader
+
 
 *****
 Notes

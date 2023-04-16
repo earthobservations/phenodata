@@ -21,7 +21,9 @@
 .. image:: https://img.shields.io/pypi/l/phenodata.svg
     :target: https://pypi.org/project/phenodata/
 
-|
+.. raw:: html
+
+    <br/><br/>
 
 #########
 phenodata
@@ -66,8 +68,8 @@ is recommended, especially when you use phenodata as a library.
 Synopsis
 ********
 
-The easiest way to use phenodata, and to explore the dataset interactively,
-is to use its command-line interface.
+The easiest way to explore both phenodata and the dataset interactively, is to
+use the command-line interface.
 
 Those two examples will acquire observation data from DWD's network, only focus
 on the "beginning of flowering" phase event, and present the results in tabular
