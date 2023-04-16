@@ -4,6 +4,7 @@ phenodata changelog
 
 development
 ===========
+- Naming things: Rename ``DwdPhenoData`` to ``DwdPhenoDataClient``
 
 2023-04-11 0.13.1
 =================

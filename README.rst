@@ -194,10 +194,10 @@ directory`_.
     >>> import pandas as pd
     >>> from phenodata.ftp import FTPSession
     >>> from phenodata.dwd.cdc import DwdCdcClient
-    >>> from phenodata.dwd.pheno import DwdPhenoData
+    >>> from phenodata.dwd.pheno import DwdPhenoDataClient
 
     >>> cdc_client = DwdCdcClient(ftp=FTPSession())
-    >>> client = DwdPhenoData(cdc=cdc_client, humanizer=None, dataset="immediate")
+    >>> client = DwdPhenoDataClient(cdc=cdc_client, dataset="immediate")
     >>> options = {
     ...     # Select data partition.
     ...     "partition": "recent",
@@ -210,7 +210,7 @@ directory`_.
     ...     "station-id": [13346]
     ... }
 
-    >>> observations: pd.DataFrame = client.get_observations(options, humanize=False)
+    >>> observations: pd.DataFrame = client.get_observations(options)
     >>> observations.info()
     [...]
     >>> observations

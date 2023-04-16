@@ -7,12 +7,12 @@ import pandas as pd
 
 from phenodata.ftp import FTPSession
 from phenodata.dwd.cdc import DwdCdcClient
-from phenodata.dwd.pheno import DwdPhenoData
+from phenodata.dwd.pheno import DwdPhenoDataClient
 
 
 def main():
     cdc_client = DwdCdcClient(ftp=FTPSession())
-    client = DwdPhenoData(cdc=cdc_client, humanizer=None, dataset="immediate")
+    client = DwdPhenoDataClient(cdc=cdc_client, dataset="immediate")
     stations: pd.DataFrame = client.get_stations()
     stations.info()
     print(stations)

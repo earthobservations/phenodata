@@ -14,7 +14,7 @@ from observation data of the previous years.
 Details
 =======
 
-The implementation can be found in ``phenodata.dwd.pheno.DwdPhenoData.get_forecast``,
+The implementation can be found in ``phenodata.dwd.pheno.DwdPhenoDataClient.get_forecast``,
 and looks roughly like this:
 
 .. code-block:: python

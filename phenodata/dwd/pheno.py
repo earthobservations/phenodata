@@ -13,7 +13,7 @@ logger = logging.getLogger(__name__)
 
 
 @attr.s
-class DwdPhenoData:
+class DwdPhenoDataClient:
     """
     Conveniently access phenology information from the Climate Data Center (CDC)
     FTP server operated by »Deutscher Wetterdienst« (DWD).
@@ -35,11 +35,11 @@ class DwdPhenoData:
     # Instance of the lowlevel DWD CDC FTP server client wrapper object ``phenodata.dwd.cdc.DwdCdcClient``
     cdc = attr.ib()
 
-    # Instance of ``phenodata.dwd.pheno.DwdPhenoDataHumanizer``
-    humanizer = attr.ib()
-
     # The dataset to access, either "annual" or "immediate"
     dataset = attr.ib()
+
+    # Instance of ``phenodata.dwd.pheno.DwdPhenoDataHumanizer``
+    humanizer = attr.ib(default=None)
 
     @property
     def data_directory(self):
