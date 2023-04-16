@@ -16,7 +16,4 @@ Unsorted / Miscellaneous
 - https://link.springer.com/article/10.1007/s00484-013-0650-2
 - https://data.pheno.fr/
 - https://temporalecology.org/data/
-- https://www.usanpn.org/data/observational
-- https://data.usanpn.org/observations/
-- https://www.usanpn.org/data/dashboard
-- https://pubs.usgs.gov/of/2018/1060/ofr20181060.pdf
+- Trachtnet: https://community.hiveeyes.org/t/phanologischer-kalender-fur-trachtpflanzen/664/93

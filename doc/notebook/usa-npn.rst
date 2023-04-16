@@ -17,13 +17,16 @@ NPN National Coordinating Office in partnership with a large
 Details
 *******
 - https://www.usanpn.org/data
+- https://www.usanpn.org/data/dashboard
 - https://www.usanpn.org/data/observational
 - https://www.usanpn.org/data/visualizations
 - https://www.usanpn.org/data/maps
 - https://www.usanpn.org/data/spring
-- https://data.usanpn.org/npn-viz-tool/
 - https://www.usanpn.org/data/share
 - https://www.usanpn.org/results/dataset-list
+- https://pubs.usgs.gov/of/2018/1060/ofr20181060.pdf
+- https://data.usanpn.org/npn-viz-tool/
+- https://data.usanpn.org/observations/
 
 ***
 API

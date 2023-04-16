@@ -97,3 +97,12 @@ length including all lengths and phases (see Figure 1 in the documentation)::
     )
     AS sq GROUP BY c;
 
+
+****
+More
+****
+
+- https://cran.r-project.org/web/packages/phenex/
+- https://cran.r-project.org/web/packages/phenmod/
+- https://cran.r-project.org/web/packages/phenmod/phenmod.pdf
+- https://www.ufz.de/index.php?en=37615
