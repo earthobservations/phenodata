@@ -5,6 +5,7 @@ phenodata changelog
 development
 ===========
 - Naming things: Rename ``DwdPhenoData`` to ``DwdPhenoDataClient``
+- Documentation: Add logo image. Thanks, @ClemensGruber.
 
 2023-04-11 0.13.1
 =================
