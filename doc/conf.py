@@ -101,6 +101,8 @@ html_static_path = ['_static']
 #
 # html_sidebars = {}
 
+html_show_sourcelink = True
+
 
 # -- Options for HTMLHelp output ---------------------------------------------
 
