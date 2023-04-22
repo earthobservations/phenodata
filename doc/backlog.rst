@@ -55,6 +55,20 @@ Unsorted I
   https://github.com/citation-file-format/citation-file-format/blob/main/.zenodo.json
 - [o] Why do some of the tests fail on CI/GHA/Linux?
 - [o] Specify output order of columns
+- [o] PostgreSQL export
+
+::
+
+   docker run --rm -it --publish=5432:5432 --env "POSTGRES_HOST_AUTH_METHOD=trust" postgres:15 postgres -c log_statement=all
+   psql postgres://postgres@localhost:5432 --command='CREATE DATABASE "phenodata-dwd";'
+
+   pip install 'psycopg[binary]'
+   phenodata export-observations \
+       --source=dwd --dataset=annual --partition=recent \
+       --station=münchen \
+       --year=2022 --filename=Hasel \
+       --target=postgresql+psycopg://postgres@localhost:5432/phenodata-dwd
+
 
 
 ***********

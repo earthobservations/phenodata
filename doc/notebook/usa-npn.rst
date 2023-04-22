@@ -37,6 +37,14 @@ API
 - http://www.usanpn.org/npn_portal/phenophases/getPhenophases.xml
 - http://www.usanpn.org/npn_portal/observations/getSiteLevelData.json?start_date=2012-03-01&end_date=2012-05-30&request_src=rest_test&additional_field=site_name&station_id=783
 
+- Phenology Observation Data
+
+  - https://www.sciencebase.gov/catalog/item/52fe35a8e4b02a2ea84aa9f7
+  - http://www.usanpn.org/npn_portal/observations/getObservations.json
+  - http://www.usanpn.org/npn_portal/observations/getSummarizedData.json
+  - http://www.usanpn.org/npn_portal/observations/getSiteSummarizedData.json
+
+
 ***********
 Open Source
 ***********

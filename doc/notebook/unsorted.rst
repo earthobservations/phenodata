@@ -17,3 +17,13 @@ Unsorted / Miscellaneous
 - https://data.pheno.fr/
 - https://temporalecology.org/data/
 - Trachtnet: https://community.hiveeyes.org/t/phanologischer-kalender-fur-trachtpflanzen/664/93
+- Harvard Forest / Schoolyard LTER Database
+
+  - https://harvardforest.fas.harvard.edu/schoolyard/phenology-data
+  - https://harvardforest2.fas.harvard.edu/asp/hf/php/k12/k12_project.php
+  - https://harvardforest2.fas.harvard.edu/asp/hf/php/admin/k12/k12_data_list.php
+
+
+- https://pudi.lubw.de/detailseite/-/publication/59302-Lokale__regionale_und_landesweite_Auswirkungen_des_Klimawandels_auf_die_Ph%C3%A4nologie_von_Feldfr%C3%BCchten_.pdf
+- https://hal.science/hal-02455932v1/file/13595_2018_Article_788.pdf
+- https://agroenvgeo.data.inra.fr/geonetwork/srv/fre/catalog.search#/metadata/d0789030-c94e-4883-8d38-2a7332c98673

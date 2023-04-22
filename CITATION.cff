@@ -8,9 +8,11 @@ abstract: phenodata is an acquisition and processing toolkit for open access phe
 authors:
   - name: Andreas Motl
     email: andreas.motl@panodata.org
+  - name: Clemens Gruber
+    email: clemens@hiveeyes.org
 
 date-published: 2018-03-11
-date-released: 2023-04-10
+date-released: 2023-04-22
 type: software
 license: AGPL
 license-url: https://github.com/earthobservations/phenodata/blob/main/LICENSE
