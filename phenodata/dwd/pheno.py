@@ -52,26 +52,34 @@ class DwdPhenoDataClient:
         """
         Return DataFrame with species information
         """
-        return self.cdc.get_dataframe(path='/help/PH_Beschreibung_Pflanze.txt', index_column=0)
+        df: pd.DataFrame = self.cdc.get_dataframe(path='/help/PH_Beschreibung_Pflanze.txt', index_column=0)
+        df.attrs["name"] = "species"
+        return df
 
     def get_phases(self):
         """
         Return DataFrame with phases information
         """
-        return self.cdc.get_dataframe(path='/help/PH_Beschreibung_Phase.txt', index_column=0)
+        df = self.cdc.get_dataframe(path='/help/PH_Beschreibung_Phase.txt', index_column=0)
+        df.attrs["name"] = "phase"
+        return df
 
     def get_quality_levels(self):
         """
         Return DataFrame with quality level information
         """
-        return self.cdc.get_dataframe(path='/help/PH_Beschreibung_Phaenologie_Qualitaetsniveau.txt', index_column=0)
+        df = self.cdc.get_dataframe(path='/help/PH_Beschreibung_Phaenologie_Qualitaetsniveau.txt', index_column=0)
+        df.attrs["name"] = "quality_level"
+        return df
 
     def get_quality_bytes(self):
         """
         Return DataFrame with quality bytes information
         ftp://opendata.dwd.de/climate_environment/CDC/observations_germany/climate/subdaily/standard_format/qualitaetsbytes.pdf
         """
-        return self.cdc.get_dataframe(path='/help/PH_Beschreibung_Phaenologie_Qualitaetsbyte.txt', index_column=0)
+        df = self.cdc.get_dataframe(path='/help/PH_Beschreibung_Phaenologie_Qualitaetsbyte.txt', index_column=0)
+        df.attrs["name"] = "quality_byte"
+        return df
 
     def get_stations(self, filter=None, all=False):
         """
@@ -115,6 +123,8 @@ class DwdPhenoDataClient:
             # Apply filter expression to DataFrame
             if type(expression) is not bool:
                 data = data[expression]
+
+        data.attrs["name"] = "station"
 
         return data
 
@@ -183,9 +193,7 @@ class DwdPhenoDataClient:
             megaframe = self.create_megaframe(observations)
             observations = self.humanizer.get_observations(megaframe)
 
-        # or pass-through with minor cosmetic amendments
-        else:
-            observations['Eintrittsdatum'] = observations['Eintrittsdatum'].astype(str)
+        observations.attrs["name"] = "observation"
 
         return observations
 
@@ -248,6 +256,8 @@ class DwdPhenoDataClient:
         # or pass-through with minor cosmetic amendments
         else:
             forecast['Datum'] = forecast['Datum'].astype(str)
+
+        forecast.attrs["name"] = "forecast"
 
         return forecast
 

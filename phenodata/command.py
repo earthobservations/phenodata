@@ -8,6 +8,7 @@ import logging
 from docopt import docopt, DocoptExit
 from tabulate import tabulate
 from phenodata import __version__
+from phenodata.dwd.export import export_database
 from phenodata.ftp import FTPSession
 from phenodata.dwd.cdc import DwdCdcClient
 from phenodata.dwd.pheno import DwdPhenoDataClient, DwdPhenoDataHumanizer
@@ -31,6 +32,8 @@ def run():
       phenodata list-filenames --source=dwd --dataset=immediate --partition=recent [--filename=Hasel,Schneegloeckchen] [--year=2017]
       phenodata list-urls --source=dwd --dataset=immediate --partition=recent [--filename=Hasel,Schneegloeckchen] [--year=2017]
       phenodata (observations|forecast) --source=dwd --dataset=immediate --partition=recent [--filename=Hasel,Schneegloeckchen] [--station-id=164,717] [--species-id=113,127] [--phase-id=5] [--quality-level=10] [--quality-byte=1,2,3] [--station=berlin,brandenburg] [--species=hazel,snowdrop] [--species-preset=mellifera-de-primary] [--phase=flowering] [--quality=ROUTKLI] [--year=2017] [--forecast-year=2021] [--humanize] [--show-ids] [--language=german] [--long-station] [--sort=Datum] [--sql=sql] [--format=csv] [--verbose]
+      phenodata export-observations --source=dwd --dataset=immediate --partition=recent --target=sqlite:///phenodata-dwd-sample.sqlite [--filename=Hasel,Schneegloeckchen] [--station-id=164,717] [--species-id=113,127] [--phase-id=5] [--station=berlin,brandenburg] [--species=hazel,snowdrop] [--species-preset=mellifera-de-primary] [--year=2017] [--format=sqlite] [--verbose]
+      phenodata export-observations-all --source=dwd [--verbose]
       phenodata drop-cache --source=dwd
       phenodata --version
       phenodata (-h | --help)
@@ -181,6 +184,22 @@ def run():
             logger.warning('Dropping the cache failed')
         return
 
+    elif options['export-observations']:
+        target = options['target']
+        export_database(client, target, options)
+
+    elif options['export-observations-all']:
+        source = options["source"]
+        for partition in ["recent", "historical"]:
+            for dataset in ["immediate", "annual"]:
+                dbname = f"phenodata-{source}-{dataset}-{partition}.sqlite"
+                target = f"sqlite:///{dbname}"
+                options["dataset"] = dataset
+                options["partition"] = partition
+                logger.debug(f"Running database export with options: {options}")
+                client = DwdPhenoDataClient(cdc=cdc_client, humanizer=humanizer, dataset=options.get('dataset'))
+                export_database(client, target, options)
+
     # Query results
     if data is not None and options["sql"]:
         import duckdb
@@ -194,7 +213,15 @@ def run():
         # Whether to show the index column or not
         showindex = True
         if options['observations'] or options['forecast']:
+
+            # Don't display index column.
             showindex = False
+
+            # Apply minor cosmetic amendments.
+            date_field_candidates = ['Eintrittsdatum', 'Datum']
+            for date_field in date_field_candidates:
+                if date_field in data:
+                    data[date_field] = data[date_field].astype(str)
 
         # Sort columns
         if options['sort']:

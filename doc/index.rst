@@ -15,6 +15,8 @@
 
     notebook/index
     forecasts
+    export/sqlite
+    archive/dwd
 
 
 .. toctree::

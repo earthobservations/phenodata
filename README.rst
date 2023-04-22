@@ -504,6 +504,30 @@ statement to filter the results by station name, and sort them by date::
         --sql="SELECT * FROM data WHERE Station LIKE '%Berlin%' ORDER BY Datum" \
         --format=md
 
+Data export
+===========
+
+You can use the ``phenodata export-observation`` subcommand to export observations
+including metadata into an `SQLite`_ database.
+
+.. code-block:: bash
+
+    phenodata export-observations \
+        --source=dwd --dataset=annual --partition=recent \
+        --station=münchen \
+        --year=2021,2022,2023 \
+        --filename=Hasel \
+        --target=sqlite:///phenodata-dwd-sample.sqlite
+
+To get an idea about the data, run your first query.
+
+.. code-block:: bash
+
+    sqlite3 -csv -header phenodata-dwd-sample.sqlite 'SELECT * FROM dwd_phenology ORDER BY date;'
+
+Please refer to the :ref:`sqlite-export` documentation about more details how
+to use that feature, and about what you can do with it.
+
 
 *******************
 Project information
@@ -581,6 +605,7 @@ easily.
 .. _presets.json: https://github.com/earthobservations/phenodata/blob/main/phenodata/dwd/presets.json
 .. _reStructuredText: https://en.wikipedia.org/wiki/ReStructuredText
 .. _share it back with us: https://github.com/earthobservations/phenodata/discussions/new?category=show-and-tell
+.. _SQLite: https://sqlite.org/
 .. _tabulate: https://github.com/astanin/python-tabulate
 .. _virtualenv: https://github.com/earthobservations/phenodata/blob/main/doc/virtualenv.rst
 .. _Xarray: https://xarray.dev/
