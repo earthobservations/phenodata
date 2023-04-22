@@ -23,7 +23,7 @@ class DwdCdcClient:
     # Instance of ``phenodata.ftp.FTPSession`` object for lowlevel access to CDC FTP
     ftp = attr.ib()
 
-    def get_dataframe(self, url=None, path=None, index_column=None, coerce_int=False):
+    def get_dataframe(self, url=None, path=None, index_column=None, coerce_int=False) -> pd.DataFrame:
         """
         Read single CSV file from FTP url and convert to pandas DataFrame object.
 
@@ -86,7 +86,7 @@ class DwdCdcClient:
 
         return StringIO(content)
 
-    def csv_to_dataframe(self, stream, index_column=None, coerce_int=False):
+    def csv_to_dataframe(self, stream, index_column=None, coerce_int=False) -> pd.DataFrame:
         """
         Read CSV data from stream into pandas DataFrame object.
 
