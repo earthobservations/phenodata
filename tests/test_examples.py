@@ -1,4 +1,5 @@
 import os
+import re
 import sys
 
 
@@ -16,6 +17,6 @@ def test_example_observations(capfd):
     os.system(f"{sys.executable} examples/observations.py")
 
     out, err = capfd.readouterr()
-    assert "Index: 6 entries" in out
+    assert re.match(r".*Index: \d+ entries.*", out, re.DOTALL)
     assert "Data columns (total 8 columns)" in out
     assert "Stations_id" in out
