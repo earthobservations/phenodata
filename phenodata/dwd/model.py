@@ -91,6 +91,7 @@ class DwdPhenoDatabase:
     dataset: DwdPhenoDataset
     partition: DwdPhenoPartition
     species: pd.DataFrame
+    species_group: pd.DataFrame
     phase: pd.DataFrame
     quality_level: pd.DataFrame
     quality_byte: pd.DataFrame
@@ -99,7 +100,7 @@ class DwdPhenoDatabase:
 
     @property
     def slots(self):
-        return [self.species, self.phase, self.quality_level, self.quality_byte, self.station, self.observation]
+        return [self.species, self.species_group, self.phase, self.quality_level, self.quality_byte, self.station, self.observation]
 
     def info(self):
         for slot in self.slots:
@@ -138,6 +139,7 @@ class DwdPhenoDatabase:
         engine = create_engine(dsn)
         with engine.connect() as connection:
             connection.execute(sa.text("DROP VIEW IF EXISTS dwd_phenology;"))
+            connection.execute(sa.text("DROP VIEW IF EXISTS dwd_phenology_mellifera_de_primary;"))
             connection.commit()
 
         for slot in self.slots:
@@ -145,9 +147,9 @@ class DwdPhenoDatabase:
             table_name = f"dwd_{name}"
             slot.to_sql(name=table_name, con=engine, if_exists="replace")
 
-        self.to_sql_create_view(engine)
+        self.to_sql_create_views(engine)
 
-    def to_sql_create_view(self, engine: Engine):
+    def to_sql_create_views(self, engine: Engine):
 
         """
         createview = CreateView('viewname', t.select().where(t.c.id > 5))
@@ -157,6 +159,8 @@ class DwdPhenoDatabase:
 
         with engine.connect() as connection:
             connection.execute(sa.text("DROP VIEW IF EXISTS dwd_phenology;"))
+            connection.execute(sa.text("DROP VIEW IF EXISTS dwd_phenology_mellifera_de_primary;"))
+            connection.commit()
             connection.execute(sa.text("""
 CREATE VIEW dwd_phenology AS
    SELECT
@@ -201,6 +205,17 @@ CREATE VIEW dwd_phenology AS
       AND dwd_observation.species_id=dwd_species.id
       AND dwd_observation.phase_id=dwd_phase.id
       AND dwd_observation.quality_level_id=dwd_quality_level.id
-      AND dwd_observation.quality_byte_id=dwd_quality_byte.id
+      AND dwd_observation.quality_byte_id=dwd_quality_byte.id;
+        """))
+
+            connection.execute(sa.text("""
+CREATE VIEW dwd_phenology_mellifera_de_primary AS
+    SELECT *
+    FROM
+        dwd_phenology, dwd_species_group
+    WHERE true
+        AND dwd_species_group.group_name = 'mellifera-de-primary'
+        AND dwd_phenology.species_id=dwd_species_group.species_id
+    ORDER BY reference_year, day_of_year;
             """))
             connection.commit()

@@ -197,12 +197,65 @@ all lengths and phases (see Figure 1 in the documentation)?::
         )
     AS sq GROUP BY c;
 
-Herder's toolbox
-================
+Specialist's toolbox
+====================
 
-.. todo::
+A few queries suitable for beekeepers and friends. The group ``mellifera-de-primary``
+is defined in phenodata's `presets.json`_ file, amongst others. Its content is available
+through the database table ``dwd_species_group``. This statement lists all observations
+of "flowering" events for primary foraging plants of honeybees (apis mellifera)::
 
-    A few queries suitable for beekeepers and friends.
+    SELECT
+        reference_year,
+        day_of_year,
+        source,
+        dwd_phenology.species_name_de,
+        phase_name_de,
+        station_full
+    FROM
+        dwd_phenology, dwd_species_group
+    WHERE true
+        AND phase_name_en LIKE '%flowering%'
+        AND dwd_species_group.group_name = 'mellifera-de-primary'
+        AND dwd_phenology.species_id=dwd_species_group.species_id
+    ORDER BY reference_year, day_of_year;
+
+There is also a convenience view ``dwd_phenology_mellifera_de_primary``, which saves
+you from needing to join tables. Again, this statement lists all observations of
+"flowering" events for primary foraging plants of honeybees (apis mellifera), but
+also filters by location on behalf of the synthesized ``station_full`` field::
+
+    SELECT
+        reference_year,
+        day_of_year,
+        source,
+        species_name_de,
+        phase_name_de,
+        station_name
+    FROM dwd_phenology_mellifera_de_primary
+    WHERE true
+        AND phase_name_en LIKE '%flowering%'
+        AND station_full LIKE '%brandenburg%';
+
+In order to see what's inside, just query the ``dwd_species_group`` table like::
+
+    SELECT *
+    FROM dwd_species_group
+    WHERE group_name='mellifera-de-primary';
+
+::
+
+    species_id,group_name,species_name_de
+    113,mellifera-de-primary,Hasel
+    127,mellifera-de-primary,"Schneeglöckchen"
+    124,mellifera-de-primary,Sal-Weide
+    120,mellifera-de-primary,"Löwenzahn"
+    330,mellifera-de-primary,"Süßkirsche"
+    310,mellifera-de-primary,Apfel
+    205,mellifera-de-primary,Winterraps
+    121,mellifera-de-primary,Robinie
+    137,mellifera-de-primary,Winter-Linde
+    114,mellifera-de-primary,Heidekraut
 
 
 ************
@@ -290,6 +343,11 @@ Backlog
     - [o] Add a few SQL query examples
 
 
+----
+
+Enjoy your research.
+
+
 .. _copyright-de: https://www.dwd.de/DE/service/copyright/copyright_node.html
 .. _copyright-en: https://www.dwd.de/EN/service/copyright/copyright_node.html
 .. _data folder: https://phenodata.hiveeyes.org/data/
@@ -307,5 +365,6 @@ Backlog
 .. _PPODB: https://rumo.biologie.hu-berlin.de/PPODB/
 .. _PPODB SQL interface: https://rumo.biologie.hu-berlin.de/PPODB/database/sql_input
 .. _PPODB summary: https://community.hiveeyes.org/t/plant-phenological-online-database-ppodb/4888
+.. _presets.json: https://github.com/earthobservations/phenodata/blob/main/phenodata/dwd/presets.json
 .. _SQLite: https://sqlite.org/
 .. _The plant phenological online database (PPODB) » an online database for long-term phenological data: https://link.springer.com/article/10.1007/s00484-013-0650-2

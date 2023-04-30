@@ -467,15 +467,24 @@ class DwdPhenoDataClient:
 
     @classmethod
     def load_preset(cls, section, option, name):
-        resource = pkg_resources.resource_stream(__name__, 'presets.json')
-        presets = json.load(resource)
+        presets = cls.load_preset_file()
         try:
             value = presets[section][option][name]
             return value
         except KeyError:
-            message = 'Preset "{}" not found in file "{}"'.format(name, resource.name)
+            message = f"Preset not found: {name}"
             logger.error(message)
             raise KeyError(message)
+
+    @classmethod
+    def load_preset_file(cls):
+        resource = pkg_resources.resource_stream(__name__, 'presets.json')
+        return json.load(resource)
+
+    @classmethod
+    def load_preset_species(cls):
+        return cls.load_preset_file()["options"]["species"]
+
 
 @attr.s
 class DwdPhenoDataHumanizer:
