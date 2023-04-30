@@ -268,6 +268,12 @@ The command will create four SQLite database files, they can be :ref:`consumed
     160 MB in size for both of the "recent" datasets, while ``immediate-historical``
     weighs in with about 500 MB, and ``annual-historical`` with about another 3 GB.
 
+Upload
+======
+::
+
+    rsync -azuv phenodata-dwd-*.sqlite root@elbanco.hiveeyes.org:/var/lib/phenodata/dwd
+
 
 *******
 Backlog

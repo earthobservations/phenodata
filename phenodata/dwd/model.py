@@ -160,9 +160,11 @@ class DwdPhenoDatabase:
             connection.execute(sa.text("""
 CREATE VIEW dwd_phenology AS
    SELECT
+      dwd_observation.id as observation_id,
       dwd_observation.source,
       dwd_observation.dataset,
       dwd_observation.partition,
+      dwd_station.id AS station_id,
       dwd_station.station_name,
       dwd_station.station_name || ', ' ||
           dwd_station.area_group || ', ' ||
@@ -171,13 +173,18 @@ CREATE VIEW dwd_phenology AS
           AS station_full,
       dwd_observation.date,
       dwd_observation.day_of_year,
+      dwd_observation.reference_year,
+      dwd_species.id AS species_id,
       dwd_species.species_name_en,
       dwd_species.species_name_de,
+      dwd_species.species_name_la,
+      dwd_phase.id AS phase_id,
       dwd_phase.phase_name_en,
       dwd_phase.phase_name_de,
+      dwd_quality_level.id AS quality_level_id,
       dwd_quality_level.description AS quality_level,
+      dwd_quality_byte.id AS quality_byte_id,
       dwd_quality_byte.description AS quality_byte,
-      dwd_observation.reference_year,
       dwd_station.latitude,
       dwd_station.longitude,
       dwd_station.altitude,
