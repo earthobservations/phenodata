@@ -19,7 +19,8 @@ which will join those tables together properly, and present a `denormalized`_ va
 of the data, ready for convenient querying.
 
 If you want to create SQLite database archive files, containing **all datasets**,
-please follow up reading the :ref:`dwd-archive` documentation section.
+or just download and use them, please follow up reading the :ref:`dwd-archive`
+documentation section.
 
 
 .. _sqlite-usage:
@@ -68,7 +69,10 @@ Inquire the database schema.
 
 .. code-block:: bash
 
+    # Show all tables and views.
     sqlite3 "${DBPATH}" '.tables'
+
+    # Show schema of all tables and views.
     sqlite3 "${DBPATH}" '.fullschema --indent'
 
 Run a query on the ``dwd_phenology`` view.
@@ -82,6 +86,11 @@ Run a query on the ``dwd_phenology`` view.
     sqlite3 -csv -header "${DBPATH}" <<SQL
     SELECT * FROM dwd_phenology ORDER BY date;
     SQL
+
+.. seealso::
+
+    For more example SQL statements, see also :ref:`SQLite DWD archive usage
+    <dwd-archive-usage>`.
 
 
 *******
