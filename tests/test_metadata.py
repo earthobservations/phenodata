@@ -68,7 +68,6 @@ def test_cli_list_quality_levels(capsys):
     assert_equal(response, reference)
 
 
-@pytest.mark.skipif(sys.platform == "linux", reason="Charset encoding weirdness. Works on macOS.")
 def test_cli_list_quality_bytes(capsys):
     """
     CLI test: Verify the `list-quality-bytes` subcommand works.
