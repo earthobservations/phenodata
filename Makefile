@@ -9,6 +9,7 @@ $(eval pytest       := $(venv)/bin/pytest)
 $(eval bumpversion  := $(venv)/bin/bumpversion)
 $(eval twine        := $(venv)/bin/twine)
 $(eval proselint    := $(venv)/bin/proselint)
+$(eval sphinx-autobuild := $(venv)/bin/sphinx-autobuild)
 
 
 # ============
@@ -29,6 +30,10 @@ release: bumpversion push build pypi-upload
 docs-html: install-doctools
 	touch doc/index.rst
 	export SPHINXBUILD="`pwd`/$(venv)/bin/sphinx-build"; cd doc; make html
+
+docs-autobuild: install-doctools
+	$(pip) install sphinx-autobuild
+	$(sphinx-autobuild) --open-browser doc doc/_build
 
 docs-lint:
 	$(proselint) *.rst doc/*.rst doc/**/*.rst
