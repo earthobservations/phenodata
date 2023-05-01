@@ -200,30 +200,16 @@ all lengths and phases (see Figure 1 in the documentation)?::
 Specialist's toolbox
 ====================
 
-A few queries suitable for beekeepers and friends. The group ``mellifera-de-primary``
-is defined in phenodata's `presets.json`_ file, amongst others. Its content is available
-through the database table ``dwd_species_group``. This statement lists all observations
-of "flowering" events for primary foraging plants of honeybees (apis mellifera)::
+At `phenological calendar for foraging plants`_, we are discussing the development
+of a convenient phenological calendar for beekeepers. Here, we are presenting
+corresponding database queries suitable for that purpose.
 
-    SELECT
-        reference_year,
-        day_of_year,
-        source,
-        dwd_phenology.species_name_de,
-        phase_name_de,
-        station_full
-    FROM
-        dwd_phenology, dwd_species_group
-    WHERE true
-        AND phase_name_en LIKE '%flowering%'
-        AND dwd_species_group.group_name = 'mellifera-de-primary'
-        AND dwd_phenology.species_id=dwd_species_group.species_id
-    ORDER BY reference_year, day_of_year;
-
-There is also a convenience view ``dwd_phenology_mellifera_de_primary``, which saves
-you from needing to join tables. Again, this statement lists all observations of
-"flowering" events for primary foraging plants of honeybees (apis mellifera), but
-also filters by location on behalf of the synthesized ``station_full`` field::
+In order to query the database for multiple plants conveniently, there is the
+``dwd_species_group`` table, derived from phenodata's `presets.json`_ file.
+The statement below uses the group ``mellifera-de-primary-openhive``, to list
+all observations of "flowering" events for primary foraging plants of honeybees
+(apis mellifera), filtering by location on behalf of the synthesized
+``station_full`` field::
 
     SELECT
         reference_year,
@@ -232,30 +218,47 @@ also filters by location on behalf of the synthesized ``station_full`` field::
         species_name_de,
         phase_name_de,
         station_name
-    FROM dwd_phenology_mellifera_de_primary
+    FROM dwd_phenology_group
     WHERE true
+        AND group_name = 'mellifera-de-primary-openhive'
         AND phase_name_en LIKE '%flowering%'
         AND station_full LIKE '%brandenburg%';
 
-In order to see what's inside, just query the ``dwd_species_group`` table like::
+In order to list the available plant group names, query the ``dwd_species_group``
+table::
 
-    SELECT *
-    FROM dwd_species_group
-    WHERE group_name='mellifera-de-primary';
+    SELECT
+        dwd_species.*
+    FROM dwd_species_group, dwd_species
+    WHERE true
+        AND dwd_species_group.species_id=dwd_species.id
+        AND group_name='mellifera-de-primary-openhive';
 
 ::
 
-    species_id,group_name,species_name_de
-    113,mellifera-de-primary,Hasel
-    127,mellifera-de-primary,"Schneeglöckchen"
-    124,mellifera-de-primary,Sal-Weide
-    120,mellifera-de-primary,"Löwenzahn"
-    330,mellifera-de-primary,"Süßkirsche"
-    310,mellifera-de-primary,Apfel
-    205,mellifera-de-primary,Winterraps
-    121,mellifera-de-primary,Robinie
-    137,mellifera-de-primary,Winter-Linde
-    114,mellifera-de-primary,Heidekraut
+    205,Winterraps,"winter oilseed rape","Brassica napus var. napus"
+    209,Sonnenblume,sunflower,"Helianthus annuus"
+    215,Mais,maize,"Zea mays"
+    310,Apfel,apple,"Malus domestica"
+    320,Birne,pear,"Pyrus communis"
+    330,"Süßkirsche",cherry,"Prunus avium"
+    340,Sauerkirsche,morello,"Prunus cerasus"
+    382,Himbeere,raspberry,"Rubus idaeus"
+    383,Brombeere,blackberry,"Rubus fructicosus"
+    113,Hasel,"common hazel","Corylus avellana"
+    114,Heidekraut,"common heather","Calluna vulgaris"
+    120,"Löwenzahn",dandelion,"Taraxacum officinale"
+    121,Robinie,"black locust","Robinia pseudoacacia"
+    122,Rosskastanie,"horse chestnut","Aesculus hippocastanum"
+    124,Sal-Weide,"goat willow","Salix caprea"
+    131,Spitz-Ahorn,"Norway maple","Acer platanoides"
+    137,Winter-Linde,"small leafed lime","Tilia cordata"
+
+.. note::
+
+    If you have a different use case, or think the existing species groups should be
+    expanded, do not hesitate to drop us a line by `creating an issue`_, in order to
+    propose changes to the ``dwd_species_group`` table.
 
 
 ************
@@ -350,6 +353,7 @@ Enjoy your research.
 
 .. _copyright-de: https://www.dwd.de/DE/service/copyright/copyright_node.html
 .. _copyright-en: https://www.dwd.de/EN/service/copyright/copyright_node.html
+.. _creating an issue: https://github.com/earthobservations/phenodata/issues
 .. _data folder: https://phenodata.hiveeyes.org/data/
 .. _datasette: https://datasette.io/
 .. _DWD CDC Open Data Server: https://www.dwd.de/EN/ourservices/opendata/opendata.html?nn=24704
@@ -361,6 +365,7 @@ Enjoy your research.
 .. _Jonas Dierenbach: https://www.researchgate.net/scientific-contributions/Jonas-Dierenbach-2007294130
 .. _Jörg Schaber: https://fairdomhub.org/people/445
 .. _phenodata: https://phenodata.readthedocs.io/
+.. _phenological calendar for foraging plants: https://community.hiveeyes.org/t/phanologischer-kalender-fur-trachtpflanzen/664
 .. _Plant-Phenological Online Database (PPODB) handbook: https://rumo.biologie.hu-berlin.de/PPODB/static/documentation/DescriptionPPODB.pdf
 .. _PPODB: https://rumo.biologie.hu-berlin.de/PPODB/
 .. _PPODB SQL interface: https://rumo.biologie.hu-berlin.de/PPODB/database/sql_input
