@@ -1,4 +1,5 @@
 import logging
+import sys
 import typing as t
 
 import pandas as pd
@@ -36,6 +37,8 @@ def acquire_database(client: DwdPhenoDataClient, options: t.Optional[t.Dict[str,
 
 
 def export_database(client, target, options):
+    if sys.version_info <= (3, 7):
+        raise DeprecationWarning("The SQLite export feature does not work on Python 3.7")
     logger.info(f"Exporting data to {target}")
     # TODO: Warn that specific options will not be honored.
     db = acquire_database(client=client, options=options).with_canonical_column_names()
