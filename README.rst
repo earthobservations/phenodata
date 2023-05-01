@@ -21,6 +21,12 @@
 .. image:: https://img.shields.io/pypi/l/phenodata.svg
     :target: https://pypi.org/project/phenodata/
 
+`GitHub <https://github.com/earthobservations/phenodata>`_
+| `PyPI <https://pypi.org/project/phenodata/>`_
+| `Documentation <https://phenodata.readthedocs.io>`_
+| `Issues <https://github.com/earthobservations/phenodata/issues>`_
+| `Changelog <https://github.com/earthobservations/phenodata/blob/main/CHANGES.rst>`_
+
 .. raw:: html
 
     <br/><br/>
