@@ -14,11 +14,16 @@ Bugs
   - using ``--species-preset`` w/o ``--humanize``. Maybe implicitly select it?
   - acquiring "forecast" data with "--humanize" and "--show-ids" options
     https://github.com/earthobservations/phenodata/issues/6
+- [o] On SQL export, when not restricting to ``--filename=Hasel``,
+  there is an additional column ``REFERENZ_JAHR``, and both this column, and
+  ``reference_year`` has type float64?
 
 Documentation
 =============
+- [o] Changelog is missing
 - [o] Add remark about outdated ``--year`` values in README
 - [o] Citation does not include description text
+- [o] Links to "Edit this page" point to ``master`` branch
 
 Code & refactoring
 ==================
@@ -31,7 +36,8 @@ Features
 ========
 - [o] Produce condensed example like outlined within README » Output example
   => The ``forecast`` examples do that.
-- [o] How long is data being cached?
+- [o] How long is data being cached? Can the cache ttl be improved, specifically
+  for historical data?
 - [o] Get rid of ``sql`` extra?
 - [o] Look into acquiring data from the CDC portal instead of using the FTP/HTTP server
 
@@ -39,6 +45,7 @@ Infrastructure
 ==============
 - [o] Provide Docker images
 - [o] Migrate to ``pyproject.toml``, with all the bells and whistles like ``poe check``
+- [o] Software tests for SQLite export subsystem
 
 Ideas
 =====
