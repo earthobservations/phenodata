@@ -1,6 +1,12 @@
 import sqlite3
+import sys
+
+import pytest
 
 from tests.util import run_command
+
+if sys.version_info < (3, 8):
+    raise pytest.skip(msg="The SQLite export feature does not work on Python 3.7", allow_module_level=True)
 
 
 def test_export_sqlite_single_species(tmp_path):
