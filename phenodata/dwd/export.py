@@ -59,7 +59,7 @@ def get_species_presets_df(species: pd.DataFrame):
             try:
                 species_id = result.index.values[0]
             except:
-                logger.warning(f"Unable to discover species name in data: {item}")
+                logger.warning(f"Species name not found in data: {item}")
                 continue
             outitem = {"species_id": species_id, "group_name": group_name, "species_name_de": item}
             outdata.append(outitem)
