@@ -54,8 +54,9 @@ def test_export_sqlite_species_group(tmp_path):
         species_name_de,
         phase_name_de,
         station_name
-    FROM dwd_phenology_mellifera_de_primary
+    FROM dwd_phenology_group
     WHERE true
+        AND group_name = 'mellifera-de-primary-openhive'
         AND phase_name_en LIKE '%flowering%'
         AND station_full LIKE '%müncheberg%';
     """

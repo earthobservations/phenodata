@@ -205,16 +205,16 @@ CREATE VIEW dwd_phenology AS
       AND dwd_observation.species_id=dwd_species.id
       AND dwd_observation.phase_id=dwd_phase.id
       AND dwd_observation.quality_level_id=dwd_quality_level.id
-      AND dwd_observation.quality_byte_id=dwd_quality_byte.id;
-        """))
+      AND dwd_observation.quality_byte_id=dwd_quality_byte.id
+    ORDER BY reference_year, day_of_year
+    ;"""))
 
             connection.execute(sa.text("""
-CREATE VIEW dwd_phenology_mellifera_de_primary AS
+CREATE VIEW dwd_phenology_group AS
     SELECT *
     FROM
         dwd_phenology, dwd_species_group
     WHERE true
-        AND dwd_species_group.group_name = 'mellifera-de-primary'
         AND dwd_phenology.species_id=dwd_species_group.species_id
     ORDER BY reference_year, day_of_year;
             """))
