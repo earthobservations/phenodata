@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 # (c) 2018-2023, The Earth Observations Developers
+import datetime
 import os
 import re
 import sys
@@ -142,8 +143,7 @@ class FTPSession(requests_ftp.ftp.FTPSession):
             # Examples: Mar 2 04:09, Jun 1 2017
             mtime = arrow.get(mtime, ['MMM D HH:mm', 'MMM D YYYY'])
             if mtime.year == 1:
-                # FIXME: Use current year instead of 2018
-                mtime = mtime.replace(year=2018)
+                mtime = mtime.replace(year=datetime.datetime.now().year)
 
             # Build directory entry
             entry = {
