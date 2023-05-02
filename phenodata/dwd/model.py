@@ -139,7 +139,7 @@ class DwdPhenoDatabase:
         engine = create_engine(dsn)
         with engine.connect() as connection:
             connection.execute(sa.text("DROP VIEW IF EXISTS dwd_phenology;"))
-            connection.execute(sa.text("DROP VIEW IF EXISTS dwd_phenology_mellifera_de_primary;"))
+            connection.execute(sa.text("DROP VIEW IF EXISTS dwd_phenology_group;"))
             connection.commit()
 
         for slot in self.slots:
@@ -150,16 +150,13 @@ class DwdPhenoDatabase:
         self.to_sql_create_views(engine)
 
     def to_sql_create_views(self, engine: Engine):
-
         """
-        createview = CreateView('viewname', t.select().where(t.c.id > 5))
-        engine.execute(createview)
-        return
+        Define views on top of physical tables.
         """
 
         with engine.connect() as connection:
             connection.execute(sa.text("DROP VIEW IF EXISTS dwd_phenology;"))
-            connection.execute(sa.text("DROP VIEW IF EXISTS dwd_phenology_mellifera_de_primary;"))
+            connection.execute(sa.text("DROP VIEW IF EXISTS dwd_phenology_group;"))
             connection.commit()
             connection.execute(sa.text("""
 CREATE VIEW dwd_phenology AS
