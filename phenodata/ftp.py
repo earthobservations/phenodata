@@ -36,7 +36,7 @@ class CacheManager:
         # See also ``listplus``.
         self.meta = dogpile.cache.make_region().configure(
             "dogpile.cache.dbm",
-            expiration_time=60 * 5,
+            expiration_time=60 * 60 * 24,
             arguments={
                 "filename": os.path.join(self.cache_path, 'meta-cache.dbm'),
             }
