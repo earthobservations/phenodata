@@ -34,22 +34,17 @@ the same matter, for everyone to run database queries on their own hardware.
 
 Data source
 ===========
-
 Data and metadata is acquired from the `DWD CDC Open Data Server`_, specifically
-the ``observations_germany/phenology`` and ``help`` directories. See
-:ref:`data-copyright` for usage information.
+the ``observations_germany/phenology`` and ``help`` directories.
 
 - https://opendata.dwd.de/climate_environment/CDC/observations_germany/phenology/
 - https://opendata.dwd.de/climate_environment/CDC/help/
 
-
-**********
-Data files
-**********
-
+SQLite database files
+=====================
 The `data folder`_ contains four SQLite database files. Before downloading and
 using them, please recognize the DWD data copyright notices referenced below at
-`data-copyright`_.
+:ref:`data-copyright`.
 
 - ``phenodata-dwd-annual-historical.sqlite`` (1.7 GB)
 - ``phenodata-dwd-annual-recent.sqlite`` (24 MB)
@@ -305,6 +300,12 @@ This section explains how to export all available datasets into corresponding
 `SQLite`_ database files, on your own machine, using the ``export-observations-all``
 subcommand.
 
+The process will take about five to ten minutes, based on the capacity of your
+computing device. Processing the immediate/historical+recent and annual/recent
+data is pretty fast. The annual/historical data however, as the largest one
+with a size of ~1.7 GB, takes the major share of computing time on the export
+operation.
+
 .. code-block:: python
 
     phenodata export-observations-all --source=dwd
@@ -356,7 +357,7 @@ Enjoy your research.
 .. _creating an issue: https://github.com/earthobservations/phenodata/issues
 .. _data folder: https://phenodata.hiveeyes.org/data/
 .. _datasette: https://datasette.io/
-.. _DWD CDC Open Data Server: https://www.dwd.de/EN/ourservices/opendata/opendata.html?nn=24704
+.. _DWD CDC Open Data Server: https://www.dwd.de/EN/ourservices/opendata/opendata.html
 .. _Franz-W. Badeck: https://badeck.eu/
 .. _GeoNutzV (de): https://www.gesetze-im-internet.de/geonutzv/GeoNutzV.pdf
 .. _GeoNutzV (en): https://www.bmuv.de/fileadmin/Daten_BMU/Download_PDF/Strategien_Bilanzen_Gesetze/130309_geonutzv_bgbi_englisch_bf.pdf
