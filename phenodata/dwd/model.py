@@ -145,7 +145,7 @@ class DwdPhenoDatabase:
         for slot in self.slots:
             name = slot.attrs["name"]
             table_name = f"dwd_{name}"
-            slot.to_sql(name=table_name, con=engine, if_exists="replace")
+            slot.to_sql(name=table_name, con=engine, if_exists="replace", chunksize=10_000)
 
         self.to_sql_create_views(engine)
 
