@@ -72,11 +72,14 @@ Inquire the database schema.
 
 .. code-block:: bash
 
-    # Show all tables and views.
+    # Display all tables and views.
     sqlite3 "${DBPATH}" '.tables'
 
-    # Show schema of all tables and views.
+    # Display schema of all tables and views.
     sqlite3 "${DBPATH}" '.fullschema --indent'
+
+    # Display database metadata information.
+    sqlite3 "${DBPATH}" --header --csv 'SELECT * FROM dwd_about'
 
 The database about historical observations from immediate reporters contains
 ~250,000 records as of 2023.
