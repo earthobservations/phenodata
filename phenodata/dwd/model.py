@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+# (c) 2023, The Earth Observations Developers
 import dataclasses
 import io
 import logging
@@ -90,6 +92,7 @@ class CanonicalColumnMap:
 class DwdPhenoDatabase:
     dataset: DwdPhenoDataset
     partition: DwdPhenoPartition
+    about: pd.DataFrame
     species: pd.DataFrame
     species_group: pd.DataFrame
     phase: pd.DataFrame
@@ -100,7 +103,7 @@ class DwdPhenoDatabase:
 
     @property
     def slots(self):
-        return [self.species, self.species_group, self.phase, self.quality_level, self.quality_byte, self.station, self.observation]
+        return [self.about, self.species, self.species_group, self.phase, self.quality_level, self.quality_byte, self.station, self.observation]
 
     def info(self):
         for slot in self.slots:

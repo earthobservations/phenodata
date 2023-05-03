@@ -1,9 +1,14 @@
+# -*- coding: utf-8 -*-
+# (c) 2023, The Earth Observations Developers
+import datetime
 import logging
 import sys
 import typing as t
+from collections import OrderedDict
 
 import pandas as pd
 
+from phenodata import __appname__, __version__
 from phenodata.dwd.model import DwdPhenoDataset, DwdPhenoDatabase, DwdPhenoPartition
 from phenodata.dwd.pheno import DwdPhenoDataClient
 
@@ -17,11 +22,12 @@ def acquire_database(client: DwdPhenoDataClient, options: t.Optional[t.Dict[str,
     partition = options.get("partition", "unknown")
 
     species = client.get_species()
-    species_group = get_species_presets_df(species)
+    species_group = get_species_groups(species)
 
     db = DwdPhenoDatabase(
         dataset=DwdPhenoDataset(dataset),
         partition=DwdPhenoPartition(partition),
+        about=get_about(dataset=dataset, partition=partition),
         species=species,
         species_group=species_group,
         phase=client.get_phases(),
@@ -49,7 +55,7 @@ def export_database(client, target, options):
     logger.info(f"Exported data to {target}")
 
 
-def get_species_presets_df(species: pd.DataFrame):
+def get_species_groups(species: pd.DataFrame):
     """
     Convert species groups from `presets.json` into DataFrame.
     """
@@ -69,3 +75,28 @@ def get_species_presets_df(species: pd.DataFrame):
     outdf = pd.DataFrame.from_records(outdata, index="species_id")
     outdf.attrs["name"] = "species_group"
     return outdf
+
+
+def get_about(dataset: str, partition: str) -> pd.DataFrame:
+    """
+    Provide database metadata.
+    """
+    today = datetime.datetime.today().strftime("%Y-%m-%d")
+    about = pd.DataFrame.from_records([
+        {"name": "type", "value": "Dataset"},
+        {"name": "title", "value": "DWD SQLite database archive"},
+        {"name": "subject", "value": "Providing unrestricted and free access to plant phenological observation data, "
+                                     "in the spirit of PPODB"},
+        {"name": "description", "value": "Full dumps of DWD plant phenological observation data in SQLite database format"},
+        {"name": "source", "value": "DWD Climate Data Center (CDC); https://www.dwd.de/EN/ourservices/opendata/opendata.html; https://opendata.dwd.de/climate_environment/CDC/observations_germany/phenology/; https://opendata.dwd.de/climate_environment/CDC/help/"},
+        {"name": "creator", "value": f"DWD Climate Data Center (CDC): Phenological observations of plants from sowing to harvest ({dataset} reporters, {partition}), Version v007, {today}"},
+        {"name": "spatial", "value": "Mostly Germany"},
+        {"name": "publisher", "value": f"{__appname__} {__version__} - an acquisition and processing toolkit for open access phenology data"},
+        {"name": "copyright", "value": "DWD CDC; https://phenodata.readthedocs.io/en/latest/archive/dwd.html#data-copyright"},
+        {"name": "created", "value": today},
+        {"name": "modified", "value": today},
+        {"name": "references", "value": "https://phenodata.readthedocs.io/en/latest/archive/dwd.html"},
+    ])
+    about.attrs["name"] = "about"
+    about = about.set_index("name")
+    return about

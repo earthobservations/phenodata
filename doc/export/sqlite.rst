@@ -65,15 +65,18 @@ Now, export a few selected data points to keep the database size small.
 Consume
 =======
 
-Inquire the database schema.
+Inquire the database schema and metadata information.
 
 .. code-block:: bash
 
-    # Show all tables and views.
+    # Display all tables and views.
     sqlite3 "${DBPATH}" '.tables'
 
-    # Show schema of all tables and views.
+    # Display schema of all tables and views.
     sqlite3 "${DBPATH}" '.fullschema --indent'
+
+    # Display database metadata information.
+    sqlite3 "${DBPATH}" --header --csv 'SELECT * FROM dwd_about'
 
 Run a query on the ``dwd_phenology`` view.
 

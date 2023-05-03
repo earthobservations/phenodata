@@ -7,7 +7,7 @@ import sys
 import logging
 from docopt import docopt, DocoptExit
 from tabulate import tabulate
-from phenodata import __version__
+from phenodata import __appname__, __version__
 from phenodata.dwd.export import export_database
 from phenodata.ftp import FTPSession
 from phenodata.dwd.cdc import DwdCdcClient
@@ -16,7 +16,6 @@ from phenodata.util import boot_logging, normalize_options, options_convert_list
 
 logger = logging.getLogger(__name__)
 
-APP_NAME = 'phenodata'
 
 def run():
     """
@@ -83,7 +82,7 @@ def run():
     commandline_schema = run.__doc__
 
     # Read commandline options
-    options = docopt(commandline_schema, version=APP_NAME + ' ' + __version__)
+    options = docopt(commandline_schema, version=f'{__appname__} {__version__}')
 
     # Initialize logging
     boot_logging(options)
