@@ -70,9 +70,11 @@ def test_export_sqlite_species_group(tmp_path):
     cursor = sqlite.execute(sql)
     results = cursor.fetchall()
 
-    # Apparently, Müncheberg's 2022 report is missing?
     assert results == [
         (2021, 55, 'dwd', 'Hasel', 'Blüte Beginn', 'Müncheberg'),
         (2021, 84, 'dwd', 'Sal-Weide', 'Blüte Beginn', 'Müncheberg'),
         (2021, 123, 'dwd', 'Winterraps', 'Blüte Beginn', 'Müncheberg'),
+        (2022, 21, 'dwd', 'Hasel', 'Blüte Beginn', 'Müncheberg'),
+        (2022, 76, 'dwd', 'Sal-Weide', 'Blüte Beginn', 'Müncheberg'),
+        (2022, 114, 'dwd', 'Winterraps', 'Blüte Beginn', 'Müncheberg'),
     ]
