@@ -32,6 +32,11 @@ the same matter, for everyone to run database queries on their own hardware.
     `The plant phenological online database (PPODB) » an online database for long-term
     phenological data`_, and the `Plant-Phenological Online Database (PPODB) handbook`_.
 
+.. seealso::
+
+    `Jörg Schaber at Systems Biology Laboratory`_ of the
+    `Department of Systems Biology at University of Magdeburg`_
+
 Data source
 ===========
 Data and metadata is acquired from the `DWD CDC Open Data Server`_, specifically
@@ -79,7 +84,7 @@ Inquire the database schema.
     sqlite3 "${DBPATH}" '.fullschema --indent'
 
     # Display database metadata information.
-    sqlite3 "${DBPATH}" --header --csv 'SELECT * FROM dwd_about'
+    sqlite3 "${DBPATH}" -csv -header 'SELECT * FROM dwd_about'
 
 The database about historical observations from immediate reporters contains
 ~250,000 records as of 2023.
@@ -122,7 +127,7 @@ slightly adjusted to use the DWD/Phenology/SQLite database schema.
 
 To invoke those queries, start an interactive shell using ``sqlite3``::
 
-    sqlite3 "${DBPATH}" --header --csv
+    sqlite3 "${DBPATH}" -csv -header
 
 At first, you usually want to get an overview over the database and list all
 available tables::
@@ -232,8 +237,9 @@ table::
         AND dwd_species_group.species_id=dwd_species.id
         AND group_name='mellifera-de-primary-openhive';
 
-::
+.. code-block:: csv
 
+    id,species_name_de,species_name_en,species_name_la
     205,Winterraps,"winter oilseed rape","Brassica napus var. napus"
     209,Sonnenblume,sunflower,"Helianthus annuus"
     215,Mais,maize,"Zea mays"
@@ -346,8 +352,6 @@ Backlog
     - [o] Outline other end-user tools to consume the databases
     - [o] Implement ``phenodata.open_database("dwd", "immediate", "recent")``
       to consume the databases
-    - [o] Acknowledge PPODB
-    - [o] Add a few SQL query examples
 
 
 ----
@@ -360,6 +364,7 @@ Enjoy your research.
 .. _creating an issue: https://github.com/earthobservations/phenodata/issues
 .. _data folder: https://phenodata.hiveeyes.org/data/
 .. _datasette: https://datasette.io/
+.. _Department of Systems Biology at University of Magdeburg: https://www.systembiologie.ovgu.de/systembiologie/en/
 .. _DWD CDC Open Data Server: https://www.dwd.de/EN/ourservices/opendata/opendata.html
 .. _Franz-W. Badeck: https://badeck.eu/
 .. _GeoNutzV (de): https://www.gesetze-im-internet.de/geonutzv/GeoNutzV.pdf
@@ -368,6 +373,7 @@ Enjoy your research.
 .. _Institute for Theoretical Biophysics at the Humboldt University: https://rumo.biologie.hu-berlin.de/
 .. _Jonas Dierenbach: https://www.researchgate.net/scientific-contributions/Jonas-Dierenbach-2007294130
 .. _Jörg Schaber: https://fairdomhub.org/people/445
+.. _Jörg Schaber at Systems Biology Laboratory: https://web.archive.org/web/20180814203044/http://www.sysbiolab.net/
 .. _phenodata: https://phenodata.readthedocs.io/
 .. _phenological calendar for foraging plants: https://community.hiveeyes.org/t/phanologischer-kalender-fur-trachtpflanzen/664
 .. _Plant-Phenological Online Database (PPODB) handbook: https://rumo.biologie.hu-berlin.de/PPODB/static/documentation/DescriptionPPODB.pdf

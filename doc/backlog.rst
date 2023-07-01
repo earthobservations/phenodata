@@ -52,6 +52,10 @@ Ideas
 - [o] Work on proposal for PPODB-next, see :ref:`ppodb`
 - [o] Add HTTP API endpoint based on SQL interface
 - [o] Add adapter for xpublish
+- [o] Add periodic scheduler, synchronized with DWD's upload schedule.
+  The "recent" partition seems to be updated each day at 08:25.
+  - https://opendata.dwd.de/climate_environment/CDC/observations_germany/phenology/immediate_reporters/crops/recent/
+  - https://opendata.dwd.de/climate_environment/CDC/observations_germany/phenology/annual_reporters/crops/recent/
 
 
 **********
