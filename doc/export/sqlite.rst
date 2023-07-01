@@ -65,6 +65,9 @@ Now, export a few selected data points to keep the database size small.
 Consume
 =======
 
+sqlite3
+-------
+
 Inquire the database schema and metadata information.
 
 .. code-block:: bash
@@ -76,7 +79,7 @@ Inquire the database schema and metadata information.
     sqlite3 "${DBPATH}" '.fullschema --indent'
 
     # Display database metadata information.
-    sqlite3 "${DBPATH}" --header --csv 'SELECT * FROM dwd_about'
+    sqlite3 "${DBPATH}" -csv -header 'SELECT * FROM dwd_about'
 
 Run a query on the ``dwd_phenology`` view.
 
@@ -134,9 +137,7 @@ Backlog
 
 .. todo::
 
-    - [o] Add ``copyright`` table, including corresponding information from DWD
-    - [o] Insert and query ``presets`` table
-    - [o] How to publish using `datasette`_
+    - [o] How to publish using `Datasette`_
     - [o] How to publish using `Grafana SQLite Datasource`_
     - [o] Explore compression options
 
@@ -144,10 +145,10 @@ Backlog
       - https://phiresky.github.io/blog/2022/sqlite-zstd/
       - https://hackaday.com/2022/08/01/never-too-rich-or-thin-compress-sqlite-80/
       - https://github.com/phiresky/sqlite-zstd
-
+    - [o] Export to Parquet format
 
 .. _database view: https://en.wikipedia.org/wiki/View_(SQL)
-.. _datasette: https://datasette.io/
+.. _Datasette: https://datasette.io/
 .. _denormalized: https://en.wikipedia.org/wiki/Denormalization
 .. _Grafana SQLite Datasource: https://grafana.com/grafana/plugins/frser-sqlite-datasource/
 .. _SQLite: https://sqlite.org/
