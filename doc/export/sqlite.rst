@@ -98,6 +98,19 @@ Run a query on the ``dwd_phenology`` view.
     For more example SQL statements, see also :ref:`SQLite DWD archive usage
     <dwd-archive-usage>`.
 
+datasette
+---------
+`Datasette`_ is a tool for exploring and publishing data. It helps people take data of
+any shape or size and publish that as an interactive, explorable website and accompanying
+API.
+
+::
+
+    datasette serve --port 7777 *.sqlite
+
+https://datasette.io/tutorials/explore
+
+
 
 *******
 Details
