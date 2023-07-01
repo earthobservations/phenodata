@@ -7,7 +7,7 @@ README = open(os.path.join(here, 'README.rst')).read()
 requires = [
     'arrow>=0.12.1,<1.3',
     'attrs>=17.4.0',
-    'charset-normalizer<3',
+    'charset-normalizer<4',
     'docopt>=0.6.2',
     'dogpile.cache>=0.6.5,<2',
     'pandas>=1.3,<2.1',
