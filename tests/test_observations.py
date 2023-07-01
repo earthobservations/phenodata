@@ -166,7 +166,7 @@ def test_cli_observations_filter_invalid_readings(capsys):
     """
     CLI test: Verify the `observations` subcommand works, with filtering by quality-byte.
     """
-    run_command("phenodata observations --source=dwd --dataset=immediate --partition=recent --filename=Hasel --quality-byte=5,6,7,8 --humanize --show-ids --format=json")
+    run_command("phenodata observations --source=dwd --dataset=immediate --partition=recent --year=2021 --filename=Hasel --quality-byte=5,6,7,8 --humanize --show-ids --format=json")
 
     out, err = capsys.readouterr()
     response = json.loads(out)
@@ -181,7 +181,7 @@ def test_cli_observations_filter_invalid_readings(capsys):
         "QS-Level": "ROUTKLI validated [7]",
         "QS-Byte": "Feldwert zweifelhaft [5]"
     }
-    assert_equal(response[0], first)
+    assert_equal(first, response[0])
 
 
 def test_cli_observations_filter_sql(capsys):
@@ -225,7 +225,9 @@ def test_cli_observations_format_csv(capsys):
     assert out.startswith("""
 Jahr,Datum,Tag,Spezies,Phase,Station,QS-Level,QS-Byte
 2021,2021-02-11,42,common hazel [113],beginning of flowering [5],"Angermünde (Ph), Brandenburg [19475]",ROUTKLI validated [7],Feldwert nicht beanstandet [1]
-2022,2022-01-28,28,common hazel [113],beginning of flowering [5],"Angermünde (Ph), Brandenburg [19475]",Load time checks [1],Feldwert nicht beanstandet [1]
+2022,2022-01-28,28,common hazel [113],beginning of flowering [5],"Angermünde (Ph), Brandenburg [19475]",ROUTKLI validated [7],Feldwert nicht beanstandet [1]
+2022,2022-03-26,85,common hazel [113],end of flowering in the observation area [41],"Angermünde (Ph), Brandenburg [19475]",ROUTKLI validated [7],Feldwert nicht beanstandet [1]
+2023,2023-01-13,13,common hazel [113],beginning of flowering [5],"Angermünde (Ph), Brandenburg [19475]",Load time checks [1],Feldwert nicht beanstandet [1]
     """.strip())
 
 
