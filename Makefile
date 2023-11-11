@@ -64,7 +64,7 @@ pypi-upload: install-releasetools
 
 install-package:
 	@test -e $(python) || python3 -m venv $(venv)
-	$(pip) install --prefer-binary --editable=.[test,develop,release,sql]
+	$(pip) install --prefer-binary --editable=.[test,sql,datasette,develop,release]
 
 install-doctools:
 	@test -e $(python) || python3 -m venv $(venv)
