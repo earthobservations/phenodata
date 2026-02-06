@@ -23,4 +23,4 @@ def test_cli_version(capsys):
         run_command("phenodata --version")
 
     out, err = capsys.readouterr()
-    assert re.match("phenodata \d+\.\d+\.\d+.*", out)
+    assert re.match(r"phenodata \d+\.\d+\.\d+.*", out)
