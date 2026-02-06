@@ -2,6 +2,7 @@ import sqlite3
 import sys
 
 import pytest
+from datadiff.tools import assert_equal
 
 from tests.util import run_command
 
@@ -36,7 +37,10 @@ def test_export_sqlite_single_species(tmp_path):
     results = cursor.fetchall()
 
     # In 2023, annual reporters did not report their observations for 2023 yet.
-    assert results == [(32, 2021, 'dwd', 'common hazel'), (3, 2022, 'dwd', 'common hazel')]
+    assert_equal(results, [
+        (8, 2024, 'dwd', 'common hazel'),
+        (30, 2025, 'dwd', 'common hazel'),
+    ])
 
 
 def test_export_sqlite_species_group(tmp_path):
@@ -70,11 +74,11 @@ def test_export_sqlite_species_group(tmp_path):
     cursor = sqlite.execute(sql)
     results = cursor.fetchall()
 
-    assert results == [
-        (2021, 55, 'dwd', 'Hasel', 'Blüte Beginn', 'Müncheberg'),
-        (2021, 84, 'dwd', 'Sal-Weide', 'Blüte Beginn', 'Müncheberg'),
-        (2021, 123, 'dwd', 'Winterraps', 'Blüte Beginn', 'Müncheberg'),
-        (2022, 21, 'dwd', 'Hasel', 'Blüte Beginn', 'Müncheberg'),
-        (2022, 76, 'dwd', 'Sal-Weide', 'Blüte Beginn', 'Müncheberg'),
-        (2022, 114, 'dwd', 'Winterraps', 'Blüte Beginn', 'Müncheberg'),
-    ]
+    assert_equal(results, [
+        (2023, 77, 'dwd', 'Sal-Weide', 'Blüte Beginn', 'Müncheberg (Ph)'),
+        (2023, 116, 'dwd', 'Winterraps', 'Blüte Beginn', 'Müncheberg (Ph)'),
+        (2024, 69, 'dwd', 'Sal-Weide', 'Blüte Beginn', 'Müncheberg (Ph)'),
+        (2024, 94, 'dwd', 'Winterraps', 'Blüte Beginn', 'Müncheberg (Ph)'),
+        (2025, 32, 'dwd', 'Hasel', 'Blüte Beginn', 'Müncheberg (Ph)'),
+        (2025, 74, 'dwd', 'Sal-Weide', 'Blüte Beginn', 'Müncheberg (Ph)'),
+    ])

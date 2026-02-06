@@ -17,8 +17,8 @@ def test_cli_forecast_immediate_recent(capsys):
     response = json.loads(out)
 
     first = {
-        "Jahr": 2023,
-        "Datum": "2023-02-26",
+        "Jahr": 2026,
+        "Datum": "2026-02-26",
         "Tag": 57,
         "Spezies": "common hazel",
         "Phase": "beginning of flowering",
@@ -52,8 +52,8 @@ def test_cli_forecast_annual_recent(capsys):
     response = json.loads(out)
 
     first = {
-        "Jahr": 2023,
-        "Datum": "2023-04-04",
+        "Jahr": 2026,
+        "Datum": "2026-04-04",
         "Tag": 94,
         "Spezies": "Apfel, frühe Reife",
         "Phase": "Austrieb Beginn",
