@@ -9,6 +9,7 @@ development
 - Add SQLite export subsystem
 - Dependencies: Permitted installation of pandas 3.0
 - CDC: Added umlaut fixes since 2026. Why?
+- pandas: Fixed ``dataframe_strip_strings`` utility function
 
 2023-04-11 0.13.1
 =================

@@ -8,6 +8,7 @@ import sys
 import math
 import logging
 import numpy as np
+import pandas as pd
 from tqdm import tqdm
 from tqdm.contrib.logging import logging_redirect_tqdm
 
@@ -87,7 +88,7 @@ def dataframe_strip_strings(col):
     if sys.version_info.major == 2:
         comptype = unicode  # FIXME
 
-    if col.dtypes == object:
+    if str(col.dtype) in ["object", "str"]:
         return (col.astype(comptype)
                 .str.strip(' \t')
                 .replace({'nan': np.nan}))
