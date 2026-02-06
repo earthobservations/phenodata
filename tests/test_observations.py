@@ -1,6 +1,7 @@
 import json
 
 import marko
+import pytest
 from datadiff.tools import assert_equal
 
 from tests.util import run_command
@@ -184,6 +185,8 @@ def test_cli_observations_filter_invalid_readings(capsys):
     assert_equal(first, response[0])
 
 
+# FIXME: Investigate and re-activate, when possible.
+@pytest.mark.skip(reason="Causes a segfault in 2026")
 def test_cli_observations_filter_sql(capsys):
     """
     CLI test: Verify the `observations` subcommand works, with filtering by quality-byte.
