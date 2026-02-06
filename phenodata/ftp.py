@@ -132,7 +132,7 @@ class FTPSession(requests_ftp.ftp.FTPSession):
             if not line: continue
 
             # Decode line format
-            parts = re.split('\s+', line)
+            parts = re.split(r'\s+', line)
             size = int(parts[4])
             mtime = ' '.join(parts[5:8])
             filename = parts[8]

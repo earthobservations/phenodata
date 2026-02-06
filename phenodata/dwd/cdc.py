@@ -58,8 +58,8 @@ class DwdCdcClient:
         # Fix CSV formatting
         content = content.strip()
         content = content.replace('\r\n', '')
-        content = re.sub(';eor;\s*', ';eor;\n', content)
-        content = re.sub('; eor ;\s*', '; eor;\n', content)
+        content = re.sub(r';eor;\s*', ';eor;\n', content)
+        content = re.sub(r'; eor ;\s*', '; eor;\n', content)
         content = content.strip()
 
         # Fixups for specific fields

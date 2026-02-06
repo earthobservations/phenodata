@@ -444,7 +444,7 @@ class DwdPhenoDataClient:
         entries = self.cdc.ftp.scan_files(
             url, subdir=partition,
             include=include,
-            include_base=['PH_(Sofort|Jahres)melder.+\.txt'],
+            include_base=[r'PH_(Sofort|Jahres)melder.+\.txt'],
             exclude_base=['PH_Beschreibung', 'Spezifizierung', 'PH_.+_Notiz'],
         )
 
