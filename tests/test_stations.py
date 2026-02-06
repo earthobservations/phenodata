@@ -5,21 +5,21 @@ from datadiff.tools import assert_equal
 from tests.util import run_command
 
 
-def test_cli_stations(capsys):
+def test_cli_stations_immediate(capsys):
     """
-    CLI test: Verify the `list-stations` subcommand works.
+    CLI test: Verify the `list-stations` subcommand works, with filtering by string.
     """
-    run_command("phenodata list-stations --source=dwd --dataset=immediate --format=json")
+    run_command("phenodata list-stations --source=dwd --dataset=immediate --filter='Braunschweig' --format=json")
 
     out, err = capsys.readouterr()
     response = json.loads(out)
 
     first = {
-      "Stations_id": 662,
-      "Stationsname": "Braunschweig",
+      "Stations_id": 19487,
+      "Stationsname": "Braunschweig (Ph)",
       "geograph.Breite": 52.2915,
       "geograph.Laenge": 10.4464,
-      "Stationshoehe": 81,
+      "Stationshoehe": 80,
       "Naturraumgruppe_Code": 62,
       "Naturraumgruppe": "Weser-Aller-Flachland",
       "Naturraum_Code": 6230,
@@ -27,7 +27,7 @@ def test_cli_stations(capsys):
       "Datum Stationsaufloesung": None,
       "Bundesland": "Niedersachsen"
     }
-    assert_equal(response[0], first)
+    assert_equal(response[3], first)
 
 
 nearest_station = {
@@ -70,18 +70,18 @@ def test_cli_nearest_station(capsys):
     assert_equal(response[0], nearest_station)
 
 
-def test_cli_stations_filter_string(capsys):
+def test_cli_stations_annual(capsys):
     """
     CLI test: Verify the `list-stations` subcommand works, with filtering by string.
     """
-    run_command("phenodata list-stations --source=dwd --dataset=annual --filter='Fränkische Alb' --format=json")
+    run_command("phenodata list-stations --source=dwd --dataset=annual --filter='Lauterhofen-Trautmannshofen' --format=json")
 
     out, err = capsys.readouterr()
     response = json.loads(out)
 
     first = {
-        "Stations_id": 2895,
-        "Stationsname": "Lauterhofen-Trautmannshofen",
+        "Stations_id": 19584,
+        "Stationsname": "Lauterhofen-Trautmannshofen (Ph)",
         "geograph.Breite": 49.3442,
         "geograph.Laenge": 11.5664,
         "Stationshoehe": 585,
