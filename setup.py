@@ -10,7 +10,7 @@ requires = [
     'charset-normalizer<4',
     'docopt>=0.6.2',
     'dogpile.cache>=0.6.5,<2',
-    'pandas>=1.3,<2.1',
+    'pandas>=1.3,<3.1',
     'platformdirs<4',
     'requests>=2.18.4,<3',
     'requests-ftp>=0.3.1,<4',
