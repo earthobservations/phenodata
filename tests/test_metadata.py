@@ -132,8 +132,8 @@ def test_cli_list_filenames_immediate_historical(capsys):
     out, err = capsys.readouterr()
     response = out.splitlines()
 
-    assert_equal(response[0], "PH_Sofortmelder_Landwirtschaft_Kulturpflanze_Dauergruenland_1979_2021_hist.txt")
-    assert_equal(response[-1], "PH_Sofortmelder_Wildwachsende_Pflanze_Wiesen-Fuchsschwanz_1979_2021_hist.txt")
+    assert_equal(response[0], "PH_Sofortmelder_Landwirtschaft_Kulturpflanze_Dauergruenland_1979_2023_hist.txt")
+    assert_equal(response[-1], "PH_Sofortmelder_Wildwachsende_Pflanze_Wiesen-Fuchsschwanz_1979_2023_hist.txt")
 
 
 def test_cli_list_filenames_annual_recent(capsys):
@@ -158,8 +158,8 @@ def test_cli_list_filenames_annual_historical(capsys):
     out, err = capsys.readouterr()
     response = out.splitlines()
 
-    assert_equal(response[0], "PH_Jahresmelder_Landwirtschaft_Kulturpflanze_Dauergruenland_1936_2021_hist.txt")
-    assert_equal(response[-1], "PH_Jahresmelder_Wildwachsende_Pflanze_Zweigriffliger_Weissdorn_1936_2021_hist.txt")
+    assert_equal(response[0], "PH_Jahresmelder_Landwirtschaft_Kulturpflanze_Dauergruenland_1936_2023_hist.txt")
+    assert_equal(response[-1], "PH_Jahresmelder_Wildwachsende_Pflanze_Zweigriffliger_Weissdorn_1936_2023_hist.txt")
 
 
 def test_cli_list_urls_immediate_recent(capsys):

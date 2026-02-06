@@ -18,13 +18,13 @@ def test_cli_observations_immediate_recent_filter_station_id(capsys):
     response = json.loads(out)
 
     first = {
-        "Jahr": 2021,
-        "Datum": "2021-02-11",
-        "Tag": 42,
+        "Jahr": 2024,
+        "Datum": "2024-01-13",
+        "Tag": 13,
         "Spezies": "common hazel [113]",
         "Phase": "beginning of flowering [5]",
         "Station": "Angermünde (Ph), Brandenburg [19475]",
-        "QS-Level": "ROUTKLI validated [7]",
+        "QS-Level": "Load time checks [1]",
         "QS-Byte": "Feldwert nicht beanstandet [1]"
     }
     assert_equal(response[0], first)
@@ -40,14 +40,14 @@ def test_cli_observations_immediate_recent_filter_station_name(capsys):
     response = json.loads(out)
 
     first = {
-        "Jahr": 2021,
-        "Datum": "2021-02-01",
-        "Tag": 32,
+        "Jahr": 2023,
+        "Datum": "2023-02-02",
+        "Tag": 33,
         "Spezies": "common hazel",
         "Phase": "beginning of flowering",
-        "Station": "Wall, Brandenburg",
+        "Station": "Dahlwitz-Hoppegarten, Brandenburg",
         "QS-Level": "ROUTKLI validated and corrected",
-        "QS-Byte": "Feldwert nicht beanstandet"
+        "QS-Byte": "Feldwert korrigiert"
     }
     assert_equal(response[0], first)
 
@@ -84,14 +84,14 @@ def test_cli_observations_annual_recent(capsys):
     response = json.loads(out)
 
     first = {
-        "Jahr": 2021,
-        "Datum": "2021-02-01",
-        "Tag": 32,
+        "Jahr": 2023,
+        "Datum": "2023-02-02",
+        "Tag": 33,
         "Spezies": "common hazel",
         "Phase": "beginning of flowering",
-        "Station": "Wall, Brandenburg",
+        "Station": "Dahlwitz-Hoppegarten, Brandenburg",
         "QS-Level": "ROUTKLI validated and corrected",
-        "QS-Byte": "Feldwert nicht beanstandet"
+        "QS-Byte": "Feldwert korrigiert"
     }
     assert_equal(response[0], first)
 
@@ -122,15 +122,15 @@ def test_cli_observations_filter_year(capsys):
     """
     CLI test: Verify the `observations` subcommand works, with filtering by year.
     """
-    run_command("phenodata observations --source=dwd --dataset=immediate --partition=recent --filename=Hasel --station-id=7521,7532 --year=2020,2021 --humanize --show-ids --format=json")
+    run_command("phenodata observations --source=dwd --dataset=immediate --partition=recent --filename=Hasel --station-id=7521,7532 --year=2022,2023 --humanize --show-ids --format=json")
 
     out, err = capsys.readouterr()
     response = json.loads(out)
 
     first = {
-        "Jahr": 2021,
-        "Datum": "2021-02-24",
-        "Tag": 55,
+        "Jahr": 2023,
+        "Datum": "2023-02-25",
+        "Tag": 56,
         "Spezies": "common hazel [113]",
         "Phase": "beginning of flowering [5]",
         "Station": "Norder-Hever-Koog, Schleswig-Holstein [7532]",
@@ -150,9 +150,9 @@ def test_cli_observations_filter_species_id(capsys):
     response = json.loads(out)
 
     first = {
-        "Jahr": 2021,
-        "Datum": "2021-02-24",
-        "Tag": 55,
+        "Jahr": 2023,
+        "Datum": "2023-02-25",
+        "Tag": 56,
         "Spezies": "common hazel [113]",
         "Phase": "beginning of flowering [5]",
         "Station": "Norder-Hever-Koog, Schleswig-Holstein [7532]",
@@ -166,18 +166,18 @@ def test_cli_observations_filter_invalid_readings(capsys):
     """
     CLI test: Verify the `observations` subcommand works, with filtering by quality-byte.
     """
-    run_command("phenodata observations --source=dwd --dataset=immediate --partition=recent --year=2021 --filename=Hasel --quality-byte=5,6,7,8 --humanize --show-ids --format=json")
+    run_command("phenodata observations --source=dwd --dataset=immediate --partition=recent --year=2023 --filename=Hasel --quality-byte=5,6,7,8 --humanize --show-ids --format=json")
 
     out, err = capsys.readouterr()
     response = json.loads(out)
 
     first = {
-        "Jahr": 2021,
-        "Datum": "2021-02-20",
-        "Tag": 51,
+        "Jahr": 2023,
+        "Datum": "2023-02-14",
+        "Tag": 45,
         "Spezies": "common hazel [113]",
         "Phase": "beginning of flowering [5]",
-        "Station": "Kirchdorf b. Sulingen, Niedersachsen [7857]",
+        "Station": "Hemmingstedt, Schleswig-Holstein [7807]",
         "QS-Level": "ROUTKLI validated [7]",
         "QS-Byte": "Feldwert zweifelhaft [5]"
     }
@@ -224,10 +224,10 @@ def test_cli_observations_format_csv(capsys):
     out, err = capsys.readouterr()
     assert out.startswith("""
 Jahr,Datum,Tag,Spezies,Phase,Station,QS-Level,QS-Byte
-2021,2021-02-11,42,common hazel [113],beginning of flowering [5],"Angermünde (Ph), Brandenburg [19475]",ROUTKLI validated [7],Feldwert nicht beanstandet [1]
-2022,2022-01-28,28,common hazel [113],beginning of flowering [5],"Angermünde (Ph), Brandenburg [19475]",ROUTKLI validated [7],Feldwert nicht beanstandet [1]
-2022,2022-03-26,85,common hazel [113],end of flowering in the observation area [41],"Angermünde (Ph), Brandenburg [19475]",ROUTKLI validated [7],Feldwert nicht beanstandet [1]
-2023,2023-01-13,13,common hazel [113],beginning of flowering [5],"Angermünde (Ph), Brandenburg [19475]",Load time checks [1],Feldwert nicht beanstandet [1]
+2024,2024-01-13,13,common hazel [113],beginning of flowering [5],"Angermünde (Ph), Brandenburg [19475]",Load time checks [1],Feldwert nicht beanstandet [1]
+2025,2025-02-03,34,common hazel [113],beginning of flowering [5],"Angermünde (Ph), Brandenburg [19475]",Load time checks [1],Feldwert nicht beanstandet [1]
+2025,2025-03-28,87,common hazel [113],end of flowering in the observation area [41],"Angermünde (Ph), Brandenburg [19475]",Load time checks [1],Feldwert nicht beanstandet [1]
+2026,2025-12-25,-7,common hazel [113],beginning of flowering [5],"Angermünde (Ph), Brandenburg [19475]",Load time checks [1],Feldwert nicht beanstandet [1]
     """.strip())
 
 
