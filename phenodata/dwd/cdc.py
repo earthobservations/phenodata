@@ -81,6 +81,15 @@ class DwdCdcClient:
             for old, new in list(fieldmap.items()):
                 content = content.replace(old, new)
 
+        # Umlaut fixes since 2026. Why?
+        fixmap = {
+            'ungepr³ft': 'ungeprüft',
+            'bestõtigt': 'bestätigt',
+            'ung³ltiges': 'ungültiges',
+        }
+        for old, new in list(fixmap.items()):
+            content = content.replace(old, new)
+
         # Debugging
         #print('content:\n', content)
 

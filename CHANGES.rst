@@ -8,6 +8,7 @@ development
 - Documentation: Add logo image. Thanks, @ClemensGruber.
 - Add SQLite export subsystem
 - Dependencies: Permitted installation of pandas 3.0
+- CDC: Added umlaut fixes since 2026. Why?
 
 2023-04-11 0.13.1
 =================
