@@ -4,6 +4,9 @@ phenodata changelog
 
 development
 ===========
+
+2026-02-07 0.14.0
+=================
 - Naming things: Rename ``DwdPhenoData`` to ``DwdPhenoDataClient``
 - Documentation: Add logo image. Thanks, @ClemensGruber.
 - Add SQLite export subsystem
