@@ -42,13 +42,13 @@ def test_cli_observations_immediate_recent_filter_station_name(capsys):
 
     first = {
         "Jahr": 2023,
-        "Datum": "2023-02-02",
-        "Tag": 33,
+        "Datum": "2023-02-03",
+        "Tag": 34,
         "Spezies": "common hazel",
         "Phase": "beginning of flowering",
-        "Station": "Dahlwitz-Hoppegarten, Brandenburg",
+        "Station": "Walddrehna, Brandenburg",
         "QS-Level": "ROUTKLI validated and corrected",
-        "QS-Byte": "Feldwert korrigiert"
+        "QS-Byte": "Feldwert nicht beanstandet"
     }
     assert_equal(response[0], first)
 
@@ -86,13 +86,13 @@ def test_cli_observations_annual_recent(capsys):
 
     first = {
         "Jahr": 2023,
-        "Datum": "2023-02-02",
-        "Tag": 33,
+        "Datum": "2023-02-03",
+        "Tag": 34,
         "Spezies": "common hazel",
         "Phase": "beginning of flowering",
-        "Station": "Dahlwitz-Hoppegarten, Brandenburg",
+        "Station": "Walddrehna, Brandenburg",
         "QS-Level": "ROUTKLI validated and corrected",
-        "QS-Byte": "Feldwert korrigiert"
+        "QS-Byte": "Feldwert nicht beanstandet"
     }
     assert_equal(response[0], first)
 
@@ -229,8 +229,8 @@ def test_cli_observations_format_csv(capsys):
 Jahr,Datum,Tag,Spezies,Phase,Station,QS-Level,QS-Byte
 2024,2024-01-13,13,common hazel [113],beginning of flowering [5],"Angermünde (Ph), Brandenburg [19475]",Load time checks [1],Feldwert nicht beanstandet [1]
 2025,2025-02-03,34,common hazel [113],beginning of flowering [5],"Angermünde (Ph), Brandenburg [19475]",Load time checks [1],Feldwert nicht beanstandet [1]
-2025,2025-03-28,87,common hazel [113],end of flowering in the observation area [41],"Angermünde (Ph), Brandenburg [19475]",Load time checks [1],Feldwert nicht beanstandet [1]
 2026,2025-12-25,-7,common hazel [113],beginning of flowering [5],"Angermünde (Ph), Brandenburg [19475]",Load time checks [1],Feldwert nicht beanstandet [1]
+2025,2025-03-28,87,common hazel [113],end of flowering in the observation area [41],"Angermünde (Ph), Brandenburg [19475]",Load time checks [1],Feldwert nicht beanstandet [1]
     """.strip())
 
 
