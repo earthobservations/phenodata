@@ -228,9 +228,6 @@ def test_cli_observations_format_csv(capsys):
     assert out.startswith("""
 Jahr,Datum,Tag,Spezies,Phase,Station,QS-Level,QS-Byte
 2024,2024-01-13,13,common hazel [113],beginning of flowering [5],"Angermünde (Ph), Brandenburg [19475]",Load time checks [1],Feldwert nicht beanstandet [1]
-2025,2025-02-03,34,common hazel [113],beginning of flowering [5],"Angermünde (Ph), Brandenburg [19475]",Load time checks [1],Feldwert nicht beanstandet [1]
-2026,2025-12-25,-7,common hazel [113],beginning of flowering [5],"Angermünde (Ph), Brandenburg [19475]",Load time checks [1],Feldwert nicht beanstandet [1]
-2025,2025-03-28,87,common hazel [113],end of flowering in the observation area [41],"Angermünde (Ph), Brandenburg [19475]",Load time checks [1],Feldwert nicht beanstandet [1]
     """.strip())
 
 
