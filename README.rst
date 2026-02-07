@@ -1,4 +1,14 @@
-|
+#########
+phenodata
+#########
+
+*Phenology data acquisition for humans.*
+
+`Documentation <https://phenodata.readthedocs.io>`_
+| `Issues <https://github.com/earthobservations/phenodata/issues>`_
+| `Changelog <https://github.com/earthobservations/phenodata/blob/main/CHANGES.rst>`_
+| `PyPI <https://pypi.org/project/phenodata/>`_
+| `Source code <https://github.com/earthobservations/phenodata>`_
 
 .. image:: https://github.com/earthobservations/phenodata/actions/workflows/tests.yml/badge.svg
     :target: https://github.com/earthobservations/phenodata/actions?workflow=Tests
@@ -20,22 +30,6 @@
 
 .. image:: https://img.shields.io/pypi/l/phenodata.svg
     :target: https://pypi.org/project/phenodata/
-
-`GitHub <https://github.com/earthobservations/phenodata>`_
-| `PyPI <https://pypi.org/project/phenodata/>`_
-| `Documentation <https://phenodata.readthedocs.io>`_
-| `Issues <https://github.com/earthobservations/phenodata/issues>`_
-| `Changelog <https://github.com/earthobservations/phenodata/blob/main/CHANGES.rst>`_
-
-.. raw:: html
-
-    <br/><br/>
-
-#########
-phenodata
-#########
-
-*Phenology data acquisition for humans.*
 
 
 *****
@@ -531,7 +525,7 @@ To get an idea about the data, run your first query.
 
     sqlite3 -csv -header phenodata-dwd-sample.sqlite 'SELECT * FROM dwd_phenology ORDER BY date;'
 
-Please refer to the :ref:`sqlite-export` documentation about more details how
+Please refer to the `SQLite database export`_ documentation about more details how
 to use that feature, and about what you can do with it.
 
 
@@ -612,6 +606,7 @@ easily.
 .. _reStructuredText: https://en.wikipedia.org/wiki/ReStructuredText
 .. _share it back with us: https://github.com/earthobservations/phenodata/discussions/new?category=show-and-tell
 .. _SQLite: https://sqlite.org/
+.. _SQLite database export: https://phenodata.readthedocs.io/en/latest/export/sqlite.html
 .. _tabulate: https://github.com/astanin/python-tabulate
 .. _virtualenv: https://github.com/earthobservations/phenodata/blob/main/doc/virtualenv.rst
 .. _Xarray: https://xarray.dev/

@@ -14,6 +14,7 @@ development
 - CDC: Added umlaut fixes since 2026. Why?
 - pandas: Fixed ``dataframe_strip_strings`` utility function
 - Python: Provided compatibility with Python 3.7 to 3.14
+- Project: Fixed rendering of README
 
 2023-04-11 0.13.1
 =================

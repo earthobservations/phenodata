@@ -34,6 +34,7 @@ setup(name='phenodata',
     version='0.14.0',
     description='phenodata is an acquisition and processing toolkit for open access phenology data',
     long_description=README,
+    long_description_content_type='text/x-rst',
     license="AGPL-3.0",
     classifiers=[
         "Programming Language :: Python",
