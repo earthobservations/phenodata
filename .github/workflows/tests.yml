@@ -46,6 +46,10 @@ jobs:
       - name: Run tests
         run: make check
 
+      - name: Run linter
+        if: ${{ matrix.python-version != '3.7' && matrix.python-version != '3.8' && matrix.python-version != '3.9' }}
+        run: make docs-lint
+
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
         with:

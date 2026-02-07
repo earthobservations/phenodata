@@ -39,7 +39,7 @@ docs-lint:
 	$(proselint) check *.rst doc/*.rst doc/**/*.rst
 
 .PHONY: check
-check: install-package docs-lint test
+check: install-package test
 
 
 # ===============

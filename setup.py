@@ -22,7 +22,7 @@ requires = [
 test_requires = [
     'datadiff>=2.0,<3',
     'marko<3',
-    'proselint==0.16.0',
+    'proselint==0.16.0; python_version>="3.10"',
     'pytest>=6.1.0,<8',
     'pytest-cov<5',
     'pytest-doctest-ellipsis-markers',
