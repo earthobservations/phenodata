@@ -1,6 +1,7 @@
 {
   "checks": {
     "annotations.misc": false,
+    "misc.capitalization.seasons": false,
     "typography.symbols": false
   }
 }

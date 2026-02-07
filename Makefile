@@ -36,7 +36,7 @@ docs-autobuild: install-doctools
 	$(sphinx-autobuild) --open-browser doc doc/_build
 
 docs-lint:
-	$(proselint) *.rst doc/*.rst doc/**/*.rst
+	$(proselint) check *.rst doc/*.rst doc/**/*.rst
 
 .PHONY: check
 check: install-package docs-lint test
