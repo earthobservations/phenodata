@@ -26,7 +26,7 @@ test_requires = [
     'marko<3',
     'proselint==0.16.0; python_version>="3.10"',
     'pytest>=6.1.0,<10',
-    'pytest-cov<5',
+    'pytest-cov<8',
     'pytest-doctest-ellipsis-markers',
 ]
 
