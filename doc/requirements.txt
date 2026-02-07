@@ -1,4 +1,4 @@
 furo
-sphinx<8
+sphinx<10
 sphinx-copybutton<1
 sphinxext-opengraph<1
