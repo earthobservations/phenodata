@@ -5,7 +5,7 @@ here = os.path.abspath(os.path.dirname(__file__))
 README = open(os.path.join(here, 'README.rst')).read()
 
 requires = [
-    'arrow>=0.12.1,<1.3',
+    'arrow>=0.12.1,<1.5',
     'attrs>=17.4.0',
     'charset-normalizer<4',
     'docopt>=0.6.2',
