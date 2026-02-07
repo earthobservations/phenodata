@@ -195,7 +195,7 @@ directory`_.
         >>> import os
         >>> import pytest
         >>> if "GITHUB_ACTION" in os.environ:
-        ...     pytest.skip(msg="pytest-doctest-ellipsis-markers does not work on CI/GHA. Works on macOS though.", allow_module_level=True)
+        ...     pytest.skip("pytest-doctest-ellipsis-markers does not work on CI/GHA. Works on macOS though.", allow_module_level=True)
 
 .. code-block:: python
 
