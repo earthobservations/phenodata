@@ -90,7 +90,7 @@ setup(name='phenodata',
     zip_safe=False,
     install_requires=requires,
     extras_require={
-        'sql': ['duckdb>=0.3,<1.5'],
+        'sql': ['duckdb>=0.3,<1.6'],
         'test': test_requires,
     },
     entry_points={
