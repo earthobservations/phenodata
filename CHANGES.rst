@@ -4,6 +4,9 @@ phenodata changelog
 
 development
 ===========
+
+2026-07-08 0.14.1
+=================
 - Dependencies: Maintenance release
 
 2026-02-07 0.14.0
