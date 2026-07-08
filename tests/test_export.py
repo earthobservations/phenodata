@@ -75,10 +75,10 @@ def test_export_sqlite_species_group(tmp_path):
     results = cursor.fetchall()
 
     assert_equal(results, [
-        (2023, 77, 'dwd', 'Sal-Weide', 'Blüte Beginn', 'Müncheberg (Ph)'),
-        (2023, 116, 'dwd', 'Winterraps', 'Blüte Beginn', 'Müncheberg (Ph)'),
         (2024, 69, 'dwd', 'Sal-Weide', 'Blüte Beginn', 'Müncheberg (Ph)'),
         (2024, 94, 'dwd', 'Winterraps', 'Blüte Beginn', 'Müncheberg (Ph)'),
         (2025, 32, 'dwd', 'Hasel', 'Blüte Beginn', 'Müncheberg (Ph)'),
         (2025, 74, 'dwd', 'Sal-Weide', 'Blüte Beginn', 'Müncheberg (Ph)'),
+        (2026, 58, 'dwd', 'Hasel', 'Blüte Beginn', 'Müncheberg (Ph)'),
+        (2026, 75, 'dwd', 'Sal-Weide', 'Blüte Beginn', 'Müncheberg (Ph)'),
     ])
