@@ -31,7 +31,7 @@ test_requires = [
 ]
 
 setup(name='phenodata',
-    version='0.14.0',
+    version='0.14.1',
     description='phenodata is an acquisition and processing toolkit for open access phenology data',
     long_description=README,
     long_description_content_type='text/x-rst',
