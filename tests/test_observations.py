@@ -41,12 +41,12 @@ def test_cli_observations_immediate_recent_filter_station_name(capsys):
     response = json.loads(out)
 
     first = {
-        "Jahr": 2023,
-        "Datum": "2023-02-03",
-        "Tag": 34,
+        "Jahr": 2024,
+        "Datum": "2024-01-13",
+        "Tag": 13,
         "Spezies": "common hazel",
         "Phase": "beginning of flowering",
-        "Station": "Walddrehna, Brandenburg",
+        "Station": "Angermünde (Ph), Brandenburg",
         "QS-Level": "ROUTKLI validated and corrected",
         "QS-Byte": "Feldwert nicht beanstandet"
     }
@@ -85,12 +85,12 @@ def test_cli_observations_annual_recent(capsys):
     response = json.loads(out)
 
     first = {
-        "Jahr": 2023,
-        "Datum": "2023-02-03",
-        "Tag": 34,
+        "Jahr": 2024,
+        "Datum": "2024-01-13",
+        "Tag": 13,
         "Spezies": "common hazel",
         "Phase": "beginning of flowering",
-        "Station": "Walddrehna, Brandenburg",
+        "Station": "Angermünde (Ph), Brandenburg",
         "QS-Level": "ROUTKLI validated and corrected",
         "QS-Byte": "Feldwert nicht beanstandet"
     }
@@ -123,7 +123,7 @@ def test_cli_observations_filter_year(capsys):
     """
     CLI test: Verify the `observations` subcommand works, with filtering by year.
     """
-    run_command("phenodata observations --source=dwd --dataset=immediate --partition=recent --filename=Hasel --station-id=7521,7532 --year=2022,2023 --humanize --show-ids --format=json")
+    run_command("phenodata observations --source=dwd --dataset=immediate --partition=historical --filename=Hasel --station-id=7521,7532 --year=2023 --humanize --show-ids --format=json")
 
     out, err = capsys.readouterr()
     response = json.loads(out)
@@ -151,13 +151,13 @@ def test_cli_observations_filter_species_id(capsys):
     response = json.loads(out)
 
     first = {
-        "Jahr": 2023,
-        "Datum": "2023-02-25",
-        "Tag": 56,
+        "Jahr": 2024,
+        "Datum": "2024-02-26",
+        "Tag": 57,
         "Spezies": "common hazel [113]",
         "Phase": "beginning of flowering [5]",
         "Station": "Norder-Hever-Koog, Schleswig-Holstein [7532]",
-        "QS-Level": "ROUTKLI validated [7]",
+        "QS-Level": "Load time checks [1]",
         "QS-Byte": "Feldwert nicht beanstandet [1]"
     }
     assert_equal(response[0], first)
@@ -167,7 +167,7 @@ def test_cli_observations_filter_invalid_readings(capsys):
     """
     CLI test: Verify the `observations` subcommand works, with filtering by quality-byte.
     """
-    run_command("phenodata observations --source=dwd --dataset=immediate --partition=recent --year=2023 --filename=Hasel --quality-byte=5,6,7,8 --humanize --show-ids --format=json")
+    run_command("phenodata observations --source=dwd --dataset=immediate --partition=historical --year=2023 --filename=Hasel --quality-byte=5,6,7,8 --humanize --show-ids --format=json")
 
     out, err = capsys.readouterr()
     response = json.loads(out)

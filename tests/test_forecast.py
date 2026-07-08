@@ -18,8 +18,8 @@ def test_cli_forecast_immediate_recent(capsys):
 
     first = {
         "Jahr": 2026,
-        "Datum": "2026-02-26",
-        "Tag": 57,
+        "Datum": "2026-03-02",
+        "Tag": 61,
         "Spezies": "common hazel",
         "Phase": "beginning of flowering",
         "Station": "Norder-Hever-Koog, Schleswig-Holstein"
@@ -53,8 +53,8 @@ def test_cli_forecast_annual_recent(capsys):
 
     first = {
         "Jahr": 2026,
-        "Datum": "2026-04-04",
-        "Tag": 94,
+        "Datum": "2026-04-08",
+        "Tag": 98,
         "Spezies": "Apfel, frühe Reife",
         "Phase": "Austrieb Beginn",
         "Station": "Berlin-Dahlem, Berlin"

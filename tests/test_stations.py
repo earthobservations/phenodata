@@ -74,17 +74,17 @@ def test_cli_stations_annual(capsys):
     """
     CLI test: Verify the `list-stations` subcommand works, with filtering by string.
     """
-    run_command("phenodata list-stations --source=dwd --dataset=annual --filter='Lauterhofen-Trautmannshofen' --format=json")
+    run_command("phenodata list-stations --source=dwd --dataset=annual --filter='Kastl-Bärnhof' --format=json")
 
     out, err = capsys.readouterr()
     response = json.loads(out)
 
     first = {
-        "Stations_id": 19584,
-        "Stationsname": "Lauterhofen-Trautmannshofen (Ph)",
-        "geograph.Breite": 49.3442,
-        "geograph.Laenge": 11.5664,
-        "Stationshoehe": 585,
+        "Stations_id": 11343,
+        "Stationsname": "Kastl-Bärnhof",
+        "geograph.Breite": 49.3833,
+        "geograph.Laenge": 11.65,
+        "Stationshoehe": 480,
         "Naturraumgruppe_Code": 8,
         "Naturraumgruppe": "Fränkische Alb (Frankenalb)",
         "Naturraum_Code": 810,
