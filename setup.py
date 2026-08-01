@@ -15,7 +15,7 @@ requires = [
     'platformdirs<5',
     'requests>=2.18.4,<3',
     'requests-ftp>=0.3.1,<4',
-    'setuptools<81',
+    'setuptools<84',
     'sqlalchemy>2,<2.1',
     'tabulate>=0.8.2,<0.11',
     'tqdm>=4.60,<5',
