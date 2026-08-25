@@ -1,0 +1,67 @@
+# A knowledgebase file for mapping fruit plant species of
+# honeybees to their respective yield classification values.
+#
+# For describing metadata, use Dublin Core terms.
+# https://www.dublincore.org/specifications/dublin-core/dcmi-terms/
+#
+# For validation, use https://pypi.org/project/toml-validator/
+# or https://www.toml-lint.com/.
+
+# Metadata for species -> yield mapping.
+[phenodata.mellifera.yield.dwd.metadata]
+
+title = "Yields per fruit plants relevant for honeybees (Apis mellifera)"
+description = """
+  Describe a mapping of DWD CDC phenology observation species
+  (nectar and honeydew source plants of honeybees) to their
+  respective yield classification values.
+  DWD CDC means Deutscher Wetterdienst Climate Data Center.
+"""
+source = "Das Trachtpflanzenbuch; Anna Maurizio, Friedgard Schaper"
+spatial = "Germany"
+creator = "poesel"
+publisher = "Hiveeyes"
+license = "CC BY 4.0"
+created = 2021-01-07T10:00:00Z
+modified = 2021-01-07T14:00:00Z
+
+references = [
+  "https://www.dwd.de/DE/klimaumwelt/klimaueberwachung/phaenologie/phaenologie_node.html",
+  "https://opendata.dwd.de/climate_environment/CDC/observations_germany/phenology/",
+  "https://community.hiveeyes.org/t/phanologischer-kalender-fur-trachtpflanzen/664",
+  "https://community.hiveeyes.org/t/phenodata-ein-datenbezug-und-manipulations-toolkit-fur-open-access-phanologiedaten/2892",
+  "https://github.com/earthobservations/phenodata",
+]
+
+# Map the DWD phenology species identifiers to the yield values.
+[phenodata.mellifera.yield.dwd.map]
+25 = { pollen = 2, nectar = 2, honeydew = false }
+101 = { pollen = 1, nectar = 1, honeydew = false }
+103 = { pollen = 2, nectar = 2, honeydew = false }
+104 = { pollen = 0, nectar = 0, honeydew = true }
+107 = { pollen = 0, nectar = 0, honeydew = true }
+108 = { pollen = 3, nectar = 2, honeydew = false }
+110 = { pollen = 1, nectar = 3, honeydew = false }
+111 = { pollen = 2, nectar = 0, honeydew = false }
+112 = { pollen = 2, nectar = 0, honeydew = false }
+113 = { pollen = 2, nectar = 0, honeydew = false }
+114 = { pollen = 2, nectar = 4, honeydew = false }
+115 = { pollen = 2, nectar = 2, honeydew = false }
+116 = { pollen = 2, nectar = 3, honeydew = false }
+117 = { pollen = 2, nectar = 2, honeydew = false }
+118 = { pollen = 0, nectar = 0, honeydew = true }
+119 = { pollen = 3, nectar = 2, honeydew = false }
+120 = { pollen = 4, nectar = 3, honeydew = false }
+121 = { pollen = [1, 2], nectar = [3, 4], honeydew = false }
+122 = { pollen = 3, nectar = 3, honeydew = false }
+123 = { pollen = 2, nectar = 0, honeydew = false }
+124 = { pollen = [3, 4], nectar = [3, 4], honeydew = false }
+125 = { pollen = 3, nectar = 2, honeydew = false }
+126 = { pollen = 1, nectar = [1, 3], honeydew = false }
+127 = { pollen = 2, nectar = 2, honeydew = false }
+128 = { pollen = 0, nectar = 0, honeydew = true }
+129 = { pollen = 2, nectar = 0, honeydew = false }
+130 = { pollen = 4, nectar = 3, honeydew = false }
+131 = { pollen = 2, nectar = 3, honeydew = false }
+132 = { pollen = 0, nectar = 0, honeydew = true }
+133 = { pollen = 0, nectar = 0, honeydew = true }
