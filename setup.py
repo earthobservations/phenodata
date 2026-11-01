@@ -11,7 +11,7 @@ requires = [
     'docopt-ng<0.10',
     'dogpile.cache>=0.6.5,<2',
     'legacy-cgi<2.7; python_version>="3.11"',
-    'pandas>=1.3,<3.1',
+    'pandas>=1.3,<3.2',
     'platformdirs<5',
     'requests>=2.18.4,<3',
     'requests-ftp>=0.3.1,<4',
